@@ -1,0 +1,41 @@
+{
+	"name": "@pdq-dice/server",
+	"version": "0.0.0",
+	"description": "Server for PDQ Bot",
+	"author": "David Dorward <david@dorward.me.uk>",
+	"homepage": "",
+	"license": "ISC",
+	"main": "src/server.js",
+	"directories": {
+		"lib": "lib"
+	},
+	"files": [
+		"lib"
+	],
+	"scripts": {
+		"start:dev": "nodemon -e ts --watch src --exec npm run start:dist:dev",
+		"start:dist:dev": "npm run build && node -r dotenv/config dist/server.js dotenv_config_path=../../shared/env/development.env",
+		"build": "npm run clean && npm run compile",
+		"clean": "rm -rf ./dist",
+		"compile": "tsc -p tsconfig.json"
+	},
+	"dependencies": {
+		"discord.js": "^12.5.3",
+		"dotenv": "^9.0.2",
+		"express": "^4.17.1",
+		"sqlite3": "^5.0.2",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.11",
+		"@types/sqlite3": "^3.1.7",
+		"@types/uuid": "^8.3.0",
+		"@types/ws": "^7.4.4",
+		"discord.js": "^12.5.3",
+		"eslint": "^7.26.0",
+		"kill-port": "^1.6.1",
+		"nodemon": "^2.0.7",
+		"tsconfig-paths": "^3.9.0",
+		"typescript": "^4.2.4"
+	}
+}
