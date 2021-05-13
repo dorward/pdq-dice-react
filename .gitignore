@@ -3,3 +3,5 @@ node_modules
 .DS_Store
 /packages/server/database.db
 /shared/env/development.env
+/lerna-debug.log
+.cache
