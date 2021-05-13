@@ -1,5 +1,6 @@
 import { User } from '../types';
 import sqlite3 from 'sqlite3';
+import { DataResolver } from 'discord.js';
 const sqlite3init = sqlite3.verbose();
 
 const db = new sqlite3init.Database(process.env.DB_PATH);
@@ -12,29 +13,46 @@ db.serialize(function () {
 	)`);
 });
 
-export const getUserById = (userId: User['userId']) => {
+export const getUserById = (userId: User['userId']): Promise<User | undefined> => {
+	console.log('getUserById');
 	return new Promise((res, rej) => {
 		db.serialize(function () {
-			db.get('SELECT * FROM user_data WHERE userId=?', [userId], (err, row) => {
-				if (err) rej(err);
-				else res(row);
+			db.get('SELECT data FROM user_data WHERE userId=?', [userId], (err, row) => {
+				if (err) {
+					console.log('Rejecting due to error', err);
+					rej(err);
+				} else if (!row) {
+					res(undefined);
+				} else {
+					console.log({ row });
+					res(JSON.parse(row.data));
+				}
 			});
 		});
 	});
 };
 
-export const getUserByCode = (code: User['code']) => {
+export const getUserByCode = (code: User['code']): Promise<User | undefined> => {
+	console.log('getUserByCode');
 	return new Promise((res, rej) => {
 		db.serialize(function () {
-			db.get('SELECT * FROM user_data WHERE code=?', [code], (err, row) => {
-				if (err) rej(err);
-				else res(row);
+			db.get('SELECT data FROM user_data WHERE code=?', [code], (err, row) => {
+				if (err) {
+					console.log('Rejecting due to error', err);
+					rej(err);
+				} else if (!row) {
+					res(undefined);
+				} else {
+					console.log({ row });
+					res(JSON.parse(row.data));
+				}
 			});
 		});
 	});
 };
 
 export const getAllUsers = (): Promise<User[]> => {
+	console.log('getAllUsers');
 	return new Promise((res, rej) => {
 		db.serialize(function () {
 			db.all('SELECT data FROM user_data', (err, rows) => {
@@ -47,6 +65,7 @@ export const getAllUsers = (): Promise<User[]> => {
 };
 
 export const addOrUpdateUser = (userId: string, code: string, data: User) => {
+	console.log('addOrUpdateUser');
 	return new Promise(async (res, rej) => {
 		const user = await getUserById(userId);
 		db.serialize(function () {

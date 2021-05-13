@@ -3,7 +3,7 @@ import cors from 'cors';
 import discord from './discord';
 
 import { User } from './types';
-import { getAllUsers } from './store/db';
+import { getAllUsers, getUserByCode } from './store/db';
 
 discord.on('ready', () => {
 	console.log(`Logged in as ${discord.user.tag}!`);
@@ -17,23 +17,18 @@ app.use(
 	})
 );
 
-const example: User = {
-	avatar: 'ASD',
-	characters: [],
-	code: 'asdf',
-	nickname: 'asdf',
-	userId: 'asdf',
-	userTag: 'asdf',
-	channel: {
-		id: 'a',
-		name: 'a',
-		guild: 'a',
-		avatar: 'a',
-	},
-};
-
 app.get('/', (req, res) => {
-	res.json(example);
+	res.json({ hello: 'world' });
+});
+
+app.get('/api/user/:code', async (req, res) => {
+	// const channel = bot.channels.get("ID");
+	try {
+		const user = await getUserByCode(req.params.code);
+		res.json(user);
+	} catch {
+		res.sendStatus(500);
+	}
 });
 
 app.get('/api/allUsers', async (req, res) => {

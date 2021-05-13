@@ -1,9 +1,17 @@
+main {
+	width: 90%;
+	margin: 0 auto;
+}
+
 main.tiny {
+	max-width: 30em;
 	height: 100vh;
-	margin: 0;
 	padding: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	text-align: center;
+
+	h1 {
+		text-align: center;
+	}
 }
