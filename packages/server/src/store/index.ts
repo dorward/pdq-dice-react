@@ -10,7 +10,7 @@ const publicChannel = (user: User): User => {
 	return publicUser;
 };
 
-const module = {
+const thingy = {
 	addOrUpdateUser: async (user: Omit<User, 'characters'>): Promise<User> => {
 		const { userId, code } = user;
 		const oldUser: Partial<User> = store[userId] || {};
@@ -30,4 +30,4 @@ const module = {
 	},
 };
 
-export default module;
+export default thingy;

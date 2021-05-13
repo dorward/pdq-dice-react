@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import discord from './discord';
 
 import { User } from './types';
@@ -10,6 +11,11 @@ discord.on('ready', () => {
 
 const app = express();
 const port = 3000;
+app.use(
+	cors({
+		origin: 'http://localhost:1234', // We only need CORS in development as in production the app will be served from the same origin
+	})
+);
 
 const example: User = {
 	avatar: 'ASD',
