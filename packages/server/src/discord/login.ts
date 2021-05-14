@@ -7,7 +7,7 @@ type LoginArgs = {
 	channel: TextChannel;
 };
 
-const imageOptions: ImageURLOptions = { format: 'png', size: 1024 };
+const imageOptions: ImageURLOptions = { format: 'png', size: 128 };
 
 const login = ({ channel, member }: LoginArgs): string => {
 	console.log('Running login from discord');
