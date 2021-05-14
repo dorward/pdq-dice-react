@@ -14,7 +14,7 @@
 	],
 	"scripts": {
 		"start:dev": "nodemon -e ts --watch src --exec npm run start:dist:dev",
-		"start:dist:dev": "npm run build && node -r dotenv/config dist/server.js dotenv_config_path=../../shared/env/development.env",
+		"start:dist:dev": "npm run build && node -r dotenv/config dist/server.js dotenv_config_path=./.env.development",
 		"build": "npm run clean && npm run compile",
 		"clean": "rm -rf ./dist",
 		"compile": "tsc -p tsconfig.json"

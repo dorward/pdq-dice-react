@@ -3,7 +3,11 @@ import sqlite3 from 'sqlite3';
 import { DataResolver } from 'discord.js';
 const sqlite3init = sqlite3.verbose();
 
-const db = new sqlite3init.Database(process.env.DB_PATH);
+const DB_PATH = process.env.DB_PATH;
+if (!DB_PATH) {
+	throw new Error('DB_PATH is not set. Aborting');
+}
+const db = new sqlite3init.Database(DB_PATH);
 
 db.serialize(function () {
 	db.run(`CREATE TABLE IF NOT EXISTS user_data (

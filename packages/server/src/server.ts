@@ -13,7 +13,7 @@ const app = express();
 const port = 3000;
 app.use(
 	cors({
-		origin: 'http://localhost:1234', // We only need CORS in development as in production the app will be served from the same origin
+		origin: process.env.FRONTEND_URL.replace(/\/$/, ''),
 	})
 );
 

@@ -2,8 +2,8 @@ import discord, { TextChannel } from 'discord.js';
 import login from './login';
 
 const config = {
-	client_url: process.env.CLIENT_URL,
-	base_url: process.env.BASE_URL,
+	FRONTEND_URL: process.env.FRONTEND_URL,
+	API_URL: process.env.API_URL,
 	token: process.env.TOKEN,
 	db_path: process.env.DB_PATH,
 };
@@ -27,10 +27,9 @@ client.on('message', msg => {
 	if (!(channel instanceof TextChannel) || content !== 'login') {
 		return;
 	}
-	console.log({ content });
 	const code = login({ channel, member });
 	if (code) {
-		void msg.author.send(`Your login code is ${code} enter it at ${config.base_url}/login?code=${code}`);
+		void msg.author.send(`Login at ${config.FRONTEND_URL}login?code=${code}`);
 	}
 });
 
