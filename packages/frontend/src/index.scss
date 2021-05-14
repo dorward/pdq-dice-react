@@ -1,12 +1,35 @@
-main {
+#root {
 	width: 90%;
 	margin: 0 auto;
+
+	> header {
+		display: flex;
+		> h1 {
+			flex: 1 0 auto;
+		}
+		> .userMenu {
+			flex: 0 1 auto;
+			> button {
+				> span {
+					display: flex;
+					> span {
+						padding-right: 3px;
+					}
+				}
+			}
+		}
+	}
+}
+
+.tiny {
+	margin: 3px auto;
+	max-width: 30em;
 }
 
 main.tiny {
-	max-width: 30em;
 	height: 100vh;
 	padding: 0;
+	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

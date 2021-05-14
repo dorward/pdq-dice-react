@@ -3,7 +3,7 @@ import { Intent, Spinner, Callout, H1 } from '@blueprintjs/core';
 import axios from 'axios';
 import useQuery from '../hooks/use-query';
 import { useHistory } from 'react-router-dom';
-import { User } from '../types';
+import { PossibleUser } from '../types';
 
 /*
  *
@@ -13,8 +13,12 @@ import { User } from '../types';
  *
  */
 
-const Login = () => {
-	const [user, setUser] = useState<null | Error | User>(null);
+type Props = {
+	user: PossibleUser;
+	setUser: (user: PossibleUser) => void;
+};
+
+const Login = ({ user, setUser }: Props) => {
 	const query = useQuery();
 	const history = useHistory();
 	const code = query.get('code');
@@ -27,12 +31,14 @@ const Login = () => {
 		(async () => {
 			try {
 				const API_URL = process.env.API_URL;
-				console.log({ API_URL });
 				const url = `${API_URL}user/${code}`;
 				const response = await axios.get(url);
 				const user = response.data;
 				if (user) {
-					setUser(user);
+					await setUser(user);
+					setTimeout(() => {
+						history.push('/dashboard');
+					}, 2000);
 				} else {
 					setUser(
 						new Error(
@@ -64,6 +70,7 @@ const Login = () => {
 				<Callout intent={Intent.SUCCESS} title="Login successful">
 					<p>Welcome {user.nickname || user.userTag}</p>
 					<img src={user.avatar} height={128} width={128} />
+					<p>Transferring you to your dashboard…</p>
 				</Callout>
 			</main>
 		);

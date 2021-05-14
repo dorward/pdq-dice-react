@@ -1,7 +1,12 @@
 import React from 'react';
 import { H1, Button, Intent, Spinner } from '@blueprintjs/core';
+import { PossibleUser } from '../types';
 
-const Home = () => {
+type Props = {
+	user: PossibleUser;
+};
+
+const Home = ({ user }: Props) => {
 	return (
 		<main className="tiny">
 			<H1>PDQ Dice</H1>

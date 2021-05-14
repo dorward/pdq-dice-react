@@ -24,3 +24,5 @@ export type User = {
 export type Store = {
 	[discordId: string]: User;
 };
+
+export type PossibleUser = null | Error | User;
