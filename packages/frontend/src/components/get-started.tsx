@@ -4,15 +4,15 @@ import { Classes, Popover2 } from '@blueprintjs/popover2';
 import axios from 'axios';
 import useQuery from '../hooks/use-query';
 import { useHistory } from 'react-router-dom';
-import { Character } from '../types';
+import { Character, UserData } from '../types';
 import EditCharacter from './edit-character';
 
-// type Props = {
-// 	characters: Character[];
-// };
+type Props = {
+	userData: UserData;
+};
 
-const GetStarted = () => {
-	return <EditCharacter firstCharacter={true} />;
+const GetStarted = ({ userData }: Props) => {
+	return <EditCharacter firstCharacter={true} userData={userData} />;
 };
 
 export default GetStarted;

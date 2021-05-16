@@ -3,20 +3,22 @@ import { Intent, Spinner, Callout, H1 } from '@blueprintjs/core';
 import axios from 'axios';
 import useQuery from '../hooks/use-query';
 import { useHistory } from 'react-router-dom';
-import { PossibleUser, User } from '../types';
+import { PossibleUser, User, UserData } from '../types';
 import UserMenu from './user-menu';
 import Characters from './characters';
 import GetStarted from './get-started';
 
 type ErrorCheckingProps = {
 	user: PossibleUser;
+	userData: UserData;
 };
 
 type Props = {
 	user: User;
+	userData: UserData;
 };
 
-const Dashboard = ({ user }: Props) => {
+const Dashboard = ({ user, userData }: Props) => {
 	const { userTag, nickname, avatar, characters } = user;
 	return (
 		<>
@@ -24,12 +26,18 @@ const Dashboard = ({ user }: Props) => {
 				<H1>PDQ Dice</H1>
 				<UserMenu {...{ userTag, nickname, avatar }} />
 			</header>
-			<main>{characters.length ? <Characters characters={characters} /> : <GetStarted />}</main>
+			<main>
+				{characters.length ? (
+					<Characters userData={userData} characters={characters} />
+				) : (
+					<GetStarted userData={userData} />
+				)}
+			</main>
 		</>
 	);
 };
 
-const ErrorCheckingDashboard = ({ user }: ErrorCheckingProps) => {
+const ErrorCheckingDashboard = ({ user, userData }: ErrorCheckingProps) => {
 	if (user instanceof Error) {
 		return (
 			<main className="tiny">
@@ -42,7 +50,7 @@ const ErrorCheckingDashboard = ({ user }: ErrorCheckingProps) => {
 	}
 
 	if (user) {
-		return <Dashboard user={user} />;
+		return <Dashboard user={user} userData={userData} />;
 	}
 
 	return (

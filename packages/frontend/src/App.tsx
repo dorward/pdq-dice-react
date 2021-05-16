@@ -10,10 +10,10 @@ import { Button, Intent, Spinner } from '@blueprintjs/core';
 import Home from './components/home';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
-import { PossibleUser } from './types';
+import useUser from './data/use-user';
 
 const App: React.FC = () => {
-	const [user, setUser] = useState<PossibleUser>(null);
+	const { user, setUser, userData } = useUser();
 
 	return (
 		<Router>
@@ -24,7 +24,7 @@ const App: React.FC = () => {
 				<Login user={user} setUser={setUser} />
 			</Route>
 			<Route exact path="/dashboard">
-				<Dashboard user={user} />
+				<Dashboard user={user} userData={userData} />
 			</Route>
 		</Router>
 	);

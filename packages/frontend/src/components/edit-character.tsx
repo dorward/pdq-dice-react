@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Callout } from '@blueprintjs/core';
+import { Callout, Button } from '@blueprintjs/core';
 import axios from 'axios';
 import useQuery from '../hooks/use-query';
 import { useHistory } from 'react-router-dom';
-import { Character } from '../types';
+import { Character, UserData } from '../types';
+import Dropzone from 'react-dropzone';
 
 type Props = {
 	firstCharacter?: boolean;
 	character?: Character;
+	userData: UserData;
 };
 
-const EditCharacter = ({ character, firstCharacter }: Props) => {
+const EditCharacter = ({ userData, character, firstCharacter }: Props) => {
+	const onDrop = (acceptedFiles: File[]) => {
+		if (acceptedFiles.length === 1) {
+			const reader = new FileReader();
+			reader.onload = () => {
+				const { result } = reader;
+				userData.addCharacter.fromYAML(result as string);
+			};
+			reader.readAsText(acceptedFiles[0]);
+		}
+	};
 	if (!character) {
 		return (
 			<>
@@ -24,11 +36,25 @@ const EditCharacter = ({ character, firstCharacter }: Props) => {
 						</Callout>
 					</>
 				)}
-				<Callout title="Upload YAML" icon="cloud-upload" intent="none" className="tiny">
-					<p>You can upload an existing character file here.</p>
-				</Callout>
+
+				<Dropzone onDrop={onDrop}>
+					{({ getRootProps, getInputProps }) => (
+						<Callout title="Upload YAML" icon="cloud-upload" intent="none" className="tiny">
+							<div {...getRootProps()}>
+								<input {...getInputProps()} />
+								<p>
+									If you have a YML containing your character data then you can drag and drop it onto this box or{' '}
+									<Button intent="primary">Open File</Button>.
+								</p>
+							</div>
+						</Callout>
+					)}
+				</Dropzone>
+
 				<Callout title="New Character" icon="new-person" intent="none" className="tiny">
-					<p>Start with a blank character sheet.</p>
+					<p>
+						Start with a blank character sheet. <Button intent="primary">New Character</Button>
+					</p>
 				</Callout>
 			</>
 		);

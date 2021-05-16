@@ -1,5 +1,7 @@
+@import '@blueprintjs/core/lib/scss/variables';
+
 #root {
-	width: 90%;
+	max-width: 800px;
 	margin: 0 auto;
 
 	> header {
@@ -35,6 +37,26 @@ main.tiny {
 	justify-content: center;
 
 	h1 {
+		text-align: center;
+	}
+}
+
+table.attributes {
+	table-layout: fixed;
+	width: 100%;
+
+	tr:nth-child(even) {
+		background: $light-gray3;
+	}
+
+	th,
+	td {
+		padding: 4px;
+		vertical-align: middle;
+	}
+	td + td,
+	th + th {
+		width: 50px;
 		text-align: center;
 	}
 }

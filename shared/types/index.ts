@@ -1,5 +1,26 @@
+export type Sheet = {
+	sheet: Character;
+};
 export type Character = {
 	name: string;
+	player: string;
+	motivation: string;
+	origin: string;
+	heropoints: Heropoints;
+	qualities: Attribute[];
+	powers: Attribute[];
+};
+export type Heropoints = {
+	max: number;
+	current: number;
+};
+
+export type Value = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'GONE';
+
+export type Attribute = {
+	name: string;
+	value: Value;
+	notes?: string;
 };
 
 type Avatar = string | null;
@@ -26,3 +47,10 @@ export type Store = {
 };
 
 export type PossibleUser = null | Error | User;
+
+export type UserData = {
+	addCharacter: {
+		fromYAML: (yaml: string) => void;
+		fromBlank: () => void;
+	};
+};
