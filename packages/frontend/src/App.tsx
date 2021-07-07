@@ -7,26 +7,28 @@ import './index.scss';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Button, Intent, Spinner } from '@blueprintjs/core';
+import { Provider } from 'react-redux';
 import Home from './components/home';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
 import useUser from './data/use-user';
+import store from './data/redux-store';
 
 const App: React.FC = () => {
-	const { user, setUser, userData } = useUser();
-
 	return (
-		<Router>
-			<Route exact path="/">
-				<Home user={user} />
-			</Route>
-			<Route path="/login">
-				<Login user={user} setUser={setUser} />
-			</Route>
-			<Route exact path="/dashboard">
-				<Dashboard user={user} userData={userData} />
-			</Route>
-		</Router>
+		<Provider store={store}>
+			<Router>
+				<Route exact path="/">
+					<Home />
+				</Route>
+				<Route path="/login">
+					<Login />
+				</Route>
+				<Route exact path="/dashboard">
+					<Dashboard />
+				</Route>
+			</Router>
+		</Provider>
 	);
 };
 

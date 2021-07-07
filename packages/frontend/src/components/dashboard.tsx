@@ -7,37 +7,25 @@ import { PossibleUser, User, UserData } from '../types';
 import UserMenu from './user-menu';
 import Characters from './characters';
 import GetStarted from './get-started';
+import { set as setUser, selectUser } from '../data/user-slice';
+import { useSelector, useDispatch } from 'react-redux';
 
-type ErrorCheckingProps = {
-	user: PossibleUser;
-	userData: UserData;
-};
-
-type Props = {
-	user: User;
-	userData: UserData;
-};
-
-const Dashboard = ({ user, userData }: Props) => {
-	const { userTag, nickname, avatar, characters } = user;
+const Dashboard = () => {
+	const { userTag, nickname, avatar, characters } = useSelector(selectUser) as User;
 	return (
 		<>
 			<header>
 				<H1>PDQ Dice</H1>
 				<UserMenu {...{ userTag, nickname, avatar }} />
 			</header>
-			<main>
-				{characters.length ? (
-					<Characters userData={userData} characters={characters} />
-				) : (
-					<GetStarted userData={userData} />
-				)}
-			</main>
+			<main>{characters.length ? <Characters /> : <GetStarted />}</main>
 		</>
 	);
 };
 
-const ErrorCheckingDashboard = ({ user, userData }: ErrorCheckingProps) => {
+const ErrorCheckingDashboard = () => {
+	const user = useSelector(selectUser);
+
 	if (user instanceof Error) {
 		return (
 			<main className="tiny">
@@ -50,7 +38,7 @@ const ErrorCheckingDashboard = ({ user, userData }: ErrorCheckingProps) => {
 	}
 
 	if (user) {
-		return <Dashboard user={user} userData={userData} />;
+		return <Dashboard />;
 	}
 
 	return (

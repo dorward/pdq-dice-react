@@ -5,20 +5,31 @@ import useQuery from '../hooks/use-query';
 import { useHistory } from 'react-router-dom';
 import { Character, UserData } from '../types';
 import Dropzone from 'react-dropzone';
+import { addCharacterFromYAML } from '../data/user-slice';
+import { useSelector, useDispatch } from 'react-redux';
 
 type Props = {
 	firstCharacter?: boolean;
-	character?: Character;
-	userData: UserData;
+	characterId?: string;
 };
 
-const EditCharacter = ({ userData, character, firstCharacter }: Props) => {
+const EditCharacter = ({ characterId, firstCharacter }: Props) => {
+	const dispatch = useDispatch();
+
+	// TODO generate an ID for it here if we don't already have one
+	// Then get the character by ID.
+	// When adding it, generate a new tab with its ID and then trigger a switch to that ID with a useEffect
+	// Maybe useEffect sets the currently being edited character?
+	// Clicking another tab explicitly changes it out of edit mode?
+	console.log({ characterId });
+	const character: any = null; // TODO If there is an ID get this from Redux
+
 	const onDrop = (acceptedFiles: File[]) => {
 		if (acceptedFiles.length === 1) {
 			const reader = new FileReader();
 			reader.onload = () => {
 				const { result } = reader;
-				userData.addCharacter.fromYAML(result as string);
+				dispatch(addCharacterFromYAML(result as string));
 			};
 			reader.readAsText(acceptedFiles[0]);
 		}

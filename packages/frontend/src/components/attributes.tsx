@@ -24,12 +24,10 @@ const AttributeRow = ({ attribute }: { attribute: Attribute }) => {
 					<input type="checkbox" name={attribute.name} value="use" /> {attribute.name}
 				</label>
 			</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
+            {values.map(([name, score]) => {
+                const available = score > attribute.value
+            return <td></td>
+})}
 		</tr>
 	);
 };

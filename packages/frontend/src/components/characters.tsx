@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, Icon } from '@blueprintjs/core';
-import { Character, UserData } from '../types';
+import { User } from '../types';
 import EditCharacter from './edit-character';
 import CharacterSheet from './character-sheet';
+import { set as setUser, selectUser } from '../data/user-slice';
+import { useSelector, useDispatch } from 'react-redux';
 
-type Props = {
-	characters: Character[];
-	userData: UserData;
-};
+const Characters = () => {
+	const { characters } = useSelector(selectUser) as User;
 
-const Characters = ({ characters, userData }: Props) => {
 	return (
 		<>
 			<Tabs>
@@ -20,7 +19,7 @@ const Characters = ({ characters, userData }: Props) => {
 						panel={<CharacterSheet character={character} />}
 					/>
 				))}
-				<Tab id="new-character-page" panel={<EditCharacter userData={userData} />}>
+				<Tab id="new-character-page" panel={<EditCharacter />}>
 					<Icon icon="new-person" />
 				</Tab>
 			</Tabs>

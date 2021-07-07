@@ -7,12 +7,8 @@ import { useHistory } from 'react-router-dom';
 import { Character, UserData } from '../types';
 import EditCharacter from './edit-character';
 
-type Props = {
-	userData: UserData;
-};
-
-const GetStarted = ({ userData }: Props) => {
-	return <EditCharacter firstCharacter={true} userData={userData} />;
+const GetStarted = () => {
+	return <EditCharacter firstCharacter />;
 };
 
 export default GetStarted;
