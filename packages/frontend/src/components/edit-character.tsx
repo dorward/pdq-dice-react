@@ -54,9 +54,10 @@ const EditCharacter = ({ characterId, firstCharacter }: Props) => {
 							<div {...getRootProps()}>
 								<input {...getInputProps()} />
 								<p>
-									If you have a YML containing your character data then you can drag and drop it onto this box or{' '}
-									<Button intent="primary">Open File</Button>.
+									If you have a YML containing your character data then you can drag and drop it onto this box or…
+									
 								</p>
+								<Button className="center" intent="primary">Open File</Button>
 							</div>
 						</Callout>
 					)}
@@ -64,8 +65,9 @@ const EditCharacter = ({ characterId, firstCharacter }: Props) => {
 
 				<Callout title="New Character" icon="new-person" intent="none" className="tiny">
 					<p>
-						Start with a blank character sheet. <Button intent="primary">New Character</Button>
+						Start with a blank character sheet. 
 					</p>
+					<Button className="center" intent="primary">New Character</Button>
 				</Callout>
 			</>
 		);
