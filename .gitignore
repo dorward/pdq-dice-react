@@ -6,3 +6,4 @@ node_modules
 /lerna-debug.log
 .cache
 /packages/frontend/.parcel-cache
+/test-character.json
