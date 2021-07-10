@@ -33,13 +33,18 @@
 	margin: auto;
 }
 
-main.tiny {
+.v-center {
 	height: 100vh;
 	padding: 0;
-	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+main.tiny {
+	border: solid $pt-divider-black 1px;
+	margin: 0 auto;
+	padding: 1ex;
 
 	h1 {
 		text-align: center;
@@ -63,5 +68,33 @@ table.attributes {
 	th + th {
 		width: 50px;
 		text-align: center;
+	}
+}
+svg.goo {
+	margin: auto;
+	display: block;
+
+	* {
+		transform-origin: 50%;
+	}
+
+	g {
+		animation: left 8s linear infinite;
+	}
+
+	circle:first-child {
+		animation: right 2s linear infinite;
+	}
+
+	@keyframes left {
+		100% {
+			transform: rotate(-360deg);
+		}
+	}
+
+	@keyframes right {
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 }

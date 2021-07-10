@@ -59,23 +59,27 @@ const Login = () => {
 
 	if (user) {
 		return (
-			<main className="tiny">
-				<H1>PDQ Dice</H1>
-				<Callout intent={Intent.SUCCESS} title="Login successful">
-					<p>Welcome {user.nickname || user.userTag}</p>
-					<img src={user.avatar} height={128} width={128} />
-					<p>Transferring you to your dashboard…</p>
-				</Callout>
-			</main>
+			<div className="v-center">
+				<main className="tiny">
+					<H1>PDQ Dice</H1>
+					<Callout intent={Intent.SUCCESS} title="Login successful">
+						<p>Welcome {user.nickname || user.userTag}</p>
+						<img src={user.avatar} height={128} width={128} />
+						<p>Transferring you to your dashboard…</p>
+					</Callout>
+				</main>
+			</div>
 		);
 	}
 
 	return (
-		<main className="tiny">
-			<H1>PDQ Dice</H1>
-			<p>Trying to log you in</p>
-			<Spinner intent={Intent.PRIMARY} />
-		</main>
+		<div className="v-center">
+			<main className="tiny">
+				<H1>PDQ Dice</H1>
+				<p>Trying to log you in</p>
+				<Spinner intent={Intent.PRIMARY} />
+			</main>{' '}
+		</div>
 	);
 };
 

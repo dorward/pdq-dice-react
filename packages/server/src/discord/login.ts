@@ -10,7 +10,6 @@ type LoginArgs = {
 const imageOptions: ImageURLOptions = { format: 'png', size: 128 };
 
 const login = ({ channel, member }: LoginArgs): string => {
-	console.log('Running login from discord');
 	if (!channel) return;
 	if (!member) return;
 	const userId = member.user.id;
