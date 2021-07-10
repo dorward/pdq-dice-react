@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Intent, Spinner, Callout, H1 } from '@blueprintjs/core';
-import axios from 'axios';
-import useQuery from '../hooks/use-query';
-import { useHistory } from 'react-router-dom';
-import { PossibleUser, User, UserData } from '../types';
+import React, {  } from 'react';
+import { Intent, Callout, H1 } from '@blueprintjs/core';
+import { User } from '../types';
 import UserMenu from './user-menu';
 import Characters from './characters';
 import GetStarted from './get-started';
-import { set as setUser, selectUser } from '../data/user-slice';
-import { useSelector, useDispatch } from 'react-redux';
+import { selectUser } from '../data/user-slice';
+import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 const Dashboard = () => {

@@ -1,4 +1,4 @@
-import { Store, User, Character } from '../types';
+import { User, Character } from '../types';
 import { addOrUpdateUser, getUserById, getUserByCode } from './db';
 
 const characters: Character[] = [];
@@ -8,7 +8,7 @@ const thingy = {
 		const { userId, code } = user;
 		const oldUser: Partial<User> = (await getUserById(userId)) || {};
 		const newUser = { characters: [...characters], ...oldUser, ...user };
-		const result = await addOrUpdateUser(userId, code, newUser);
+		await addOrUpdateUser(userId, code, newUser);
 		return newUser;
 	},
 	getUser: async (code: string): Promise<User | undefined> => {

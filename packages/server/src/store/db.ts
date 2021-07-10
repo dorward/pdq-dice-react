@@ -1,6 +1,5 @@
 import { User } from '../types';
 import sqlite3 from 'sqlite3';
-import { DataResolver } from 'discord.js';
 const sqlite3init = sqlite3.verbose();
 
 const DB_PATH = process.env.DB_PATH;
@@ -78,6 +77,9 @@ export const addOrUpdateUser = (userId: string, code: string, data: User) => {
 				else res(this);
 			};
 			if (user) {
+				if (user.code !== code) { 
+					throw new Error("Attempt to update user with improper code");
+				}
 				db.run(
 					'UPDATE user_data SET code=?, data=json(?) WHERE userId=?',
 					[code, JSON.stringify(data), userId],

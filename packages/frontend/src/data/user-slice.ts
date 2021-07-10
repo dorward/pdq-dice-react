@@ -1,7 +1,8 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
-import { Sheet, Character, PossibleUser, User } from '../types';
+import { Sheet, PossibleUser, User } from '../types';
 import yaml from 'js-yaml';
+import saveToServer from '../api/save-to-server';
 
 type UserState = {
 	user: PossibleUser;
@@ -19,10 +20,11 @@ const userSlice = createSlice({
 	initialState: initialUserState,
 	reducers: {
 		set: (state, action: PayloadAction<User | Error>) => {
-			console.log(action);
+			console.log("reducers: set", action);
 			state.user = action.payload;
 		},
 		addCharacterFromYAML: (state, action: PayloadAction<string>) => {
+			console.log("reducers: addCharacterFromYAML", action);
 			const parsed = yaml.load(action.payload) as Sheet | null;
 			if (!parsed)
 				throw new Error('The YAML file could not be parsed. Something is probably wrong with the format of it.');
@@ -30,6 +32,8 @@ const userSlice = createSlice({
 			const user = guardUser(state.user);
 			const newUser: User = { ...user, characters: [...user.characters, character] };
 			state.user = newUser;
+			console.log("user state:", state.user);
+			saveToServer(newUser);
 		},
 		unset: state => {
 			state = null;

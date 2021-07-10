@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Callout, Button } from '@blueprintjs/core';
-import axios from 'axios';
-import useQuery from '../hooks/use-query';
-import { useHistory } from 'react-router-dom';
-import { Character, UserData } from '../types';
 import Dropzone from 'react-dropzone';
 import { addCharacterFromYAML } from '../data/user-slice';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 type Props = {
 	firstCharacter?: boolean;

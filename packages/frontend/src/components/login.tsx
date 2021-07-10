@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Intent, Spinner, Callout, H1 } from '@blueprintjs/core';
 import axios from 'axios';
 import useQuery from '../hooks/use-query';
 import { useHistory } from 'react-router-dom';
-import { PossibleUser } from '../types';
 import { set as setUser, selectUser } from '../data/user-slice';
 import { useSelector, useDispatch } from 'react-redux';
 

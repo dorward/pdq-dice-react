@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Sheet, Character, PossibleUser, User } from '../types';
+import { useState } from 'react';
+import { Sheet, PossibleUser, User } from '../types';
 import yaml from 'js-yaml';
 
 const useUser = () => {
@@ -8,6 +8,7 @@ const useUser = () => {
 	const getUser = (): User => {
 		if (!user) throw new Error('No user');
 		if (user instanceof Error) throw user;
+		console.log('getUser', user);
 		return user;
 	};
 
