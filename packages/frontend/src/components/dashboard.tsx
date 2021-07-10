@@ -9,6 +9,7 @@ import Characters from './characters';
 import GetStarted from './get-started';
 import { set as setUser, selectUser } from '../data/user-slice';
 import { useSelector, useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const Dashboard = () => {
 	const { userTag, nickname, avatar, characters } = useSelector(selectUser) as User;
@@ -42,9 +43,7 @@ const ErrorCheckingDashboard = () => {
 	}
 
 	return (
-		<main className="tiny">
-			<p>This should redirect to the homepage</p>
-		</main>
+		<Redirect to="/" />
 	);
 };
 
