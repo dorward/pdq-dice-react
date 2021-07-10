@@ -5,6 +5,7 @@
         "Popover",
         "VARCHAR",
         "blueprintjs",
+        "consts",
         "dropzone",
         "heropoints",
         "reduxjs",

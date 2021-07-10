@@ -1,35 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Attribute, UserData } from '../types';
 import { H2, H3, HTMLTable } from '@blueprintjs/core';
+import AttributeRow from './attribute-row';
 
 type Props = {
 	attributes: Attribute[];
 	title: string;
-};
-
-const values = [
-	['MSTR', 6],
-	['EXP', 4],
-	['GD', 2],
-	['AVG', 0],
-	['PR', -2],
-	['GONE', -Infinity],
-] as const;
-
-const AttributeRow = ({ attribute }: { attribute: Attribute }) => {
-	return (
-		<tr>
-			<td>
-				<label>
-					<input type="checkbox" name={attribute.name} value="use" /> {attribute.name}
-				</label>
-			</td>
-            {values.map(([name, score]) => {
-                const available = score > attribute.value
-            return <td></td>
-})}
-		</tr>
-	);
 };
 
 const Attributes = ({ attributes, title }: Props) => {
