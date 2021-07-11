@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Tab, Tabs, Icon } from '@blueprintjs/core';
 import { User } from '../types';
 import EditCharacter from './edit-character';
 import CharacterSheet from './character-sheet';
-import { set as setUser, selectUser } from '../data/user-slice';
-import { useSelector, useDispatch } from 'react-redux';
+import { selectUser } from '../data/user-slice';
+import { useSelector } from 'react-redux';
 
 const Characters = () => {
 	const { characters } = useSelector(selectUser) as User;
