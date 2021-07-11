@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Attribute, UserData } from '../types';
-import { H2, H3, HTMLTable } from '@blueprintjs/core';
+import React from 'react';
+import { Attribute } from '../types';
+import { HTMLTable } from '@blueprintjs/core';
 import AttributeRow from './attribute-row';
 
 type Props = {
@@ -49,7 +49,7 @@ const Attributes = ({ attributes, title }: Props) => {
 				</thead>
 				<tbody>
 					{attributes.map(attribute => (
-						<AttributeRow attribute={attribute} />
+						<AttributeRow key={attribute.name} attribute={attribute} />
 					))}
 				</tbody>
 			</HTMLTable>
