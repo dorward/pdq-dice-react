@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React from 'react';
 import { Intent, Callout, H1 } from '@blueprintjs/core';
 import { User } from '../types';
 import UserMenu from './user-menu';
@@ -7,9 +7,11 @@ import GetStarted from './get-started';
 import { selectUser } from '../data/user-slice';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import Results from './results';
 
 const Dashboard = () => {
 	const { userTag, nickname, avatar, characters } = useSelector(selectUser) as User;
+
 	return (
 		<>
 			<header>
@@ -17,6 +19,7 @@ const Dashboard = () => {
 				<UserMenu {...{ userTag, nickname, avatar }} />
 			</header>
 			<main>{characters.length ? <Characters /> : <GetStarted />}</main>
+			<Results />
 		</>
 	);
 };
@@ -39,9 +42,7 @@ const ErrorCheckingDashboard = () => {
 		return <Dashboard />;
 	}
 
-	return (
-		<Redirect to="/" />
-	);
+	return <Redirect to="/" />;
 };
 
 export default ErrorCheckingDashboard;

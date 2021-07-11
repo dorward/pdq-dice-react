@@ -6,6 +6,7 @@
         "blueprintjs",
         "consts",
         "heropoints",
+        "popover",
         "reduxjs",
         "uuidv"
     ]

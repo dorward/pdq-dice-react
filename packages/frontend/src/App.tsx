@@ -4,14 +4,12 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '@blueprintjs/popover2/lib/css/blueprint-popover2.css';
 import './index.scss';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Button, Intent, Spinner } from '@blueprintjs/core';
 import { Provider } from 'react-redux';
 import Home from './components/home';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
-import useUser from './data/use-user';
 import store from './data/redux-store';
 
 const App: React.FC = () => {

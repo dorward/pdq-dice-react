@@ -23,6 +23,10 @@
 	}
 }
 
+.results {
+	width: 600px;
+}
+
 .tiny {
 	margin: 3px auto;
 	max-width: 30em;
@@ -33,12 +37,18 @@
 	margin: auto;
 }
 
+.h-center {
+	margin: auto;
+}
+
 .v-center {
 	height: 100vh;
 	padding: 0;
+	margin: auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	width: 100%;
 }
 
 main.tiny {
