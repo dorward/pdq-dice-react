@@ -12,7 +12,7 @@ const CharacterSheet = ({ character }: Props) => {
 		<>
 			<div className="character-sheet">
 				<H2>{character.name}</H2>
-				<Attributes title="Standard Qualities" attributes={character.qualities} character={character} />
+				<Attributes title="Standard Qualities" attributes={character.qualities} character={character} isWoundable />
 				<Attributes title="Powers" attributes={character.powers} character={character} />
 			</div>
 		</>

@@ -7,9 +7,10 @@ type Props = {
 	attributes: Attribute[];
 	title: string;
 	character: Character;
+	isWoundable?: boolean;
 };
 
-const Attributes = ({ attributes, title, character }: Props) => {
+const Attributes = ({ attributes, title, character, isWoundable = false }: Props) => {
 	return (
 		<>
 			<HTMLTable className="attributes">
@@ -50,7 +51,7 @@ const Attributes = ({ attributes, title, character }: Props) => {
 				</thead>
 				<tbody>
 					{attributes.map(attribute => (
-						<AttributeRow key={attribute.name} attribute={attribute} character={character} />
+						<AttributeRow key={attribute.name} {...{ attribute, character, isWoundable }} />
 					))}
 				</tbody>
 			</HTMLTable>
