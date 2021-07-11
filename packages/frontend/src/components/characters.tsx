@@ -6,6 +6,9 @@ import CharacterSheet from './character-sheet';
 import { selectUser } from '../data/user-slice';
 import { useSelector } from 'react-redux';
 
+// TODO: Make the tabs controlled after giving each character a unique id. Use
+// that throughout when we need to determine which character is active.
+
 const Characters = () => {
 	const { characters } = useSelector(selectUser) as User;
 
@@ -14,9 +17,9 @@ const Characters = () => {
 			<Tabs>
 				{characters.map(character => (
 					<Tab
-						id={character.name.replace(/\s/g, '')}
+						id={character.id}
 						title={character.name}
-						key={character.name}
+						key={character.id}
 						panel={<CharacterSheet character={character} />}
 					/>
 				))}

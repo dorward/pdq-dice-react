@@ -3,6 +3,7 @@ export type Sheet = {
 };
 export type Character = {
 	name: string;
+	id: string;
 	player: string;
 	motivation: string;
 	origin: string;
@@ -19,8 +20,10 @@ export type Value = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'GONE';
 
 export type Attribute = {
 	name: string;
+	id: string;
 	value: Value;
 	notes?: string;
+	wounds: number;
 };
 
 type Avatar = string | null;

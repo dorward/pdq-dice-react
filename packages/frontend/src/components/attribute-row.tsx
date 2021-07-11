@@ -1,5 +1,5 @@
 import React from 'react';
-import { Attribute } from '../types';
+import { Attribute, Character } from '../types';
 import { Icon } from '@blueprintjs/core';
 import { attributeValues } from '../consts';
 import { applyWound } from '../data/user-slice';
@@ -7,9 +7,10 @@ import { useDispatch } from 'react-redux';
 
 export type RowProps = {
 	attribute: Attribute;
+	character: Character;
 };
 
-const AttributeRow = ({ attribute }: RowProps) => {
+const AttributeRow = ({ attribute, character }: RowProps) => {
 	const dispatch = useDispatch();
 	const attributeValue = attributeValues.filter(value => value[0] === attribute.value)[0][1];
 	return (
@@ -31,7 +32,12 @@ const AttributeRow = ({ attribute }: RowProps) => {
 							color="green"
 							onClick={() => {
 								console.log('Apply wound');
-								dispatch(applyWound(attribute.name));
+								dispatch(
+									applyWound({
+										characterId: character.id,
+										attributeId: attribute.id,
+									})
+								);
 							}}
 						/>
 					)}

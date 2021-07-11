@@ -1,17 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
-import { Sheet, PossibleUser, User } from '../types';
+import { Sheet, User } from '../types';
 import yaml from 'js-yaml';
 import saveToServer from '../api/save-to-server';
+import cleanUser from './clean-user';
 
 type UserState = {
-	user: PossibleUser;
-};
-
-const guardUser = (user: PossibleUser): User => {
-	if (!user) throw new Error('No user');
-	if (user instanceof Error) throw user;
-	return user;
+	user: User;
 };
 
 const initialUserState: UserState = { user: null };
@@ -21,7 +16,10 @@ const userSlice = createSlice({
 	reducers: {
 		set: (state, action: PayloadAction<User | Error>) => {
 			console.log('reducers: set', action);
-			state.user = action.payload;
+			if (action.payload instanceof Error) throw action.payload;
+			const { user, cleaned } = cleanUser(action.payload);
+			if (cleaned) saveToServer(user as User);
+			state.user = user;
 		},
 		addCharacterFromYAML: (state, action: PayloadAction<string>) => {
 			console.log('reducers: addCharacterFromYAML', action);
@@ -29,15 +27,22 @@ const userSlice = createSlice({
 			if (!parsed)
 				throw new Error('The YAML file could not be parsed. Something is probably wrong with the format of it.');
 			const character = parsed.sheet;
-			const user = guardUser(state.user);
+			const user = state.user;
 			const newUser: User = { ...user, characters: [...user.characters, character] };
 			state.user = newUser;
 			console.log('user state:', state.user);
 			saveToServer(newUser);
 		},
-		applyWound: (state, action: PayloadAction<string>) => {
+		applyWound: (state, action: PayloadAction<any>) => {
 			console.log('reducers: applyWound', action);
-			state.user = { ...state.user };
+			if (action.payload instanceof Error) throw action.payload;
+			const { characterId, attributeId } = action.payload;
+			const { user } = state;
+			const character = user.characters.find(c => c.id === characterId);
+			const attribute = character.qualities.find(q => q.id === attributeId);
+			console.log({ character, attribute });
+			attribute.wounds++;
+			saveToServer(JSON.parse(JSON.stringify(user)));
 		},
 		unset: state => {
 			state = null;

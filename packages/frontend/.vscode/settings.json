@@ -4,6 +4,8 @@
         "MSTR",
         "blueprintjs",
         "consts",
-        "reduxjs"
+        "heropoints",
+        "reduxjs",
+        "uuidv"
     ]
 }
