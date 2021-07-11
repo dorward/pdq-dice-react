@@ -34,11 +34,11 @@ app.get('/api/user/:code', async (req, res) => {
 });
 
 app.post('/api/user/:id/:code', async (req, res) => {
-	console.log("Trying to update user");
+	console.log('Trying to update user');
 	try {
 		await addOrUpdateUser(req.params.id, req.params.code, req.body);
 	} catch (e) {
-		if (e.message === "Attempt to update user with improper code") {
+		if (e.message === 'Attempt to update user with improper code') {
 			return res.sendStatus(401);
 		}
 		console.log(e);
@@ -47,7 +47,6 @@ app.post('/api/user/:id/:code', async (req, res) => {
 });
 
 app.get('/api/allUsers', async (req, res) => {
-	// const channel = bot.channels.get("ID");
 	const users = await getAllUsers();
 	res.json({ users });
 });
