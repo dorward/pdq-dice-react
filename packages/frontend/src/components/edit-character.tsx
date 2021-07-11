@@ -17,7 +17,6 @@ const EditCharacter = ({ characterId, firstCharacter }: Props) => {
 	// When adding it, generate a new tab with its ID and then trigger a switch to that ID with a useEffect
 	// Maybe useEffect sets the currently being edited character?
 	// Clicking another tab explicitly changes it out of edit mode?
-	console.log({ characterId });
 	const character: any = null; // TODO If there is an ID get this from Redux
 
 	const onDrop = (acceptedFiles: File[]) => {
@@ -49,21 +48,20 @@ const EditCharacter = ({ characterId, firstCharacter }: Props) => {
 						<Callout title="Upload YAML" icon="cloud-upload" intent="none" className="tiny">
 							<div {...getRootProps()}>
 								<input {...getInputProps()} />
-								<p>
-									If you have a YML containing your character data then you can drag and drop it onto this box or…
-									
-								</p>
-								<Button className="center" intent="primary">Open File</Button>
+								<p>If you have a YML containing your character data then you can drag and drop it onto this box or…</p>
+								<Button className="center" intent="primary">
+									Open File
+								</Button>
 							</div>
 						</Callout>
 					)}
 				</Dropzone>
 
 				<Callout title="New Character" icon="new-person" intent="none" className="tiny">
-					<p>
-						Start with a blank character sheet. 
-					</p>
-					<Button className="center" intent="primary">New Character</Button>
+					<p>Start with a blank character sheet.</p>
+					<Button className="center" intent="primary">
+						New Character
+					</Button>
 				</Callout>
 			</>
 		);

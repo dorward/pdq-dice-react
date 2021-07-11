@@ -77,8 +77,8 @@ export const addOrUpdateUser = (userId: string, code: string, data: User) => {
 				else res(this);
 			};
 			if (user) {
-				if (user.code !== code) { 
-					throw new Error("Attempt to update user with improper code");
+				if (user.code !== code) {
+					throw new Error('Attempt to update user with improper code');
 				}
 				db.run(
 					'UPDATE user_data SET code=?, data=json(?) WHERE userId=?',

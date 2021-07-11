@@ -25,7 +25,6 @@ const Login = () => {
 					const response = await axios.get(url);
 					const user = response.data;
 					if (user) {
-						console.log('Calling setUser', setUser);
 						dispatch(setUser(user));
 					} else {
 						setUser(

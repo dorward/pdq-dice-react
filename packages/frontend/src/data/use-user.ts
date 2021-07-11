@@ -8,7 +8,6 @@ const useUser = () => {
 	const getUser = (): User => {
 		if (!user) throw new Error('No user');
 		if (user instanceof Error) throw user;
-		console.log('getUser', user);
 		return user;
 	};
 
