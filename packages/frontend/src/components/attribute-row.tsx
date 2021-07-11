@@ -2,39 +2,40 @@ import React from 'react';
 import { Attribute } from '../types';
 import { Icon } from '@blueprintjs/core';
 import { attributeValues } from '../consts';
+import { applyWound } from '../data/user-slice';
 
 export type RowProps = {
 	attribute: Attribute;
 };
 
 const AttributeRow = ({ attribute }: RowProps) => {
-	console.log({ attribute });
 	const attributeValue = attributeValues.filter(value => value[0] === attribute.value)[0][1];
-
 	return (
-		<tr>
-			<td>
+		<tr key={attribute.name}>
+			<td key="label">
 				<label>
 					<input type="checkbox" name={attribute.name} value="use" /> {attribute.name}
 				</label>
 			</td>
-			{attributeValues.map(([_name, score]) => {
-				if (score < attributeValue) {
-					return (
-						<td>
-							<Icon icon="tick-circle" />
-						</td>
-					);
-				}
-				if (score === attributeValue) {
-					return (
-						<td>
-							<Icon icon="tick-circle" color="green" />
-						</td>
-					);
-				}
-				return <td><Icon icon="ban-circle" color="#BFCCD6" /></td>;
-			})}
+			{attributeValues.map(([name, score]) => (
+				<td key={name}>
+					{score < attributeValue && <Icon icon="tick-circle" />}
+					{score === attributeValue && (
+						<Icon
+							tabIndex={0}
+							role="button"
+							aria-label={`Apply wound to ${attribute.name}`}
+							icon="tick-circle"
+							color="green"
+							onClick={() => {
+								console.log('Apply wound');
+								applyWound(attribute.name);
+							}}
+						/>
+					)}
+					{score > attributeValue && <Icon icon="ban-circle" color="#BFCCD6" />}
+				</td>
+			))}
 		</tr>
 	);
 };

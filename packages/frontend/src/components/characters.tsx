@@ -16,6 +16,7 @@ const Characters = () => {
 					<Tab
 						id={character.name.replace(/\s/g, '')}
 						title={character.name}
+						key={character.name}
 						panel={<CharacterSheet character={character} />}
 					/>
 				))}
