@@ -4,6 +4,7 @@ import axios from 'axios';
 import useQuery from '../hooks/use-query';
 import { useHistory } from 'react-router-dom';
 import { set as setUser, selectUser } from '../data/user-slice';
+import { setUserCreds } from '../data/whoami-slice';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Login = () => {
@@ -26,6 +27,7 @@ const Login = () => {
 					const user = response.data;
 					if (user) {
 						dispatch(setUser(user));
+						dispatch(setUserCreds({ userId: user.userId, code: user.code }));
 					} else {
 						setUser(
 							new Error(

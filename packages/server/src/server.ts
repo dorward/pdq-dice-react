@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import discord from './discord';
-
+import d6 from './util/d6';
 import { getAllUsers, getUserByCode, addOrUpdateUser } from './store/db';
 
 discord.on('ready', () => {
@@ -49,6 +49,16 @@ app.post('/api/user/:id/:code', async (req, res) => {
 app.get('/api/allUsers', async (req, res) => {
 	const users = await getAllUsers();
 	res.json({ users });
+});
+
+// TODO say what character this is for too!
+app.post('/api/roll/:id/:code/d6', async (req, res) => {
+	const user = await getUserByCode(req.params.code);
+	if (!user || user.userId !== req.params.id) {
+		return res.sendStatus(401);
+	}
+	const result = d6();
+	res.json({ result });
 });
 
 app.listen(port, () => {

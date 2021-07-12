@@ -18,19 +18,17 @@ const Results = () => {
 			}}
 			isOpen={!!(results.loading || results.roll)}>
 			<div className="v-center">
-				<div className="h-center results">
-					<Card interactive={true} elevation={1}>
-						{results.loading && <Loading />}
-						{results.roll && (
-							<>
-								<p>{results.roll}</p>
-								<Button onClick={() => dispatch(markClear())} intent="primary">
-									OK
-								</Button>
-							</>
-						)}
-					</Card>
-				</div>
+				<Card interactive={true} elevation={1} className="h-center results">
+					{results.loading && <Loading />}
+					{results.roll && (
+						<>
+							<p>{results.roll}</p>
+							<Button onClick={() => dispatch(markClear())} intent="primary">
+								OK
+							</Button>
+						</>
+					)}
+				</Card>
 			</div>
 		</Overlay>
 	);

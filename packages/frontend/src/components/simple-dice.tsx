@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup } from '@blueprintjs/core';
 import { useDispatch } from 'react-redux';
 import { markLoading, setResult } from '../data/results-slice';
+import { d6 } from '../api/roll';
 
 const SimpleDice = () => {
 	const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const SimpleDice = () => {
 				icon="random"
 				onClick={() => {
 					dispatch(markLoading());
-					setTimeout(() => dispatch(setResult(1)), 1000);
+					d6();
 				}}>
 				d6
 			</Button>
