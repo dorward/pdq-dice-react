@@ -1,6 +1,4 @@
 {
-    "cSpell.words": [
-        "VARCHAR",
-        "uuidv"
-    ]
+	"cSpell.words": ["VARCHAR", "uuidv"],
+	"workbench.colorTheme": "Kimbie Dark"
 }

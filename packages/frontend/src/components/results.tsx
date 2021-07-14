@@ -22,7 +22,7 @@ const Results = () => {
 					{results.loading && <Loading />}
 					{results.roll && (
 						<>
-							<p>{results.roll}</p>
+							<pre>{JSON.stringify(results, undefined, 2)}</pre>
 							<Button onClick={() => dispatch(markClear())} intent="primary">
 								OK
 							</Button>

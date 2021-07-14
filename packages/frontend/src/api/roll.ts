@@ -1,6 +1,6 @@
 import store from '../data/redux-store';
 import axios from 'axios';
-import { setResult } from '../data/results-slice';
+import { setResult, markLoading } from '../data/results-slice';
 
 const getBase = () => {
 	const API_URL = process.env.API_URL;
@@ -9,10 +9,19 @@ const getBase = () => {
 	return url;
 };
 
-export const d6 = async () => {
-	const url = `${getBase()}d6`;
-	const response = await axios.post(url);
+type D6Params = {
+	high?: boolean;
+};
+
+export const d6 = async ({ high }: D6Params) => {
+	store.dispatch(markLoading());
+	const url = getBase();
+	const data = {
+		dice: '1d6',
+		high,
+	};
+	const response = await axios.post(url, data);
 	const result = response.data.result;
-	store.dispatch(setResult(result));
+	store.dispatch(setResult(response.data));
 	return result;
 };

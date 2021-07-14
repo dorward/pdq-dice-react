@@ -51,14 +51,27 @@ app.get('/api/allUsers', async (req, res) => {
 	res.json({ users });
 });
 
+const supportedDice = ['1d6', '2d6'];
+
 // TODO say what character this is for too!
-app.post('/api/roll/:id/:code/d6', async (req, res) => {
+app.post('/api/roll/:id/:code', async (req, res) => {
 	const user = await getUserByCode(req.params.code);
 	if (!user || user.userId !== req.params.id) {
 		return res.sendStatus(401);
 	}
-	const result = d6();
-	res.json({ result });
+
+	const { dice, high } = req.body;
+	console.log(req.body);
+	if (!supportedDice.includes(dice)) return res.sendStatus(400);
+
+	const result = dice === '1d6' ? [d6()] : [d6(), d6()];
+	let success;
+	if (typeof high !== 'undefined') {
+		success = false;
+		if (high && result[0] >= 4) success = true;
+		if (!high && result[0] <= 3) success = true;
+	}
+	res.json({ result, success });
 });
 
 app.listen(port, () => {

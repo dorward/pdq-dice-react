@@ -36,7 +36,6 @@ export const getUserById = (userId: User['userId']): Promise<User | undefined> =
 };
 
 export const getUserByCode = (code: User['code']): Promise<User | undefined> => {
-	console.log('getUserByCode');
 	return new Promise((res, rej) => {
 		db.serialize(function () {
 			db.get('SELECT data FROM user_data WHERE code=?', [code], (err, row) => {
@@ -46,7 +45,6 @@ export const getUserByCode = (code: User['code']): Promise<User | undefined> => 
 				} else if (!row) {
 					res(undefined);
 				} else {
-					console.log({ row });
 					res(JSON.parse(row.data));
 				}
 			});
