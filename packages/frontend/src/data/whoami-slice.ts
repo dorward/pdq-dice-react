@@ -30,4 +30,7 @@ const WhoamiSlice = createSlice({
 
 export const { setUserCreds, setCharacterId } = WhoamiSlice.actions;
 export const selectWhoami = (state: RootState) => state.whoami;
+export const selectCharacterId = (state: RootState) =>
+	state.whoami.characterId || state.user?.user?.characters?.[0]?.id;
+
 export default WhoamiSlice.reducer;

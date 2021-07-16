@@ -55,6 +55,8 @@ const supportedDice = ['1d6', '2d6'];
 
 // TODO say what character this is for too!
 app.post('/api/roll/:id/:code', async (req, res) => {
+	const characterId = req.body;
+	console.log('request body', characterId);
 	const user = await getUserByCode(req.params.code);
 	if (!user || user.userId !== req.params.id) {
 		return res.sendStatus(401);

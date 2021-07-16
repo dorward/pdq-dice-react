@@ -1,12 +1,15 @@
 import store from '../data/redux-store';
 import axios from 'axios';
 import { setResult, markLoading } from '../data/results-slice';
+import { selectWhoami, selectCharacterId } from '../data/whoami-slice';
 
 const getBase = () => {
 	const API_URL = process.env.API_URL;
-	const { whoami } = store.getState();
+	const whoami = selectWhoami(store.getState());
+	const characterId = selectCharacterId(store.getState());
 	const url = `${API_URL}roll/${whoami.userId}/${whoami.code}/`;
-	return url;
+	const auth = { characterId };
+	return { auth, url };
 };
 
 type D6Params = {
@@ -15,8 +18,9 @@ type D6Params = {
 
 export const d6 = async ({ high }: D6Params) => {
 	store.dispatch(markLoading());
-	const url = getBase();
+	const { auth, url } = getBase();
 	const data = {
+		...auth,
 		dice: '1d6',
 		high,
 	};
