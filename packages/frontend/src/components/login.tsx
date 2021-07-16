@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Intent, Spinner, Callout, H1 } from '@blueprintjs/core';
+import { Intent, Callout, H1 } from '@blueprintjs/core';
 import axios from 'axios';
 import useQuery from '../hooks/use-query';
 import { useHistory } from 'react-router-dom';
 import { set as setUser, selectUser } from '../data/user-slice';
 import { setUserCreds } from '../data/whoami-slice';
 import { useSelector, useDispatch } from 'react-redux';
+import Loading from './loading';
 
 const Login = () => {
 	const query = useQuery();
@@ -76,9 +77,9 @@ const Login = () => {
 		<div className="v-center">
 			<main className="tiny">
 				<H1>PDQ Dice</H1>
-				<p>Trying to log you in</p>
-				<Spinner intent={Intent.PRIMARY} />
-			</main>{' '}
+				<p style={{ textAlign: 'center' }}>Trying to log you in</p>
+				<Loading />
+			</main>
 		</div>
 	);
 };
