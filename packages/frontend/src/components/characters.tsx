@@ -13,7 +13,7 @@ const Characters = () => {
 	const { characters } = useSelector(selectUser) as User;
 	return (
 		<>
-			<Tabs onChange={id => dispatch(setCharacterId(id as string))}>
+			<Tabs onChange={id => dispatch(setCharacterId(id as string))} large renderActiveTabPanelOnly>
 				<Tab id="simple-dice" panel={<NoCharacter />}>
 					<Icon icon="random" id="random" title="Dice rolling" />
 				</Tab>
