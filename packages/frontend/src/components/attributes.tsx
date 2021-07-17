@@ -1,5 +1,5 @@
 import React from 'react';
-import { Attribute, Character } from '../types';
+import { Attribute, Character, SelectedAttributes } from '../types';
 import { HTMLTable } from '@blueprintjs/core';
 import AttributeRow from './attribute-row';
 
@@ -8,9 +8,10 @@ type Props = {
 	title: string;
 	character: Character;
 	isWoundable?: boolean;
+	attributeState: [SelectedAttributes, (x: SelectedAttributes) => void];
 };
 
-const Attributes = ({ attributes, title, character, isWoundable = false }: Props) => {
+const Attributes = ({ attributes, title, character, attributeState, isWoundable = false }: Props) => {
 	return (
 		<>
 			<HTMLTable className="attributes">
@@ -51,7 +52,7 @@ const Attributes = ({ attributes, title, character, isWoundable = false }: Props
 				</thead>
 				<tbody>
 					{attributes.map(attribute => (
-						<AttributeRow key={attribute.name} {...{ attribute, character, isWoundable }} />
+						<AttributeRow key={attribute.name} {...{ attribute, character, isWoundable, attributeState }} />
 					))}
 				</tbody>
 			</HTMLTable>

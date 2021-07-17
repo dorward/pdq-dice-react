@@ -57,3 +57,5 @@ export type UserData = {
 		fromBlank: () => void;
 	};
 };
+
+export type SelectedAttributes = Record<string, boolean>;

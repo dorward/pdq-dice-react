@@ -1,5 +1,5 @@
-import React from 'react';
-import { Character } from '../types';
+import React, { useState } from 'react';
+import { Character, SelectedAttributes } from '../types';
 import { H2 } from '@blueprintjs/core';
 import Attributes from './attributes';
 import SimpleDice from './simple-dice';
@@ -9,13 +9,26 @@ type Props = {
 };
 
 const CharacterSheet = ({ character }: Props) => {
+	const attributeState = useState<SelectedAttributes>({});
+
 	return (
 		<>
 			<div className="character-sheet">
 				<H2>{character.name}</H2>
 				<SimpleDice />
-				<Attributes title="Standard Qualities" attributes={character.qualities} character={character} isWoundable />
-				<Attributes title="Powers" attributes={character.powers} character={character} />
+				<Attributes
+					title="Standard Qualities"
+					attributes={character.qualities}
+					character={character}
+					isWoundable
+					attributeState={attributeState}
+				/>
+				<Attributes
+					title="Powers"
+					attributes={character.powers}
+					character={character}
+					attributeState={attributeState}
+				/>
 			</div>
 		</>
 	);
