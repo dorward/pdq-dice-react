@@ -1,8 +1,17 @@
 @import '@blueprintjs/core/lib/scss/variables';
 
+html,
+body {
+	background: $blue1;
+}
+
 #root {
+	background: white;
+	box-sizing: border-box;
 	max-width: 800px;
+	min-height: 100vh;
 	margin: 0 0 0 2em;
+	padding: 0 1em;
 	> header {
 		display: flex;
 		> h1 {
