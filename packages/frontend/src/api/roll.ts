@@ -2,6 +2,8 @@ import store from '../data/redux-store';
 import axios from 'axios';
 import { setResult, markLoading } from '../data/results-slice';
 import { selectWhoami, selectCharacterId } from '../data/whoami-slice';
+import { selectCharacter } from '../data/user-slice';
+import { SelectedAttributes } from '../types';
 
 const getBase = () => {
 	const API_URL = process.env.API_URL;
@@ -23,6 +25,31 @@ export const d6 = async ({ high }: D6Params) => {
 		...auth,
 		dice: '1d6',
 		high,
+	};
+	const response = await axios.post(url, data);
+	const result = response.data.result;
+	store.dispatch(setResult(response.data));
+	return result;
+};
+
+type SkillCheckParams = {
+	selected: SelectedAttributes;
+};
+
+export const skillCheck = async ({ selected }: SkillCheckParams) => {
+	store.dispatch(markLoading());
+	const character = selectCharacter(store.getState());
+	const bonuses = [...character.qualities, ...character.powers]
+		.filter(attribute => selected[attribute.id])
+		.map(bonus => ({
+			name: bonus.name,
+			value: bonus.value,
+		}));
+	const { auth, url } = getBase();
+	const data = {
+		...auth,
+		dice: '2d6',
+		bonuses,
 	};
 	const response = await axios.post(url, data);
 	const result = response.data.result;

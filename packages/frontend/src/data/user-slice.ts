@@ -56,4 +56,9 @@ const userSlice = createSlice({
 
 export const { set, unset, addCharacterFromYAML, applyWound, healWound } = userSlice.actions;
 export const selectUser = (state: RootState) => state.user.user;
+export const selectCharacter = (state: RootState) => {
+	const id = state.whoami.characterId;
+	const character = state.user.user.characters.find(c => c.id === id);
+	return character;
+};
 export default userSlice.reducer;

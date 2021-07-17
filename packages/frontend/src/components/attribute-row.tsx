@@ -14,7 +14,7 @@ const AttributeRow = ({ attribute, character, isWoundable, attributeState }: Row
 	const firstBought = attributeValues.findIndex(value => value[0] === attribute.value);
 	const firstUnwounded = firstBought + attribute.wounds;
 	const [selectedAttributes, setSelected] = attributeState;
-	const checked = selectedAttributes[attribute.id];
+	const checked = !!selectedAttributes[attribute.id];
 	const onChange = () => setSelected({ ...selectedAttributes, [attribute.id]: !checked });
 
 	return (

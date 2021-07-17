@@ -3,6 +3,7 @@ import { Character, SelectedAttributes } from '../types';
 import { H2 } from '@blueprintjs/core';
 import Attributes from './attributes';
 import SimpleDice from './simple-dice';
+import SkillCheck from './skill-check';
 
 type Props = {
 	character: Character;
@@ -29,6 +30,7 @@ const CharacterSheet = ({ character }: Props) => {
 					character={character}
 					attributeState={attributeState}
 				/>
+				<SkillCheck attributeState={attributeState} />
 			</div>
 		</>
 	);
