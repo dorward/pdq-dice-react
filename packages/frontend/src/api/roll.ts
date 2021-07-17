@@ -4,6 +4,7 @@ import { setResult, markLoading } from '../data/results-slice';
 import { selectWhoami, selectCharacterId } from '../data/whoami-slice';
 import { selectCharacter } from '../data/user-slice';
 import { SelectedAttributes } from '../types';
+import { attributeValues } from '../consts';
 
 const getBase = () => {
 	const API_URL = process.env.API_URL;
@@ -41,16 +42,21 @@ export const skillCheck = async ({ selected }: SkillCheckParams) => {
 	const character = selectCharacter(store.getState());
 	const bonuses = [...character.qualities, ...character.powers]
 		.filter(attribute => selected[attribute.id])
-		.map(bonus => ({
-			name: bonus.name,
-			value: bonus.value,
-		}));
+		.map(attribute => {
+			const value =
+				attributeValues[attributeValues.findIndex(value => value[0] === attribute.value) + (attribute.wounds || 0)][1];
+			return {
+				name: attribute.name,
+				value,
+			};
+		});
 	const { auth, url } = getBase();
 	const data = {
 		...auth,
 		dice: '2d6',
 		bonuses,
 	};
+	console.log(data);
 	const response = await axios.post(url, data);
 	const result = response.data.result;
 	store.dispatch(setResult(response.data));
