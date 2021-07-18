@@ -53,6 +53,17 @@ app.get('/api/allUsers', async (req, res) => {
 
 const supportedDice = ['1d6', '2d6'];
 
+type Result = {
+	name: string;
+	value: number;
+};
+
+type Body = {
+	dice: '1d6' | '2d6';
+	high?: boolean;
+	bonuses?: Result[];
+};
+
 // TODO say what character this is for too!
 app.post('/api/roll/:id/:code', async (req, res) => {
 	const characterId = req.body;
@@ -62,18 +73,26 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 		return res.sendStatus(401);
 	}
 
-	const { dice, high } = req.body;
+	const { dice, high, bonuses = [] } = req.body as Body;
 	console.log(req.body);
 	if (!supportedDice.includes(dice)) return res.sendStatus(400);
-
-	const result = dice === '1d6' ? [d6()] : [d6(), d6()];
+	const rolls = [d6(), d6()];
+	const diceResult: Result =
+		dice === '1d6'
+			? { name: 'Roll', value: rolls[0] }
+			: { name: `Roll (${rolls[0]} + ${rolls[1]})`, value: rolls[0] + rolls[1] };
 	let success;
 	if (typeof high !== 'undefined') {
 		success = false;
-		if (high && result[0] >= 4) success = true;
-		if (!high && result[0] <= 3) success = true;
+		if (high && rolls[0] >= 4) success = true;
+		if (!high && rolls[0] <= 3) success = true;
 	}
-	res.json({ result, success });
+	const result = [diceResult, ...bonuses];
+	const total = result.reduce((acc, cur) => {
+		return acc + +cur.value;
+	}, 0);
+
+	res.json({ result, total, success });
 });
 
 app.listen(port, () => {
