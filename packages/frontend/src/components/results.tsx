@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { markClear } from '../data/results-slice';
 import { useDispatch } from 'react-redux';
 import Loading from './loading';
+import { HTMLTable } from '@blueprintjs/core';
 
 const Results = () => {
 	const dispatch = useDispatch();
@@ -20,9 +21,19 @@ const Results = () => {
 			<div className="v-center">
 				<Card interactive={true} elevation={1} className="h-center results">
 					{results.loading && <Loading />}
-					{results.roll && (
+					{results?.roll?.results && (
 						<>
-							<pre>{JSON.stringify(results, undefined, 2)}</pre>
+							<HTMLTable>
+								<tbody>
+									{results.roll.results.map(result => (
+										<tr>
+											<td>{result.name}</td>
+											<td>{result.value}</td>
+										</tr>
+									))}
+								</tbody>
+							</HTMLTable>
+
 							<Button onClick={() => dispatch(markClear())} intent="primary">
 								OK
 							</Button>

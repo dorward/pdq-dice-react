@@ -87,12 +87,12 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 		if (high && rolls[0] >= 4) success = true;
 		if (!high && rolls[0] <= 3) success = true;
 	}
-	const result = [diceResult, ...bonuses];
-	const total = result.reduce((acc, cur) => {
+	const results = [diceResult, ...bonuses];
+	const total = results.reduce((acc, cur) => {
 		return acc + +cur.value;
 	}, 0);
 
-	res.json({ result, total, success });
+	res.json({ results, total, success });
 });
 
 app.listen(port, () => {

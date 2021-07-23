@@ -3,7 +3,11 @@ import { RootState } from './redux-store';
 
 type ResultsState = {
 	loading: boolean;
-	roll: null | number;
+	roll: {
+		results: { name: string; value: string }[];
+		total: number;
+		success?: boolean;
+	};
 };
 
 const initialResultsState: ResultsState = { loading: false, roll: null };
@@ -20,7 +24,7 @@ const resultsSlice = createSlice({
 			state.loading = true;
 			state.roll = null;
 		},
-		setResult: (state, action: PayloadAction<number>) => {
+		setResult: (state, action: PayloadAction<ResultsState['roll']>) => {
 			state.loading = false;
 			state.roll = action.payload;
 		},
