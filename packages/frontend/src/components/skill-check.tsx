@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonGroup } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 import { skillCheck } from '../api/roll';
 import { SelectedAttributes } from '../types';
 
@@ -10,11 +10,9 @@ type Props = {
 const SkillCheck = ({ attributeState }: Props) => {
 	const [selected] = attributeState;
 	return (
-		<ButtonGroup>
-			<Button icon="random" onClick={() => skillCheck({ selected })}>
-				Skill Check
-			</Button>
-		</ButtonGroup>
+		<Button className="skill-check" icon="random" onClick={() => skillCheck({ selected })}>
+			Skill Check
+		</Button>
 	);
 };
 

@@ -16,7 +16,7 @@ const CharacterSheet = ({ character }: Props) => {
 		<>
 			<div className="character-sheet">
 				<H2>{character.name}</H2>
-				<SimpleDice />
+				<SimpleDice attributeState={attributeState} />
 				<Attributes
 					title="Standard Qualities"
 					attributes={character.qualities}

@@ -39,8 +39,19 @@ body {
 }
 
 .results {
-	width: 600px;
+	width: 400px;
 	min-height: 22em;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	table {
+		margin: auto;
+	}
+	.bp3-button-group {
+		margin-top: 2em;
+		justify-content: center;
+	}
 }
 
 .tiny {
@@ -99,6 +110,10 @@ table.attributes {
 
 .attribute-row-label {
 	display: block;
+}
+
+.bp3-button-group:not(.bp3-minimal) > .bp3-button:not(:last-child).skill-check {
+	margin-right: 1em;
 }
 
 svg.goo {

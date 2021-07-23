@@ -1,5 +1,5 @@
 import React from 'react';
-import { Overlay, Card, Button } from '@blueprintjs/core';
+import { Overlay, Card, Button, ButtonGroup, Intent } from '@blueprintjs/core';
 import { selectResults } from '../data/results-slice';
 import { useSelector } from 'react-redux';
 import { markClear } from '../data/results-slice';
@@ -23,20 +23,28 @@ const Results = () => {
 					{results.loading && <Loading />}
 					{results?.roll?.results && (
 						<>
-							<HTMLTable>
-								<tbody>
-									{results.roll.results.map(result => (
-										<tr>
-											<td>{result.name}</td>
-											<td>{result.value}</td>
-										</tr>
-									))}
-								</tbody>
-							</HTMLTable>
+							<div>
+								<h2>Result</h2>
+								<HTMLTable>
+									<tbody>
+										{results.roll.results.map(result => (
+											<tr>
+												<td>{result.name}</td>
+												<td>{result.value}</td>
+											</tr>
+										))}
+									</tbody>
+								</HTMLTable>
+							</div>
+							<ButtonGroup>
+								<Button onClick={() => dispatch(markClear())} intent={Intent.PRIMARY}>
+									OK
+								</Button>
 
-							<Button onClick={() => dispatch(markClear())} intent="primary">
-								OK
-							</Button>
+								<Button onClick={() => alert('not yet implemented')} intent={Intent.NONE}>
+									Benny
+								</Button>
+							</ButtonGroup>
 						</>
 					)}
 				</Card>
