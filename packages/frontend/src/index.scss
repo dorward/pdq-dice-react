@@ -92,8 +92,15 @@ table.attributes {
 	table-layout: fixed;
 	width: 100%;
 
+	tr.wounded {
+		background: $red5;
+	}
+
 	tr:nth-child(even) {
 		background: $light-gray3;
+		&.wounded {
+			background: $red4;
+		}
 	}
 
 	th,

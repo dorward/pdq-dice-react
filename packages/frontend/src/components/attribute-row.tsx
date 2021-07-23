@@ -2,6 +2,7 @@ import React from 'react';
 import { Attribute, Character, SelectedAttributes } from '../types';
 import { attributeValues } from '../consts';
 import AttributeState from './attribute-state';
+import classnames from 'classnames';
 
 export type RowProps = {
 	attribute: Attribute;
@@ -18,7 +19,7 @@ const AttributeRow = ({ attribute, character, isWoundable, attributeState }: Row
 	const onChange = () => setSelected({ ...selectedAttributes, [attribute.id]: !checked });
 
 	return (
-		<tr key={attribute.name}>
+		<tr key={attribute.name} className={classnames({ wounded: Boolean(attribute.wounds) })}>
 			<td key="label">
 				<label className="attribute-row-label">
 					<input type="checkbox" name={attribute.name} value="use" checked={checked} onChange={onChange} />{' '}
