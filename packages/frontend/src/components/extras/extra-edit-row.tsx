@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 const extraValues = [0, 1, 2, 3, 4, 5, 6];
 
-const AttributeEditRow = ({ extra }: RowProps) => {
+const ExtraEditRow = ({ extra }: RowProps) => {
 	const dispatch = useDispatch();
 
 	return (
@@ -33,4 +33,4 @@ const AttributeEditRow = ({ extra }: RowProps) => {
 	);
 };
 
-export default AttributeEditRow;
+export default ExtraEditRow;

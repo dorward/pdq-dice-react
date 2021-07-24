@@ -2,7 +2,7 @@ import React from 'react';
 
 import { HTMLTable } from '@blueprintjs/core';
 import { Props } from './types';
-import ExtrasEditRow from './extras-edit-row';
+import ExtrasEditRow from './extra-edit-row';
 import { Button, Icon } from '@blueprintjs/core';
 import { useDispatch } from 'react-redux';
 import { addExtra } from '../../data/edit-mode-slice';
