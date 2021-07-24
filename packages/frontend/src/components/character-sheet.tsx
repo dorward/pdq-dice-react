@@ -54,8 +54,13 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 					attributeState={attributeState}
 				/>
 				<div className="controls">
-					<FormGroup label="Description" labelFor={descriptionId}>
-						<InputGroup id={descriptionId} value={description} onChange={e => setDescription(e.currentTarget.value)} />
+					<FormGroup label="Description of roll" labelFor={descriptionId}>
+						<InputGroup
+							placeholder="What action are you rolling for?"
+							id={descriptionId}
+							value={description}
+							onChange={e => setDescription(e.currentTarget.value)}
+						/>
 					</FormGroup>
 					<SkillCheck options={options} />
 				</div>
