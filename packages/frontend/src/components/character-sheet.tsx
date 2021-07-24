@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Character, SelectedAttributes, RollData } from '../types';
-import { H2, FormGroup, InputGroup, Button, Icon } from '@blueprintjs/core';
+import { FormGroup, InputGroup, Button, Icon } from '@blueprintjs/core';
 import Attributes from './attributes';
 import SimpleDice from './simple-dice';
 import SkillCheck from './skill-check';
 import { useDispatch, useSelector } from 'react-redux';
 import { editCharacter, selectEditingCharacter } from '../data/edit-mode-slice';
 import { finishEditing } from '../data/helpers';
+import CharacterHeader from './character-header';
 
 type Props = {
 	character: Character;
@@ -23,7 +24,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 	return (
 		<>
 			<div className="character-sheet">
-				<H2>{character.name}</H2>
+				<CharacterHeader name={character.name} />
 				<div className="character-menu">
 					<SimpleDice options={options} />
 					{characterToEdit ? (
@@ -56,7 +57,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 				<div className="controls">
 					<FormGroup label="Description of roll" labelFor={descriptionId}>
 						<InputGroup
-							placeholder="What action are you rolling for?"
+							placeholder="What action are you rolling"
 							id={descriptionId}
 							value={description}
 							onChange={e => setDescription(e.currentTarget.value)}
