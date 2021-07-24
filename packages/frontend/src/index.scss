@@ -88,6 +88,11 @@ main.tiny {
 	}
 }
 
+.character-menu {
+	display: flex;
+	justify-content: space-between;
+}
+
 table.attributes {
 	table-layout: fixed;
 	width: 100%;

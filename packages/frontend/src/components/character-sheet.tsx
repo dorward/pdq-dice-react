@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Character, SelectedAttributes, RollData } from '../types';
-import { H2, FormGroup, InputGroup } from '@blueprintjs/core';
+import { H2, FormGroup, InputGroup, Button, Icon } from '@blueprintjs/core';
 import Attributes from './attributes';
 import SimpleDice from './simple-dice';
 import SkillCheck from './skill-check';
+import { useDispatch, useSelector } from 'react-redux';
+import { editCharacter, selectEditingCharacter, cancelEdit } from '../data/edit-mode-slice';
 
 type Props = {
 	character: Character;
 };
 
-const CharacterSheet = ({ character }: Props) => {
+const CharacterSheet = ({ character: characterProp }: Props) => {
+	const dispatch = useDispatch();
+	const characterToEdit = useSelector(selectEditingCharacter);
+	const character = characterToEdit || characterProp;
 	const attributeState = useState<SelectedAttributes>({});
 	const [description, setDescription] = useState('');
 	const descriptionId = `${character.id}-description`;
@@ -18,7 +23,18 @@ const CharacterSheet = ({ character }: Props) => {
 		<>
 			<div className="character-sheet">
 				<H2>{character.name}</H2>
-				<SimpleDice options={options} />
+				<div className="character-menu">
+					<SimpleDice options={options} />
+					{characterToEdit ? (
+						<Button onClick={() => dispatch(cancelEdit())}>
+							<Icon icon="floppy-disk" title="Save" htmlTitle="Save" />
+						</Button>
+					) : (
+						<Button onClick={() => dispatch(editCharacter(character))}>
+							<Icon icon="edit" title="Edit" htmlTitle="Edit" />
+						</Button>
+					)}
+				</div>
 				<Attributes
 					title="Standard Qualities"
 					attributes={character.qualities}
