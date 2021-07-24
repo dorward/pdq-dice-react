@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Character, SelectedAttributes, RollData } from '../types';
 import { FormGroup, InputGroup, Button, Icon } from '@blueprintjs/core';
 import Attributes from './attributes';
+import Extras from './extras';
 import SimpleDice from './simple-dice';
 import SkillCheck from './skill-check';
 import { useDispatch, useSelector } from 'react-redux';
@@ -54,6 +55,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 					character={character}
 					attributeState={attributeState}
 				/>
+				<Extras extras={character.extras} />
 				<div className="controls">
 					<FormGroup label="Description of roll" labelFor={descriptionId}>
 						<InputGroup

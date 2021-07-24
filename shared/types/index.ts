@@ -9,6 +9,7 @@ export type Character = {
 	origin: string;
 	heropoints: Heropoints;
 	qualities: Attribute[];
+	extras: Extra[];
 	powers: Attribute[];
 };
 export type Heropoints = {
@@ -17,6 +18,12 @@ export type Heropoints = {
 };
 
 export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'GONE';
+
+export type Extra = {
+	name: string;
+	id: string;
+	value: number;
+};
 
 export type Attribute = {
 	name: string;

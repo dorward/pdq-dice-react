@@ -17,9 +17,7 @@ const userSlice = createSlice({
 	reducers: {
 		set: (state, action: PayloadAction<User | Error>) => {
 			if (action.payload instanceof Error) throw action.payload;
-			const { user, cleaned } = cleanUser(action.payload);
-			if (cleaned) saveToServer(user as User);
-			state.user = user;
+			state.user = cleanUser(action.payload);
 		},
 		addCharacterFromYAML: (state, action: PayloadAction<string>) => {
 			const parsed = yaml.load(action.payload) as Sheet | null;

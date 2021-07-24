@@ -93,10 +93,18 @@ main.tiny {
 	justify-content: space-between;
 }
 
-table.attributes {
+table.attributes,
+table.extras {
 	table-layout: fixed;
 	width: 100%;
 	margin: 1em 0;
+
+	.bp3-form-group {
+		margin: 0;
+		input {
+			background: inherit;
+		}
+	}
 
 	tr {
 		&.wounded {
@@ -129,6 +137,10 @@ table.attributes {
 			text-align: center;
 		}
 	}
+}
+
+button.add {
+	margin-left: 1em;
 }
 
 .attribute-row-label {
