@@ -4,6 +4,7 @@ import { Sheet, User } from '../types';
 import yaml from 'js-yaml';
 import saveToServer from '../api/save-to-server';
 import cleanUser from './clean-user';
+import { Character } from '../types';
 
 type UserState = {
 	user: User;
@@ -30,6 +31,14 @@ const userSlice = createSlice({
 			state.user = newUser;
 			saveToServer(newUser);
 		},
+		updateCharacter: (state, action: PayloadAction<Character>) => {
+			const characterId = action.payload.id;
+			const characterIndex = state.user.characters.findIndex(character => character.id === characterId);
+			console.log({ characterId, characterIndex });
+			state.user.characters.splice(characterIndex, 1, action.payload);
+			saveToServer(state.user);
+			return state;
+		},
 		applyWound: (state, action: PayloadAction<any>) => {
 			if (action.payload instanceof Error) throw action.payload;
 			const { characterId, attributeId } = action.payload;
@@ -54,7 +63,7 @@ const userSlice = createSlice({
 	},
 });
 
-export const { set, unset, addCharacterFromYAML, applyWound, healWound } = userSlice.actions;
+export const { set, unset, addCharacterFromYAML, applyWound, healWound, updateCharacter } = userSlice.actions;
 export const selectUser = (state: RootState) => state.user.user;
 export const selectCharacter = (state: RootState) => {
 	const id = state.whoami.characterId;

@@ -21,11 +21,10 @@ const EditModeSlice = createSlice({
 			qualityToUpdate.value = action.payload.value;
 			return state;
 		},
-		cancelEdit: (state: EditModeState) => null,
-		saveEdit: (state: EditModeState) => (alert('Not yet implemented'), state),
+		exitEditMode: (state: EditModeState) => null,
 	},
 });
 
-export const { editCharacter, cancelEdit, updateQuality } = EditModeSlice.actions;
+export const { editCharacter, exitEditMode, updateQuality } = EditModeSlice.actions;
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export default EditModeSlice.reducer;

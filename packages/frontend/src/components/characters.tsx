@@ -7,13 +7,20 @@ import { selectUser } from '../data/user-slice';
 import { setCharacterId } from '../data/whoami-slice';
 import NoCharacter from './no-character';
 import { useDispatch, useSelector } from 'react-redux';
+import { exitEditMode } from '../data/edit-mode-slice';
 
 const Characters = () => {
 	const dispatch = useDispatch();
 	const { characters } = useSelector(selectUser) as User;
 	return (
 		<>
-			<Tabs onChange={id => dispatch(setCharacterId(id as string))} large renderActiveTabPanelOnly>
+			<Tabs
+				onChange={id => {
+					dispatch(exitEditMode());
+					dispatch(setCharacterId(id as string));
+				}}
+				large
+				renderActiveTabPanelOnly>
 				<Tab id="simple-dice" panel={<NoCharacter />}>
 					<Icon icon="random" id="random" title="Dice rolling" />
 				</Tab>
