@@ -59,3 +59,29 @@ export type UserData = {
 };
 
 export type SelectedAttributes = Record<string, boolean>;
+
+type AttributeState = [SelectedAttributes, (x: SelectedAttributes) => void];
+
+export type RollData = {
+	attributeState: AttributeState;
+	description: string;
+};
+
+export type SkillCheckBonus = {
+	name: string;
+	value: number;
+};
+
+export type SkillCheckRequestBody = {
+	dice: '1d6' | '2d6';
+	high?: boolean;
+	bonuses?: SkillCheckBonus[];
+	description?: string;
+};
+
+export type SkillCheckResponseBody = {
+	results: SkillCheckBonus[];
+	total: number;
+	success?: boolean;
+	description?: string;
+};

@@ -3,6 +3,7 @@ import cors from 'cors';
 import discord from './discord';
 import d6 from './util/d6';
 import { getAllUsers, getUserByCode, addOrUpdateUser } from './store/db';
+import { SkillCheckRequestBody, SkillCheckResponseBody, SkillCheckBonus } from './types';
 
 discord.on('ready', () => {
 	console.log(`Logged in as ${discord.user.tag}!`);
@@ -53,17 +54,6 @@ app.get('/api/allUsers', async (req, res) => {
 
 const supportedDice = ['1d6', '2d6'];
 
-type Result = {
-	name: string;
-	value: number;
-};
-
-type Body = {
-	dice: '1d6' | '2d6';
-	high?: boolean;
-	bonuses?: Result[];
-};
-
 // TODO say what character this is for too!
 app.post('/api/roll/:id/:code', async (req, res) => {
 	const characterId = req.body;
@@ -73,11 +63,11 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 		return res.sendStatus(401);
 	}
 
-	const { dice, high, bonuses = [] } = req.body as Body;
+	const { dice, high, bonuses = [], description } = req.body as SkillCheckRequestBody;
 	console.log(req.body);
 	if (!supportedDice.includes(dice)) return res.sendStatus(400);
 	const rolls = [d6(), d6()];
-	const diceResult: Result =
+	const diceResult: SkillCheckBonus =
 		dice === '1d6'
 			? { name: 'Roll', value: rolls[0] }
 			: { name: `Roll (${rolls[0]} + ${rolls[1]})`, value: rolls[0] + rolls[1] };
@@ -92,7 +82,7 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 		return acc + +cur.value;
 	}, 0);
 
-	res.json({ results, total, success });
+	res.json({ results, total, success, description } as SkillCheckResponseBody);
 });
 
 app.listen(port, () => {

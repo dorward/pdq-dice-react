@@ -91,6 +91,7 @@ main.tiny {
 table.attributes {
 	table-layout: fixed;
 	width: 100%;
+	margin: 1em 0;
 
 	tr.wounded {
 		background: $red5;
@@ -117,6 +118,14 @@ table.attributes {
 
 .attribute-row-label {
 	display: block;
+}
+
+.controls {
+	padding: 4px;
+	label {
+		color: $dark-gray1;
+		font-weight: 600;
+	}
 }
 
 .bp3-button-group:not(.bp3-minimal) > .bp3-button:not(:last-child).skill-check {

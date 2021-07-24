@@ -2,16 +2,16 @@ import React from 'react';
 import { Button, ButtonGroup } from '@blueprintjs/core';
 import { d6 } from '../api/roll';
 import SkillCheck from './skill-check';
-import { SelectedAttributes } from '../types';
+import { RollData } from '../types';
 
 type Props = {
-	attributeState?: [SelectedAttributes, (x: SelectedAttributes) => void];
+	options?: RollData;
 };
 
-const SimpleDice = ({ attributeState }: Props) => {
+const SimpleDice = ({ options }: Props) => {
 	return (
 		<ButtonGroup>
-			{attributeState && <SkillCheck attributeState={attributeState} />}
+			{options && <SkillCheck options={options} />}
 
 			<Button icon="random" onClick={() => d6({})}>
 				d6

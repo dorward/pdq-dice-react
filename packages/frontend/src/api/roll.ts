@@ -3,7 +3,7 @@ import axios from 'axios';
 import { setResult, markLoading } from '../data/results-slice';
 import { selectWhoami, selectCharacterId } from '../data/whoami-slice';
 import { selectCharacter } from '../data/user-slice';
-import { SelectedAttributes } from '../types';
+import { SkillCheckRequestBody, SelectedAttributes } from '../types';
 import { attributeValues } from '../consts';
 
 const getBase = () => {
@@ -35,9 +35,11 @@ export const d6 = async ({ high }: D6Params) => {
 
 type SkillCheckParams = {
 	selected: SelectedAttributes;
+	description: string;
 };
 
-export const skillCheck = async ({ selected }: SkillCheckParams) => {
+export const skillCheck = async ({ selected, description }: SkillCheckParams) => {
+	console.log('Skill check', { selected, description });
 	store.dispatch(markLoading());
 	const character = selectCharacter(store.getState());
 	const bonuses = [...character.qualities, ...character.powers]
@@ -51,10 +53,11 @@ export const skillCheck = async ({ selected }: SkillCheckParams) => {
 			};
 		});
 	const { auth, url } = getBase();
-	const data = {
+	const data: SkillCheckRequestBody = {
 		...auth,
 		dice: '2d6',
 		bonuses,
+		description,
 	};
 	console.log(data);
 	const response = await axios.post(url, data);
