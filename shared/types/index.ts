@@ -16,12 +16,12 @@ export type Heropoints = {
 	current: number;
 };
 
-export type Value = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'GONE';
+export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'GONE';
 
 export type Attribute = {
 	name: string;
 	id: string;
-	value: Value;
+	value: QualityValue;
 	notes?: string;
 	wounds: number;
 };
