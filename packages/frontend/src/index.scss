@@ -98,14 +98,16 @@ table.attributes {
 	width: 100%;
 	margin: 1em 0;
 
-	tr.wounded {
-		background: $red5;
-	}
-
-	tr:nth-child(even) {
-		background: $light-gray3;
+	tr {
 		&.wounded {
-			background: $red4;
+			background: $red5;
+		}
+
+		&:nth-child(even) {
+			background: $light-gray3;
+			&.wounded {
+				background: $red4;
+			}
 		}
 	}
 
@@ -118,6 +120,14 @@ table.attributes {
 	th + th {
 		width: 50px;
 		text-align: center;
+	}
+
+	&.edit {
+		td + td,
+		th + th {
+			width: 100px;
+			text-align: center;
+		}
 	}
 }
 

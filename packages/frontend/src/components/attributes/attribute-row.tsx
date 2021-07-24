@@ -1,15 +1,8 @@
 import React from 'react';
-import { Attribute, Character, SelectedAttributes } from '../types';
-import { attributeValues } from '../consts';
+import { attributeValues } from '../../consts';
 import AttributeState from './attribute-state';
 import classnames from 'classnames';
-
-export type RowProps = {
-	attribute: Attribute;
-	character: Character;
-	isWoundable: boolean;
-	attributeState: [SelectedAttributes, (x: SelectedAttributes) => void];
-};
+import { RowProps } from './types';
 
 const AttributeRow = ({ attribute, character, isWoundable, attributeState }: RowProps) => {
 	const firstBought = attributeValues.findIndex(value => value[0] === attribute.value);

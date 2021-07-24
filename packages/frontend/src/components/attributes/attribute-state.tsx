@@ -1,7 +1,7 @@
 import React from 'react';
-import { Attribute, Character } from '../types';
+import { Attribute, Character } from '../../types';
 import { Icon } from '@blueprintjs/core';
-import { applyWound, healWound } from '../data/user-slice';
+import { applyWound, healWound } from '../../data/user-slice';
 import { useDispatch } from 'react-redux';
 
 type AttributeStateProps = {
