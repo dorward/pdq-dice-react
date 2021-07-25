@@ -1,6 +1,6 @@
-import React from 'react';
 import { Button, Menu, MenuItem } from '@blueprintjs/core';
 import { Popover2 } from '@blueprintjs/popover2';
+import React from 'react';
 
 type Props = {
 	userTag?: string;
@@ -38,7 +38,7 @@ const UserMenu = ({ userTag, nickname, avatar }: Props) => {
 				minimal={false}
 				placement="bottom"
 				content={<Dropdown />}
-				renderTarget={({ isOpen, ref, ...targetProps }) => (
+				renderTarget={({ ref, ...targetProps }) => (
 					<Button {...targetProps} elementRef={ref}>
 						<Label userTag={userTag} nickname={nickname} />
 						<img src={avatar} height={32} width={32} />

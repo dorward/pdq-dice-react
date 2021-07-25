@@ -1,10 +1,10 @@
-import store from '../data/redux-store';
-import axios from 'axios';
-import { setResult, markLoading } from '../data/results-slice';
-import { selectWhoami, selectCharacterId } from '../data/whoami-slice';
-import { selectCharacter } from '../data/user-slice';
-import { SkillCheckRequestBody, SelectedAttributes } from '../types';
+import { SelectedAttributes, SkillCheckRequestBody } from '../types';
 import { attributeValues } from '../consts';
+import { markLoading, setResult } from '../data/results-slice';
+import { selectCharacter } from '../data/user-slice';
+import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
+import axios from 'axios';
+import store from '../data/redux-store';
 
 const getBase = () => {
 	const API_URL = process.env.API_URL;

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import user from './user-slice';
-import results from './results-slice';
-import whoami from './whoami-slice';
 import editMode from './edit-mode-slice';
+import results from './results-slice';
+import user from './user-slice';
+import whoami from './whoami-slice';
 
 const reduxStore = configureStore({
 	reducer: {

@@ -1,7 +1,7 @@
-import React from 'react';
 import { HTMLTable } from '@blueprintjs/core';
-import AttributeRow from './attribute-row';
 import { Props } from './types';
+import AttributeRow from './attribute-row';
+import React from 'react';
 
 const AttributesPlay = ({ attributes, title, character, attributeState, isWoundable = false }: Props) => {
 	return (

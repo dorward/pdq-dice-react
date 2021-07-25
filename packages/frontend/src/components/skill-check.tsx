@@ -1,7 +1,7 @@
-import React from 'react';
 import { Button } from '@blueprintjs/core';
-import { skillCheck } from '../api/roll';
 import { RollData } from '../types';
+import { skillCheck } from '../api/roll';
+import React from 'react';
 
 type Props = {
 	options: RollData;

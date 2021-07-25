@@ -1,11 +1,11 @@
 import React from 'react';
 
+import { Button, Icon } from '@blueprintjs/core';
 import { HTMLTable } from '@blueprintjs/core';
 import { Props } from './types';
-import ExtrasEditRow from './extra-edit-row';
-import { Button, Icon } from '@blueprintjs/core';
-import { useDispatch } from 'react-redux';
 import { addExtra } from '../../data/edit-mode-slice';
+import { useDispatch } from 'react-redux';
+import ExtrasEditRow from './extra-edit-row';
 
 const ExtrasEdit = ({ extras }: Props) => {
 	const dispatch = useDispatch();

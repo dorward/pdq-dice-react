@@ -1,7 +1,7 @@
-import React from 'react';
 import { HTMLTable } from '@blueprintjs/core';
-import AttributeEditRow from './attribute-edit-row';
 import { Props } from './types';
+import AttributeEditRow from './attribute-edit-row';
+import React from 'react';
 
 const AttributesEdit = ({ attributes, title, character, attributeState, isWoundable = false }: Props) => {
 	return (

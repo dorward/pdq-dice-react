@@ -1,13 +1,13 @@
-import React from 'react';
-import { attributeValues } from '../../consts';
-import classnames from 'classnames';
-import { RowProps } from './types';
-import { QualityValue } from '../../types';
 import { HTMLSelect } from '@blueprintjs/core';
+import { QualityValue } from '../../types';
+import { RowProps } from './types';
+import { attributeValues } from '../../consts';
 import { updateQuality } from '../../data/edit-mode-slice';
 import { useDispatch } from 'react-redux';
+import React from 'react';
+import classnames from 'classnames';
 
-const AttributeEditRow = ({ attribute, character, isWoundable, attributeState }: RowProps) => {
+const AttributeEditRow = ({ attribute }: RowProps) => {
 	const dispatch = useDispatch();
 	return (
 		<tr key={attribute.name} className={classnames({ wounded: Boolean(attribute.wounds) })}>

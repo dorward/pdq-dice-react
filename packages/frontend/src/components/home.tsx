@@ -1,6 +1,6 @@
-import React from 'react';
 import { H1 } from '@blueprintjs/core';
 import Loading from './loading';
+import React from 'react';
 
 const Home = () => {
 	return (

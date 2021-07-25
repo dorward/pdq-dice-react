@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from './redux-store';
 import { Character, QualityValue } from '../types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { RootState } from './redux-store';
 import { v4 as uuidv4 } from 'uuid';
 
 type EditModeState = null | Character;
@@ -32,7 +32,7 @@ const EditModeSlice = createSlice({
 			extraToUpdate.value = action.payload.value;
 			return state;
 		},
-		addExtra: (state: EditModeState, action: PayloadAction) => {
+		addExtra: (state: EditModeState) => {
 			state.extras = [
 				...state.extras,
 				{
@@ -47,7 +47,7 @@ const EditModeSlice = createSlice({
 			state.name = action.payload;
 			return state;
 		},
-		exitEditMode: (state: EditModeState) => null,
+		exitEditMode: () => null,
 	},
 });
 

@@ -1,14 +1,16 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Character } from '../types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 import { Sheet, User } from '../types';
-import yaml from 'js-yaml';
-import saveToServer from '../api/save-to-server';
 import cleanUser from './clean-user';
-import { Character } from '../types';
+import saveToServer from '../api/save-to-server';
+import yaml from 'js-yaml';
 
 type UserState = {
 	user: User;
 };
+
+type AttributePath = { characterId: string; attributeId: string };
 
 const initialUserState: UserState = { user: null };
 const userSlice = createSlice({
@@ -37,7 +39,7 @@ const userSlice = createSlice({
 			saveToServer(state.user);
 			return state;
 		},
-		applyWound: (state, action: PayloadAction<any>) => {
+		applyWound: (state, action: PayloadAction<AttributePath>) => {
 			if (action.payload instanceof Error) throw action.payload;
 			const { characterId, attributeId } = action.payload;
 			const { user } = state;
@@ -46,7 +48,7 @@ const userSlice = createSlice({
 			attribute.wounds++;
 			saveToServer(JSON.parse(JSON.stringify(user)));
 		},
-		healWound: (state, action: PayloadAction<any>) => {
+		healWound: (state, action: PayloadAction<AttributePath>) => {
 			if (action.payload instanceof Error) throw action.payload;
 			const { characterId, attributeId } = action.payload;
 			const { user } = state;
@@ -55,9 +57,7 @@ const userSlice = createSlice({
 			attribute.wounds--;
 			saveToServer(JSON.parse(JSON.stringify(user)));
 		},
-		unset: state => {
-			state = null;
-		},
+		unset: () => null,
 	},
 });
 

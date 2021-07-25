@@ -2,8 +2,8 @@ import React from 'react';
 
 import { HTMLTable } from '@blueprintjs/core';
 import { Props } from './types';
-import ExtraPlayRow from './extra-play-row';
 import ExtraEditRow from './extra-edit-row';
+import ExtraPlayRow from './extra-play-row';
 
 const ExtrasPlay = ({ extras }: Props) => {
 	return (

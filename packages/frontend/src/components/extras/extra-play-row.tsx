@@ -1,5 +1,5 @@
-import React from 'react';
 import { RowProps } from './types';
+import React from 'react';
 // import { HTMLSelect, FormGroup, InputGroup } from '@blueprintjs/core';
 // import { updateExtra } from '../../data/edit-mode-slice';
 // import { useDispatch } from 'react-redux';

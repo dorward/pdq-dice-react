@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Character, SelectedAttributes, RollData } from '../types';
-import { FormGroup, InputGroup, Button, Icon } from '@blueprintjs/core';
-import Attributes from './attributes';
-import Extras from './extras';
-import SimpleDice from './simple-dice';
-import SkillCheck from './skill-check';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, FormGroup, Icon, InputGroup } from '@blueprintjs/core';
+import { Character, RollData, SelectedAttributes } from '../types';
 import { editCharacter, selectEditingCharacter } from '../data/edit-mode-slice';
 import { finishEditing } from '../data/helpers';
+import { useDispatch, useSelector } from 'react-redux';
+import Attributes from './attributes';
 import CharacterHeader from './character-header';
+import Extras from './extras';
+import React, { useState } from 'react';
+import SimpleDice from './simple-dice';
+import SkillCheck from './skill-check';
 
 type Props = {
 	character: Character;

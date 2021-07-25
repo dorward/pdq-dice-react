@@ -1,5 +1,5 @@
-import React from 'react';
 import Goo from 'gooey-react';
+import React from 'react';
 
 const Loading = () => (
 	<Goo>

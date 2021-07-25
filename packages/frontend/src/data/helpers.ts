@@ -1,6 +1,6 @@
-import store from '../data/redux-store';
 import { exitEditMode } from '../data/edit-mode-slice';
 import { updateCharacter } from '../data/user-slice';
+import store from '../data/redux-store';
 
 export const finishEditing = () => {
 	console.log('Finish editing');

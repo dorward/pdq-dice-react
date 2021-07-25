@@ -1,16 +1,15 @@
-import React from 'react';
-import { Intent, Callout, H1 } from '@blueprintjs/core';
+import { Callout, H1, Intent } from '@blueprintjs/core';
+import { Redirect } from 'react-router-dom';
 import { User } from '../types';
-import UserMenu from './user-menu';
-import Characters from './characters';
-import GetStarted from './get-started';
 import { selectUser } from '../data/user-slice';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import Characters from './characters';
+import React from 'react';
 import Results from './results';
+import UserMenu from './user-menu';
 
 const Dashboard = () => {
-	const { userTag, nickname, avatar, characters } = useSelector(selectUser) as User;
+	const { userTag, nickname, avatar } = useSelector(selectUser) as User;
 
 	return (
 		<>
@@ -18,7 +17,9 @@ const Dashboard = () => {
 				<H1>PDQ Dice</H1>
 				<UserMenu {...{ userTag, nickname, avatar }} />
 			</header>
-			<main>{characters.length ? <Characters /> : <GetStarted />}</main>
+			<main>
+				<Characters />
+			</main>
 			<Results />
 		</>
 	);

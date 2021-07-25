@@ -1,5 +1,5 @@
+import { PossibleUser, Sheet, User } from '../types';
 import { useState } from 'react';
-import { Sheet, PossibleUser, User } from '../types';
 import yaml from 'js-yaml';
 
 const useUser = () => {
@@ -21,7 +21,9 @@ const useUser = () => {
 			const newUser: User = { ...user, characters: [...user.characters, character] };
 			setUser(newUser);
 		},
-		fromBlank: () => {},
+		fromBlank: () => {
+			console.log('Not yet implemented');
+		},
 	} as const;
 
 	const userData = { addCharacter } as const;

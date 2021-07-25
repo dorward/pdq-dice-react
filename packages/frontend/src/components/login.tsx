@@ -1,12 +1,12 @@
+import { Callout, H1, Intent } from '@blueprintjs/core';
+import { selectUser, set as setUser } from '../data/user-slice';
+import { setUserCreds } from '../data/whoami-slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import Loading from './loading';
 import React, { useEffect } from 'react';
-import { Intent, Callout, H1 } from '@blueprintjs/core';
 import axios from 'axios';
 import useQuery from '../hooks/use-query';
-import { useHistory } from 'react-router-dom';
-import { set as setUser, selectUser } from '../data/user-slice';
-import { setUserCreds } from '../data/whoami-slice';
-import { useSelector, useDispatch } from 'react-redux';
-import Loading from './loading';
 
 const Login = () => {
 	const query = useQuery();

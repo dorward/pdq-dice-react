@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 
 type ResultsState = {
@@ -16,11 +16,11 @@ const resultsSlice = createSlice({
 	name: 'results',
 	initialState: initialResultsState,
 	reducers: {
-		markClear: (state, action: PayloadAction) => {
+		markClear: state => {
 			state.loading = false;
 			state.roll = null;
 		},
-		markLoading: (state, action: PayloadAction) => {
+		markLoading: state => {
 			state.loading = true;
 			state.roll = null;
 		},

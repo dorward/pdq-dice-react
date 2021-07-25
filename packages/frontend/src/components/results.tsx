@@ -1,11 +1,11 @@
-import React from 'react';
-import { Overlay, Card, Button, ButtonGroup, Intent } from '@blueprintjs/core';
-import { selectResults } from '../data/results-slice';
-import { useSelector } from 'react-redux';
-import { markClear } from '../data/results-slice';
-import { useDispatch } from 'react-redux';
-import Loading from './loading';
+import { Button, ButtonGroup, Card, Intent, Overlay } from '@blueprintjs/core';
 import { HTMLTable } from '@blueprintjs/core';
+import { markClear } from '../data/results-slice';
+import { selectResults } from '../data/results-slice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import Loading from './loading';
+import React from 'react';
 
 const Results = () => {
 	const dispatch = useDispatch();

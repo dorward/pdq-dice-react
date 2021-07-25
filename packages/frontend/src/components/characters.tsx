@@ -1,13 +1,13 @@
-import React from 'react';
-import { Tab, Tabs, Icon } from '@blueprintjs/core';
+import { Icon, Tab, Tabs } from '@blueprintjs/core';
 import { User } from '../types';
-import EditCharacter from './edit-character';
-import CharacterSheet from './character-sheet';
+import { exitEditMode } from '../data/edit-mode-slice';
 import { selectUser } from '../data/user-slice';
 import { setCharacterId } from '../data/whoami-slice';
-import NoCharacter from './no-character';
 import { useDispatch, useSelector } from 'react-redux';
-import { exitEditMode } from '../data/edit-mode-slice';
+import CharacterSheet from './character-sheet';
+import NewCharacter from './new-character';
+import NoCharacter from './no-character';
+import React from 'react';
 
 const Characters = () => {
 	const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const Characters = () => {
 				}}
 				large
 				renderActiveTabPanelOnly>
-				<Tab id="simple-dice" panel={<NoCharacter />}>
+				<Tab id="simple-dice" panel={<NoCharacter showWelcome={characters.length === 0} />}>
 					<Icon icon="random" id="random" title="Dice rolling" />
 				</Tab>
 				{characters.map(character => (
@@ -32,7 +32,7 @@ const Characters = () => {
 						panel={<CharacterSheet character={character} />}
 					/>
 				))}
-				<Tab id="new-character-page" panel={<EditCharacter />}>
+				<Tab id="new-character-page" panel={<NewCharacter />}>
 					<Icon icon="new-person" title="New character" />
 				</Tab>
 			</Tabs>
