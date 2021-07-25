@@ -38,7 +38,7 @@ export const skillCheck = async () => {
 	console.log('Skill check', { selected, description });
 	store.dispatch(markLoading());
 	const character = selectCharacter(store.getState());
-	const bonuses = [...character.qualities, ...character.powers]
+	const qualityBonuses = [...character.qualities, ...character.powers]
 		.filter(attribute => selected[attribute.id])
 		.map(attribute => {
 			const value =
@@ -48,6 +48,14 @@ export const skillCheck = async () => {
 				value,
 			};
 		});
+	const extraBonuses = character.extras
+		.filter(extra => selected[extra.id])
+		.map(extra => ({
+			name: extra.name,
+			value: extra.value,
+		}));
+
+	const bonuses = [...qualityBonuses, ...extraBonuses];
 	const { auth, url } = getBase();
 	const data: SkillCheckRequestBody = {
 		...auth,

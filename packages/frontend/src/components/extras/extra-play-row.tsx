@@ -1,15 +1,21 @@
 import { RowProps } from './types';
+import { selectSelected, toggleSelected } from '../../data/roll-slice';
+import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
-// import { HTMLSelect, FormGroup, InputGroup } from '@blueprintjs/core';
-// import { updateExtra } from '../../data/edit-mode-slice';
-// import { useDispatch } from 'react-redux';
 
 const ExtraPlayRow = ({ extra }: RowProps) => {
-	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
+	const selectedExtras = useSelector(selectSelected);
+	const checked = !!selectedExtras[extra.id];
+	const onChange = () => dispatch(toggleSelected(extra.id));
 
 	return (
-		<tr key={extra.name}>
-			<td key="label">{extra.name}</td>
+		<tr key={extra.id}>
+			<td key="label">
+				<label className="attribute-row-label">
+					<input type="checkbox" name={extra.name} value="use" checked={checked} onChange={onChange} /> {extra.name}
+				</label>
+			</td>
 			<td>{extra.value}</td>
 		</tr>
 	);
