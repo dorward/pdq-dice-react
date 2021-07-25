@@ -1,17 +1,16 @@
 import { Button, ButtonGroup } from '@blueprintjs/core';
-import { RollData } from '../types';
 import { d6 } from '../api/roll';
 import React from 'react';
 import SkillCheck from './skill-check';
 
 type Props = {
-	options?: RollData;
+	hasSkillButton?: boolean;
 };
 
-const SimpleDice = ({ options }: Props) => {
+const SimpleDice = ({ hasSkillButton }: Props) => {
 	return (
 		<ButtonGroup>
-			{options && <SkillCheck options={options} />}
+			{hasSkillButton && <SkillCheck />}
 
 			<Button icon="random" onClick={() => d6({})}>
 				d6

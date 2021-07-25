@@ -28,7 +28,7 @@ const Results = () => {
 								<HTMLTable>
 									<tbody>
 										{results.roll.results.map(result => (
-											<tr>
+											<tr key={result.name}>
 												<td>{result.name}</td>
 												<td>{result.value}</td>
 											</tr>

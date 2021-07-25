@@ -3,8 +3,7 @@ import React from 'react';
 import { FormGroup, H2, InputGroup } from '@blueprintjs/core';
 import { selectEditingCharacter } from '../data/edit-mode-slice';
 import { updateName } from '../data/edit-mode-slice';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 type Props = {
 	name: string;

@@ -1,5 +1,5 @@
 import { Button, FormGroup, Icon, InputGroup } from '@blueprintjs/core';
-import { Character, RollData, SelectedAttributes } from '../types';
+import { Character } from '../types';
 import { editCharacter, selectEditingCharacter } from '../data/edit-mode-slice';
 import { finishEditing } from '../data/helpers';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,16 +18,14 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 	const dispatch = useDispatch();
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const character = characterToEdit || characterProp;
-	const attributeState = useState<SelectedAttributes>({});
 	const [description, setDescription] = useState('');
 	const descriptionId = `${character.id}-description`;
-	const options: RollData = { attributeState, description };
 	return (
 		<>
 			<div className="character-sheet">
 				<CharacterHeader name={character.name} />
 				<div className="character-menu">
-					<SimpleDice options={options} />
+					<SimpleDice hasSkillButton />
 					{characterToEdit ? (
 						<Button onClick={finishEditing}>
 							<Icon icon="floppy-disk" title="Save" htmlTitle="Save" />
@@ -42,19 +40,8 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 						</Button>
 					)}
 				</div>
-				<Attributes
-					title="Standard Qualities"
-					attributes={character.qualities}
-					character={character}
-					isWoundable
-					attributeState={attributeState}
-				/>
-				<Attributes
-					title="Powers"
-					attributes={character.powers}
-					character={character}
-					attributeState={attributeState}
-				/>
+				<Attributes title="Standard Qualities" attributes={character.qualities} character={character} isWoundable />
+				<Attributes title="Powers" attributes={character.powers} character={character} />
 				<Extras extras={character.extras} />
 				<div className="controls">
 					<FormGroup label="Description of roll" labelFor={descriptionId}>
@@ -65,7 +52,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 							onChange={e => setDescription(e.currentTarget.value)}
 						/>
 					</FormGroup>
-					<SkillCheck options={options} />
+					<SkillCheck />
 				</div>
 			</div>
 		</>

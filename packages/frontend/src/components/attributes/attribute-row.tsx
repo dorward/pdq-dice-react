@@ -1,15 +1,20 @@
 import { RowProps } from './types';
 import { attributeValues } from '../../consts';
+import { selectSelected, toggleSelected } from '../../data/roll-slice';
+import { useDispatch, useSelector } from 'react-redux';
 import AttributeState from './attribute-state';
 import React from 'react';
 import classnames from 'classnames';
 
-const AttributeRow = ({ attribute, character, isWoundable, attributeState }: RowProps) => {
+const AttributeRow = ({ attribute, character, isWoundable }: RowProps) => {
+	const dispatch = useDispatch();
+	const selectedAttributes = useSelector(selectSelected);
+
 	const firstBought = attributeValues.findIndex(value => value[0] === attribute.value);
 	const firstUnwounded = firstBought + attribute.wounds;
-	const [selectedAttributes, setSelected] = attributeState;
+
 	const checked = !!selectedAttributes[attribute.id];
-	const onChange = () => setSelected({ ...selectedAttributes, [attribute.id]: !checked });
+	const onChange = () => dispatch(toggleSelected(attribute.id));
 
 	return (
 		<tr key={attribute.name} className={classnames({ wounded: Boolean(attribute.wounds) })}>

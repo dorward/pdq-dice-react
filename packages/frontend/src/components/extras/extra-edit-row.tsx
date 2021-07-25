@@ -13,7 +13,7 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 		<tr key={extra.name}>
 			<td key="label">
 				<FormGroup>
-					<InputGroup id={`input-${extra.id}`} value={extra.name} />
+					<InputGroup id={`input-${extra.id}`} value={extra.name} onChange={() => console.log('not yet implemented')} />
 				</FormGroup>
 			</td>
 			<td>

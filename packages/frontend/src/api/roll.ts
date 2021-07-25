@@ -1,8 +1,9 @@
-import { SelectedAttributes, SkillCheckRequestBody } from '../types';
+import { SkillCheckRequestBody } from '../types';
 import { attributeValues } from '../consts';
 import { markLoading, setResult } from '../data/results-slice';
 import { selectCharacter } from '../data/user-slice';
 import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
+
 import axios from 'axios';
 import store from '../data/redux-store';
 
@@ -32,13 +33,8 @@ export const d6 = async ({ high }: D6Params) => {
 	store.dispatch(setResult(response.data));
 	return result;
 };
-
-type SkillCheckParams = {
-	selected: SelectedAttributes;
-	description: string;
-};
-
-export const skillCheck = async ({ selected, description }: SkillCheckParams) => {
+export const skillCheck = async () => {
+	const { selected, description } = store.getState().roll;
 	console.log('Skill check', { selected, description });
 	store.dispatch(markLoading());
 	const character = selectCharacter(store.getState());

@@ -1,14 +1,15 @@
 {
-    "cSpell.words": [
-        "Creds",
-        "Dropzone",
-        "MSTR",
-        "Woundable",
-        "blueprintjs",
-        "consts",
-        "heropoints",
-        "popover",
-        "reduxjs",
-        "uuidv"
-    ]
+	"cSpell.words": [
+		"Creds",
+		"Dropzone",
+		"MSTR",
+		"Woundable",
+		"blueprintjs",
+		"consts",
+		"heropoints",
+		"popover",
+		"reduxjs",
+		"uuidv",
+		"vars"
+	]
 }

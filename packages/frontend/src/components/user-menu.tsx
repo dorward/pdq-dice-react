@@ -38,7 +38,8 @@ const UserMenu = ({ userTag, nickname, avatar }: Props) => {
 				minimal={false}
 				placement="bottom"
 				content={<Dropdown />}
-				renderTarget={({ ref, ...targetProps }) => (
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				renderTarget={({ isOpen, ref, ...targetProps }) => (
 					<Button {...targetProps} elementRef={ref}>
 						<Label userTag={userTag} nickname={nickname} />
 						<img src={avatar} height={32} width={32} />

@@ -3,7 +3,7 @@ import { Props } from './types';
 import AttributeRow from './attribute-row';
 import React from 'react';
 
-const AttributesPlay = ({ attributes, title, character, attributeState, isWoundable = false }: Props) => {
+const AttributesPlay = ({ attributes, title, character, isWoundable = false }: Props) => {
 	return (
 		<>
 			<HTMLTable className="attributes">
@@ -44,7 +44,7 @@ const AttributesPlay = ({ attributes, title, character, attributeState, isWounda
 				</thead>
 				<tbody>
 					{attributes.map(attribute => (
-						<AttributeRow key={attribute.name} {...{ attribute, character, isWoundable, attributeState }} />
+						<AttributeRow key={attribute.name} {...{ attribute, character, isWoundable }} />
 					))}
 				</tbody>
 			</HTMLTable>

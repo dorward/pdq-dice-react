@@ -17,7 +17,7 @@ const ExtrasPlay = ({ extras }: Props) => {
 				</thead>
 				<tbody>
 					{extras.map(extra => (
-						<ExtraPlayRow key={extra.name} extra={extra} />
+						<ExtraPlayRow key={extra.id} extra={extra} />
 					))}
 					<ExtraEditRow
 						key="circumstance"
