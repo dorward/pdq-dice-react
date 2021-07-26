@@ -10,7 +10,7 @@ import classnames from 'classnames';
 const AttributeEditRow = ({ attribute }: RowProps) => {
 	const dispatch = useDispatch();
 	return (
-		<tr key={attribute.name} className={classnames({ wounded: Boolean(attribute.wounds) })}>
+		<tr key={attribute.id} className={classnames({ wounded: Boolean(attribute.wounds) })}>
 			<td key="label">{attribute.name}</td>
 			<td>
 				<HTMLSelect

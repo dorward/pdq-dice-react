@@ -12,10 +12,19 @@ type AttributeUpdate = {
 	value: QualityValue;
 };
 
-type ExtraUpdate = {
+type ExtraUpdateName = {
+	id: string;
+	name: string;
+};
+
+type ExtraUpdateValue = {
 	id: string;
 	value: number;
 };
+
+type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue;
+
+const isValue = (data: ExtraUpdate): data is ExtraUpdateValue => 'value' in data;
 
 const EditModeSlice = createSlice({
 	name: 'EditMode',
@@ -29,7 +38,8 @@ const EditModeSlice = createSlice({
 		},
 		updateExtra: (state: EditModeState, action: PayloadAction<ExtraUpdate>) => {
 			const extraToUpdate = state.extras.find(q => q.id === action.payload.id);
-			extraToUpdate.value = action.payload.value;
+			if (isValue(action.payload)) extraToUpdate.value = action.payload.value;
+			else extraToUpdate.name = action.payload.name;
 			return state;
 		},
 		addExtra: (state: EditModeState) => {

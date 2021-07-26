@@ -25,7 +25,7 @@ const ExtrasEdit = ({ extras }: Props) => {
 				</thead>
 				<tbody>
 					{extras.map(extra => (
-						<ExtrasEditRow key={extra.name} extra={extra} />
+						<ExtrasEditRow key={extra.id} extra={extra} />
 					))}
 				</tbody>
 			</HTMLTable>
