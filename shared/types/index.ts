@@ -92,3 +92,17 @@ export type SkillCheckResponseBody = {
 	success?: boolean;
 	description?: string;
 };
+
+export type ExtraUpdateName = {
+	id: string;
+	name: string;
+};
+
+export type ExtraUpdateValue = {
+	id: string;
+	value: number;
+};
+
+export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue;
+
+export const isExtraUpdateValue = (data: ExtraUpdate): data is ExtraUpdateValue => 'value' in data;

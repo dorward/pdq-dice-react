@@ -1,4 +1,4 @@
-import { Character, QualityValue } from '../types';
+import { Character, ExtraUpdate, QualityValue, isExtraUpdateValue } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,20 +12,6 @@ type AttributeUpdate = {
 	value: QualityValue;
 };
 
-type ExtraUpdateName = {
-	id: string;
-	name: string;
-};
-
-type ExtraUpdateValue = {
-	id: string;
-	value: number;
-};
-
-type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue;
-
-const isValue = (data: ExtraUpdate): data is ExtraUpdateValue => 'value' in data;
-
 const EditModeSlice = createSlice({
 	name: 'EditMode',
 	initialState: initialEditModeState,
@@ -38,7 +24,7 @@ const EditModeSlice = createSlice({
 		},
 		updateExtra: (state: EditModeState, action: PayloadAction<ExtraUpdate>) => {
 			const extraToUpdate = state.extras.find(q => q.id === action.payload.id);
-			if (isValue(action.payload)) extraToUpdate.value = action.payload.value;
+			if (isExtraUpdateValue(action.payload)) extraToUpdate.value = action.payload.value;
 			else extraToUpdate.name = action.payload.name;
 			return state;
 		},

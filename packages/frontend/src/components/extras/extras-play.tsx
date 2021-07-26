@@ -2,7 +2,7 @@ import React from 'react';
 
 import { HTMLTable } from '@blueprintjs/core';
 import { Props } from './types';
-import ExtraEditRow from './extra-edit-row';
+import ExtraCircumstanceRow from './extra-circumstance-row';
 import ExtraPlayRow from './extra-play-row';
 
 const ExtrasPlay = ({ extras }: Props) => {
@@ -19,14 +19,7 @@ const ExtrasPlay = ({ extras }: Props) => {
 					{extras.map(extra => (
 						<ExtraPlayRow key={extra.id} extra={extra} />
 					))}
-					<ExtraEditRow
-						key="circumstance"
-						extra={{
-							id: 'circumstance',
-							name: 'Circumstance',
-							value: 0,
-						}}
-					/>
+					<ExtraCircumstanceRow key="circumstance" />
 				</tbody>
 			</HTMLTable>
 		</>
