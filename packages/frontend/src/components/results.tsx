@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Card, Intent, Overlay } from '@blueprintjs/core';
 import { HTMLTable } from '@blueprintjs/core';
-import { markClear } from '../data/results-slice';
-import { selectResults } from '../data/results-slice';
+import { markClear, selectResults } from '../data/results-slice';
+import { reset as markRollClear } from '../data/roll-slice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import Loading from './loading';
@@ -37,7 +37,12 @@ const Results = () => {
 								</HTMLTable>
 							</div>
 							<ButtonGroup>
-								<Button onClick={() => dispatch(markClear())} intent={Intent.PRIMARY}>
+								<Button
+									onClick={() => {
+										dispatch(markRollClear());
+										dispatch(markClear());
+									}}
+									intent={Intent.PRIMARY}>
 									OK
 								</Button>
 
