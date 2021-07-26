@@ -34,8 +34,7 @@ export const d6 = async ({ high }: D6Params) => {
 	return result;
 };
 export const skillCheck = async () => {
-	const { selected, description } = store.getState().roll;
-	console.log('Skill check', { selected, description });
+	const { selected, description, circumstance } = store.getState().roll;
 	store.dispatch(markLoading());
 	const character = selectCharacter(store.getState());
 	const qualityBonuses = [...character.qualities, ...character.powers]
@@ -54,8 +53,9 @@ export const skillCheck = async () => {
 			name: extra.name,
 			value: extra.value,
 		}));
+	const circumstanceBonus = circumstance.value ? [{ name: circumstance.name, value: circumstance.value }] : [];
 
-	const bonuses = [...qualityBonuses, ...extraBonuses];
+	const bonuses = [...qualityBonuses, ...extraBonuses, ...circumstanceBonus];
 	const { auth, url } = getBase();
 	const data: SkillCheckRequestBody = {
 		...auth,
