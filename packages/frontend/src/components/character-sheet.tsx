@@ -46,7 +46,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 				<div className="controls">
 					<FormGroup label="Description of roll" labelFor={descriptionId}>
 						<InputGroup
-							placeholder="What action are you rolling"
+							placeholder="What action are you rolling?"
 							id={descriptionId}
 							value={description}
 							onChange={e => setDescription(e.currentTarget.value)}
