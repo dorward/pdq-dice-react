@@ -33,6 +33,7 @@ export const d6 = async ({ high }: D6Params) => {
 	store.dispatch(setResult(response.data));
 	return result;
 };
+
 export const skillCheck = async () => {
 	const { selected, description, circumstance } = store.getState().roll;
 	store.dispatch(markLoading());
