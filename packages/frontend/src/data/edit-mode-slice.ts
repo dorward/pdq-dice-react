@@ -43,10 +43,27 @@ const EditModeSlice = createSlice({
 			state.name = action.payload;
 			return state;
 		},
+		updateCurrentBennies: (state: EditModeState, action: PayloadAction<number>) => {
+			state.bennies.current = action.payload;
+			return state;
+		},
+		updateMaximumBennies: (state: EditModeState, action: PayloadAction<string>) => {
+			state.bennies.max = action.payload;
+			return state;
+		},
 		exitEditMode: () => null,
 	},
 });
 
-export const { editCharacter, exitEditMode, updateQuality, updateName, updateExtra, addExtra } = EditModeSlice.actions;
+export const {
+	editCharacter,
+	exitEditMode,
+	updateQuality,
+	updateName,
+	updateExtra,
+	addExtra,
+	updateCurrentBennies,
+	updateMaximumBennies,
+} = EditModeSlice.actions;
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export default EditModeSlice.reducer;

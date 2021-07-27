@@ -13,7 +13,7 @@ export type Character = {
 	powers: Attribute[];
 };
 export type Bennies = {
-	max: number | string;
+	max: string;
 	current: number;
 };
 
