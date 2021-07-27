@@ -63,8 +63,8 @@ const userSlice = createSlice({
 			const characterId = action.payload;
 			const character = user.characters.find(c => c.id === characterId);
 			character.bennies.current--;
+			saveToServer(JSON.parse(JSON.stringify(user)));
 			return state;
-			// saveToServer(JSON.parse(JSON.stringify(user)));
 		},
 		unset: () => null,
 	},
