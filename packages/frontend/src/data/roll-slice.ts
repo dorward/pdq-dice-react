@@ -44,7 +44,10 @@ export const selectRollData = (state: RootState) => state.roll;
 export const selectCircumstance = (state: RootState) => state.roll.circumstance;
 export const selectBennyUse = (state: RootState) => {
 	if (state.roll.usedBenny) return false; // One benny per roll
-	// TODO: if character has no bennies left // Can't spend what you don't have
-	return true;
+	const characterId = state.whoami.characterId;
+	if (!characterId) return false; // Only characters have bennies
+	const character = state.user.user.characters.find(c => c.id === characterId);
+	if (!character) return false; // Character not found
+	return character.bennies.current > 0; // Can't spend what you don't have
 };
 export default rollSlice.reducer;
