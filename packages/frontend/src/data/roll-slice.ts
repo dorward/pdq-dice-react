@@ -6,12 +6,14 @@ type RollSlice = {
 	description: string;
 	selected: Record<string, boolean>;
 	circumstance: Extra;
+	usedBenny: boolean;
 };
 
 const initialRollState: RollSlice = {
 	description: '',
 	selected: {},
 	circumstance: { id: 'circumstance', name: '', value: 0 },
+	usedBenny: false,
 };
 
 const rollSlice = createSlice({
@@ -29,11 +31,20 @@ const rollSlice = createSlice({
 			else extraToUpdate.name = action.payload.name;
 			return state;
 		},
+		useBenny: state => {
+			state.usedBenny = true;
+			return state;
+		},
 	},
 });
 
-export const { reset, toggleSelected, updateCircumstance } = rollSlice.actions;
+export const { reset, toggleSelected, updateCircumstance, useBenny } = rollSlice.actions;
 export const selectSelected = (state: RootState) => state.roll.selected;
 export const selectRollData = (state: RootState) => state.roll;
 export const selectCircumstance = (state: RootState) => state.roll.circumstance;
+export const selectBennyUse = (state: RootState) => {
+	if (state.roll.usedBenny) return false; // One benny per roll
+	// TODO: if character has no bennies left // Can't spend what you don't have
+	return true;
+};
 export default rollSlice.reducer;

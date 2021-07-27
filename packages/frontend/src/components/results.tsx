@@ -1,10 +1,10 @@
 import { Button, ButtonGroup, Card, Intent, Overlay } from '@blueprintjs/core';
 import { HTMLTable } from '@blueprintjs/core';
 import { markClear, selectResults } from '../data/results-slice';
-import { reset as markRollClear } from '../data/roll-slice';
+import { reset as markRollClear, selectBennyUse, useBenny } from '../data/roll-slice';
 import { selectCharacterId } from '../data/whoami-slice';
 import { skillCheck } from '../api/roll';
-import { spendBennie } from '../data/user-slice';
+import { spendBenny } from '../data/user-slice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import Loading from './loading';
@@ -13,6 +13,7 @@ import React from 'react';
 const Results = () => {
 	const dispatch = useDispatch();
 	const results = useSelector(selectResults);
+	const bennyAvailable = useSelector(selectBennyUse);
 	const characterId = useSelector(selectCharacterId);
 	return (
 		<Overlay
@@ -50,14 +51,17 @@ const Results = () => {
 									OK
 								</Button>
 
-								<Button
-									onClick={() => {
-										dispatch(spendBennie(characterId));
-										skillCheck();
-									}}
-									intent={Intent.NONE}>
-									Benny
-								</Button>
+								{bennyAvailable && (
+									<Button
+										onClick={() => {
+											dispatch(useBenny());
+											dispatch(spendBenny(characterId));
+											skillCheck();
+										}}
+										intent={Intent.NONE}>
+										Benny
+									</Button>
+								)}
 							</ButtonGroup>
 						</>
 					)}

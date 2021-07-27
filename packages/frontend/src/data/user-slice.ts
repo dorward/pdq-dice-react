@@ -57,19 +57,20 @@ const userSlice = createSlice({
 			attribute.wounds--;
 			saveToServer(JSON.parse(JSON.stringify(user)));
 		},
-		spendBennie: (state, action: PayloadAction<string>) => {
-			console.log('Spend bennie');
+		spendBenny: (state, action: PayloadAction<string>) => {
+			console.log('Spend benny');
 			const { user } = state;
 			const characterId = action.payload;
 			const character = user.characters.find(c => c.id === characterId);
 			character.bennies.current--;
 			return state;
+			// saveToServer(JSON.parse(JSON.stringify(user)));
 		},
 		unset: () => null,
 	},
 });
 
-export const { set, unset, addCharacterFromYAML, applyWound, healWound, updateCharacter, spendBennie } =
+export const { set, unset, addCharacterFromYAML, applyWound, healWound, updateCharacter, spendBenny } =
 	userSlice.actions;
 export const selectUser = (state: RootState) => state.user.user;
 export const selectCharacter = (state: RootState) => {
