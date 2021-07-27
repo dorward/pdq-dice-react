@@ -13,6 +13,7 @@ type Props = {
 const CharacterHeader = ({ name }: Props) => {
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const bennies = useSelector(selectBennies) ?? { current: 0, max: 'unknown' };
+
 	const dispatch = useDispatch();
 
 	if (characterToEdit) {
