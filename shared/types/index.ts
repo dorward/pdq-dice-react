@@ -7,13 +7,13 @@ export type Character = {
 	player: string;
 	motivation: string;
 	origin: string;
-	heropoints: Heropoints;
+	bennies: Bennies;
 	qualities: Attribute[];
 	extras: Extra[];
 	powers: Attribute[];
 };
-export type Heropoints = {
-	max: number;
+export type Bennies = {
+	max: number | string;
 	current: number;
 };
 

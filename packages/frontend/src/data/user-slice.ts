@@ -68,4 +68,11 @@ export const selectCharacter = (state: RootState) => {
 	const character = state.user.user.characters.find(c => c.id === id);
 	return character;
 };
+export const selectBennies = (state: RootState) => {
+	const characterId = state.whoami.characterId;
+	if (!characterId) return null;
+	const character = state.user.user.characters.find(c => c.id === characterId);
+	if (!character) return null;
+	return character.bennies;
+};
 export default userSlice.reducer;
