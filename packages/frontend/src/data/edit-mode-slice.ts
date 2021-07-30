@@ -1,6 +1,15 @@
-import { AttributeUpdate, AttributeUpdateValue, Character, ExtraUpdate, isExtraUpdateValue } from '../types';
+import {
+	Attribute,
+	AttributeUpdate,
+	AttributeUpdateValue,
+	Character,
+	Extra,
+	ExtraUpdate,
+	isExtraUpdateValue,
+} from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
+import { mutateName, mutateValue } from './edit-mode-helpers';
 import { v4 as uuidv4 } from 'uuid';
 
 type EditModeState = null | Character;
@@ -16,17 +25,17 @@ const EditModeSlice = createSlice({
 	reducers: {
 		editCharacter: (state: EditModeState, action: PayloadAction<Character>) => action.payload,
 		updateAttribute: (state: EditModeState, action: PayloadAction<AttributeUpdate>) => {
-			const qualityToUpdate = [...state.qualities, ...state.powers].find(q => q.id === action.payload.id);
 			if (isAttributeUpdateValue(action.payload)) {
 				if (action.payload.value === 'DEL') {
 					state.qualities = state.qualities.filter(q => q.id !== action.payload.id);
 					state.powers = state.powers.filter(q => q.id !== action.payload.id);
 					return state;
 				}
-				qualityToUpdate.value = action.payload.value;
+				state.qualities = mutateValue(state.qualities, action.payload.id, action.payload.value) as Attribute[];
+				state.powers = mutateValue(state.powers, action.payload.id, action.payload.value) as Attribute[];
 			} else {
-				console.log('updating name', qualityToUpdate.name, qualityToUpdate.id, action.payload.name);
-				qualityToUpdate.name = action.payload.name;
+				state.qualities = mutateName(state.qualities, action.payload.id, action.payload.name) as Attribute[];
+				state.powers = mutateName(state.powers, action.payload.id, action.payload.name) as Attribute[];
 			}
 			return state;
 		},
@@ -49,12 +58,10 @@ const EditModeSlice = createSlice({
 				if (value === 'DEL') {
 					state.extras = state.extras.filter(q => q.id !== action.payload.id);
 				} else {
-					const extraToUpdate = state.extras.find(q => q.id === action.payload.id);
-					extraToUpdate.value = action.payload.value as number;
+					state.extras = mutateValue(state.extras, action.payload.id, action.payload.value) as Extra[];
 				}
 			} else {
-				const extraToUpdate = state.extras.find(q => q.id === action.payload.id);
-				extraToUpdate.name = action.payload.name;
+				state.extras = mutateName(state.extras, action.payload.id, action.payload.name) as Extra[];
 			}
 			return state;
 		},
