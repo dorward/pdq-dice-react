@@ -23,9 +23,18 @@ const EditModeSlice = createSlice({
 			return state;
 		},
 		updateExtra: (state: EditModeState, action: PayloadAction<ExtraUpdate>) => {
-			const extraToUpdate = state.extras.find(q => q.id === action.payload.id);
-			if (isExtraUpdateValue(action.payload)) extraToUpdate.value = action.payload.value;
-			else extraToUpdate.name = action.payload.name;
+			if (isExtraUpdateValue(action.payload)) {
+				const { value } = action.payload;
+				if (value === 'DEL') {
+					state.extras = state.extras.filter(q => q.id !== action.payload.id);
+				} else {
+					const extraToUpdate = state.extras.find(q => q.id === action.payload.id);
+					extraToUpdate.value = action.payload.value as number;
+				}
+			} else {
+				const extraToUpdate = state.extras.find(q => q.id === action.payload.id);
+				extraToUpdate.name = action.payload.name;
+			}
 			return state;
 		},
 		addExtra: (state: EditModeState) => {

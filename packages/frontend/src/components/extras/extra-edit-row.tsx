@@ -1,3 +1,4 @@
+import { ExtraUpdateValue } from '../../types';
 import { FormGroup, HTMLSelect, InputGroup } from '@blueprintjs/core';
 import { RowProps } from './types';
 import { updateExtra } from '../../data/edit-mode-slice';
@@ -27,7 +28,8 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 					value={extra.value}
 					options={extraValues}
 					onChange={e => {
-						const data = { id: extra.id, value: +e.target.value };
+						const value = e.target.value;
+						const data = { id: extra.id, value: value === 'DEL' ? value : +value } as ExtraUpdateValue;
 						dispatch(updateExtra(data));
 					}}
 				/>

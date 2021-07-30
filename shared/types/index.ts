@@ -100,7 +100,7 @@ export type ExtraUpdateName = {
 
 export type ExtraUpdateValue = {
 	id: string;
-	value: number;
+	value: 'DEL' | number;
 };
 
 export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue;
