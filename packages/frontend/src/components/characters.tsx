@@ -1,8 +1,8 @@
 import { Icon, Tab, Tabs } from '@blueprintjs/core';
 import { User } from '../types';
 import { exitEditMode } from '../data/edit-mode-slice';
+import { selectCharacterId, setCharacterId } from '../data/whoami-slice';
 import { selectUser } from '../data/user-slice';
-import { setCharacterId } from '../data/whoami-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import CharacterSheet from './character-sheet';
 import NewCharacter from './new-character';
@@ -12,6 +12,7 @@ import React from 'react';
 const Characters = () => {
 	const dispatch = useDispatch();
 	const { characters } = useSelector(selectUser) as User;
+	const id = useSelector(selectCharacterId) || 'new-character-page';
 	return (
 		<>
 			<Tabs
@@ -19,6 +20,7 @@ const Characters = () => {
 					dispatch(exitEditMode());
 					dispatch(setCharacterId(id as string));
 				}}
+				selectedTabId={id}
 				large
 				renderActiveTabPanelOnly>
 				<Tab id="simple-dice" panel={<NoCharacter showWelcome={characters.length === 0} />}>

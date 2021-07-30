@@ -31,8 +31,8 @@ const userSlice = createSlice({
 			state.user = newUser;
 			saveToServer(newUser);
 		},
-		addCharacterFromScratch: state => {
-			state.user.characters = [...state.user.characters, blankCharacter()];
+		addCharacterFromScratch: (state, action: PayloadAction<string>) => {
+			state.user.characters = [...state.user.characters, blankCharacter(action.payload)];
 			// TODO: saveToServer(state.user);
 			return state;
 		},

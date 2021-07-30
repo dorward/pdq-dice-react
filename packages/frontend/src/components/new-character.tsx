@@ -1,5 +1,6 @@
 import { Button, Callout } from '@blueprintjs/core';
-import { addCharacterFromScratch, addCharacterFromYAML } from '../data/user-slice';
+import { addCharacterFromYAML } from '../data/user-slice';
+import { createNewCharacter } from '../data/helpers';
 import { useDispatch } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import React from 'react';
@@ -34,7 +35,7 @@ const NewCharacter = () => {
 
 			<Callout title="New Character" icon="new-person" intent="none" className="tiny">
 				<p>Start with a blank character sheet.</p>
-				<Button className="center" intent="primary" onClick={() => dispatch(addCharacterFromScratch())}>
+				<Button className="center" intent="primary" onClick={createNewCharacter}>
 					New Character
 				</Button>
 			</Callout>
