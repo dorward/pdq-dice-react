@@ -1,6 +1,7 @@
 import { Character, Sheet, User } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
+import blankCharacter from './blankCharacter';
 import cleanUser from './clean-user';
 import saveToServer from '../api/save-to-server';
 import yaml from 'js-yaml';
@@ -29,6 +30,11 @@ const userSlice = createSlice({
 			const newUser: User = { ...user, characters: [...user.characters, character] };
 			state.user = newUser;
 			saveToServer(newUser);
+		},
+		addCharacterFromScratch: state => {
+			state.user.characters = [...state.user.characters, blankCharacter()];
+			// TODO: saveToServer(state.user);
+			return state;
 		},
 		updateCharacter: (state, action: PayloadAction<Character>) => {
 			const characterId = action.payload.id;
@@ -69,8 +75,16 @@ const userSlice = createSlice({
 	},
 });
 
-export const { set, unset, addCharacterFromYAML, applyWound, healWound, updateCharacter, spendBenny } =
-	userSlice.actions;
+export const {
+	addCharacterFromScratch,
+	addCharacterFromYAML,
+	applyWound,
+	healWound,
+	set,
+	spendBenny,
+	unset,
+	updateCharacter,
+} = userSlice.actions;
 export const selectUser = (state: RootState) => state.user.user;
 export const selectCharacter = (state: RootState) => {
 	const id = state.whoami.characterId;

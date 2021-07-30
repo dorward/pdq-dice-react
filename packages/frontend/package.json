@@ -27,6 +27,7 @@
 		"react-dropzone": "^11.3.2",
 		"react-redux": "^7.2.4",
 		"react-router-dom": "^5.2.0",
+		"unique-names-generator": "^4.6.0",
 		"uuid": "^3.4.0"
 	},
 	"devDependencies": {
