@@ -9,7 +9,9 @@ import { useSelector } from 'react-redux';
 const Attributes = (props: Props) => {
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const Component = characterToEdit ? AttributesEdit : AttributesPlay;
-	return <Component {...props} />;
+	const character = characterToEdit ?? props.character;
+	console.log({ character });
+	return <Component {...{ ...props, character }} />;
 };
 
 export default Attributes;

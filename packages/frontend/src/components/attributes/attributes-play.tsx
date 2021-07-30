@@ -3,7 +3,8 @@ import { Props } from './types';
 import AttributeRow from './attribute-row';
 import React from 'react';
 
-const AttributesPlay = ({ attributes, title, character, isWoundable = false }: Props) => {
+const AttributesPlay = ({ dataSource, title, character, isWoundable = false }: Props) => {
+	const attributes = character[dataSource];
 	return (
 		<>
 			<HTMLTable className="attributes">

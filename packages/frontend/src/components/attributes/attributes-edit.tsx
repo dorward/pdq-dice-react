@@ -1,12 +1,13 @@
 import { Button, HTMLTable, Icon } from '@blueprintjs/core';
 import { Props } from './types';
-import { addQuality } from '../../data/edit-mode-slice';
+import { addAttribute } from '../../data/edit-mode-slice';
 import { useDispatch } from 'react-redux';
 import AttributeEditRow from './attribute-edit-row';
 import React from 'react';
 
-const AttributesEdit = ({ attributes, title, character, isWoundable = false }: Props) => {
+const AttributesEdit = ({ dataSource, title, character, isWoundable = false }: Props) => {
 	const dispatch = useDispatch();
+	const attributes = character[dataSource];
 
 	return (
 		<>
@@ -17,7 +18,7 @@ const AttributesEdit = ({ attributes, title, character, isWoundable = false }: P
 							{title}{' '}
 							<Button
 								className="add"
-								onClick={() => dispatch(addQuality(title === 'Standard Qualities' ? 'quality' : 'power'))}>
+								onClick={() => dispatch(addAttribute(title === 'Standard Qualities' ? 'quality' : 'power'))}>
 								<Icon icon="add" title="Add Extra" htmlTitle="Add Extra" />
 							</Button>
 						</th>
@@ -27,7 +28,7 @@ const AttributesEdit = ({ attributes, title, character, isWoundable = false }: P
 				</thead>
 				<tbody>
 					{attributes.map(attribute => (
-						<AttributeEditRow key={attribute.name} {...{ attribute, character, isWoundable }} />
+						<AttributeEditRow key={attribute.id} {...{ attribute, character, isWoundable }} />
 					))}
 				</tbody>
 			</HTMLTable>

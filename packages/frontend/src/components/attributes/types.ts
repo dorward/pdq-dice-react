@@ -1,10 +1,10 @@
 import { Attribute, Character } from '../../types';
 
 export type Props = {
-	attributes: Attribute[];
 	title: string;
 	character: Character;
 	isWoundable?: boolean;
+	dataSource: 'powers' | 'qualities';
 };
 
 export type RowProps = {

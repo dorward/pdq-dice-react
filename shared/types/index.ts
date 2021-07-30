@@ -1,6 +1,7 @@
 export type Sheet = {
 	sheet: Character;
 };
+
 export type Character = {
 	name: string;
 	id: string;
@@ -12,6 +13,7 @@ export type Character = {
 	extras: Extra[];
 	powers: Attribute[];
 };
+
 export type Bennies = {
 	max: string;
 	current: number;
@@ -93,6 +95,18 @@ export type SkillCheckResponseBody = {
 	description?: string;
 };
 
+export type AttributeUpdateName = {
+	id: string;
+	name: string;
+};
+
+export type AttributeUpdateValue = {
+	id: string;
+	value: 'DEL' | QualityValue;
+};
+
+export type AttributeUpdate = AttributeUpdateName | AttributeUpdateValue;
+
 export type ExtraUpdateName = {
 	id: string;
 	name: string;
@@ -104,5 +118,7 @@ export type ExtraUpdateValue = {
 };
 
 export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue;
+
+export const isAt = (data: AttributeUpdate): data is AttributeUpdateValue => 'value' in data;
 
 export const isExtraUpdateValue = (data: ExtraUpdate): data is ExtraUpdateValue => 'value' in data;

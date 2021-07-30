@@ -1,4 +1,4 @@
-import { Character, ExtraUpdate, QualityValue, isExtraUpdateValue } from '../types';
+import { AttributeUpdate, AttributeUpdateValue, Character, ExtraUpdate, isExtraUpdateValue } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,22 +7,30 @@ type EditModeState = null | Character;
 
 const initialEditModeState: EditModeState = null;
 
-type AttributeUpdate = {
-	id: string;
-	value: QualityValue;
-};
+// TODO: Figure out why I can't export this from types/index.ts
+export const isAttributeUpdateValue = (data: AttributeUpdate): data is AttributeUpdateValue => 'value' in data;
 
 const EditModeSlice = createSlice({
 	name: 'EditMode',
 	initialState: initialEditModeState,
 	reducers: {
 		editCharacter: (state: EditModeState, action: PayloadAction<Character>) => action.payload,
-		updateQuality: (state: EditModeState, action: PayloadAction<AttributeUpdate>) => {
+		updateAttribute: (state: EditModeState, action: PayloadAction<AttributeUpdate>) => {
 			const qualityToUpdate = [...state.qualities, ...state.powers].find(q => q.id === action.payload.id);
-			qualityToUpdate.value = action.payload.value;
+			if (isAttributeUpdateValue(action.payload)) {
+				if (action.payload.value === 'DEL') {
+					state.qualities = state.qualities.filter(q => q.id !== action.payload.id);
+					state.powers = state.powers.filter(q => q.id !== action.payload.id);
+					return state;
+				}
+				qualityToUpdate.value = action.payload.value;
+			} else {
+				console.log('updating name', qualityToUpdate.name, qualityToUpdate.id, action.payload.name);
+				qualityToUpdate.name = action.payload.name;
+			}
 			return state;
 		},
-		addQuality: (state: EditModeState, action: PayloadAction<'quality' | 'power'>) => {
+		addAttribute: (state: EditModeState, action: PayloadAction<'quality' | 'power'>) => {
 			const prop = action.payload === 'quality' ? 'qualities' : 'powers';
 			state[prop] = [
 				...state[prop],
@@ -79,14 +87,14 @@ const EditModeSlice = createSlice({
 
 export const {
 	addExtra,
-	addQuality,
+	addAttribute,
 	editCharacter,
 	exitEditMode,
 	updateCurrentBennies,
 	updateExtra,
 	updateMaximumBennies,
 	updateName,
-	updateQuality,
+	updateAttribute,
 } = EditModeSlice.actions;
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export default EditModeSlice.reducer;

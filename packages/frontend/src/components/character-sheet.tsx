@@ -1,3 +1,4 @@
+import { Props as AttributesProps } from './attributes/types';
 import { Button, FormGroup, Icon, InputGroup } from '@blueprintjs/core';
 import { Character } from '../types';
 import { editCharacter, selectEditingCharacter } from '../data/edit-mode-slice';
@@ -12,6 +13,18 @@ import SkillCheck from './skill-check';
 
 type Props = {
 	character: Character;
+};
+
+const qualities = {
+	title: 'Standard Qualities',
+	dataSource: 'qualities' as AttributesProps['dataSource'],
+	isWoundable: true,
+};
+
+const powers = {
+	title: 'Powers',
+	dataSource: 'powers' as AttributesProps['dataSource'],
+	isWoundable: false,
 };
 
 const CharacterSheet = ({ character: characterProp }: Props) => {
@@ -40,8 +53,8 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 						</Button>
 					)}
 				</div>
-				<Attributes title="Standard Qualities" attributes={character.qualities} character={character} isWoundable />
-				<Attributes title="Powers" attributes={character.powers} character={character} />
+				<Attributes {...{ ...qualities, character }} />
+				<Attributes {...{ ...powers, character }} />
 				<Extras extras={character.extras} />
 				<div className="controls">
 					<FormGroup label="Description of roll" labelFor={descriptionId}>
