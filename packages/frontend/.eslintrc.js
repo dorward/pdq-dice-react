@@ -14,6 +14,7 @@ module.exports = {
 		// 		allowSeparatedGroups: false,
 		// 	},
 		// ],
+		'no-duplicate-imports': 'error',
 		'sort-imports-es6-autofix/sort-imports-es6': [
 			2,
 			{

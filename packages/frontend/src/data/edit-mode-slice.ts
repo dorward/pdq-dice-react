@@ -22,6 +22,19 @@ const EditModeSlice = createSlice({
 			qualityToUpdate.value = action.payload.value;
 			return state;
 		},
+		addQuality: (state: EditModeState, action: PayloadAction<'quality' | 'power'>) => {
+			const prop = action.payload === 'quality' ? 'qualities' : 'powers';
+			state[prop] = [
+				...state[prop],
+				{
+					id: uuidv4(),
+					name: `New ${action.payload}`,
+					value: 'AVG',
+					wounds: 0,
+				},
+			];
+			return state;
+		},
 		updateExtra: (state: EditModeState, action: PayloadAction<ExtraUpdate>) => {
 			if (isExtraUpdateValue(action.payload)) {
 				const { value } = action.payload;
@@ -65,14 +78,15 @@ const EditModeSlice = createSlice({
 });
 
 export const {
+	addExtra,
+	addQuality,
 	editCharacter,
 	exitEditMode,
-	updateQuality,
-	updateName,
-	updateExtra,
-	addExtra,
 	updateCurrentBennies,
+	updateExtra,
 	updateMaximumBennies,
+	updateName,
+	updateQuality,
 } = EditModeSlice.actions;
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export default EditModeSlice.reducer;

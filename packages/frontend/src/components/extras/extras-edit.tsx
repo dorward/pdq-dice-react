@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Button, Icon } from '@blueprintjs/core';
-import { HTMLTable } from '@blueprintjs/core';
+import { Button, HTMLTable, Icon } from '@blueprintjs/core';
 import { Props } from './types';
 import { addExtra } from '../../data/edit-mode-slice';
 import { useDispatch } from 'react-redux';

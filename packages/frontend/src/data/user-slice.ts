@@ -1,7 +1,6 @@
-import { Character } from '../types';
+import { Character, Sheet, User } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
-import { Sheet, User } from '../types';
 import cleanUser from './clean-user';
 import saveToServer from '../api/save-to-server';
 import yaml from 'js-yaml';
