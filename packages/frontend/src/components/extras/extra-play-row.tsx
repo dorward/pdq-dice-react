@@ -1,3 +1,4 @@
+import { Checkbox } from '@blueprintjs/core';
 import { RowProps } from './types';
 import { selectSelected, toggleSelected } from '../../data/roll-slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,9 +12,11 @@ const ExtraPlayRow = ({ extra }: RowProps) => {
 
 	return (
 		<tr key={extra.id}>
-			<td key="label">
+			<td key="label" className="bonus-name">
 				<label className="attribute-row-label">
-					<input type="checkbox" name={extra.name} value="use" checked={checked} onChange={onChange} /> {extra.name}
+					<Checkbox checked={checked} onChange={onChange}>
+						{extra.name}
+					</Checkbox>
 				</label>
 			</td>
 			<td>{extra.value}</td>

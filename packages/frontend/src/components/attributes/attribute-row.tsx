@@ -1,3 +1,4 @@
+import { Checkbox } from '@blueprintjs/core';
 import { RowProps } from './types';
 import { attributeValues } from '../../consts';
 import { selectSelected, toggleSelected } from '../../data/roll-slice';
@@ -18,11 +19,10 @@ const AttributeRow = ({ attribute, character, isWoundable }: RowProps) => {
 
 	return (
 		<tr key={attribute.name} className={classnames({ wounded: Boolean(attribute.wounds) })}>
-			<td key="label">
-				<label className="attribute-row-label">
-					<input type="checkbox" name={attribute.name} value="use" checked={checked} onChange={onChange} />{' '}
+			<td key="label" className="bonus-name">
+				<Checkbox checked={checked} onChange={onChange}>
 					{attribute.name}
-				</label>
+				</Checkbox>
 			</td>
 			{attributeValues.map(([name], index) => (
 				<td key={name}>
