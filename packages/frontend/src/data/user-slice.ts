@@ -33,7 +33,7 @@ const userSlice = createSlice({
 		},
 		addCharacterFromScratch: (state, action: PayloadAction<string>) => {
 			state.user.characters = [...state.user.characters, blankCharacter(action.payload)];
-			// TODO: saveToServer(state.user);
+			saveToServer(state.user);
 			return state;
 		},
 		updateCharacter: (state, action: PayloadAction<Character>) => {
@@ -47,6 +47,13 @@ const userSlice = createSlice({
 			const characterId = action.payload;
 			const character = state.user.characters.find(c => c.id === characterId);
 			character.hidden = !character.hidden;
+			return state;
+		},
+		deleteCharacter: (state, action: PayloadAction<string>) => {
+			const characterId = action.payload;
+			const characterIndex = state.user.characters.findIndex(c => c.id === characterId);
+			state.user.characters.splice(characterIndex, 1);
+			saveToServer(state.user);
 			return state;
 		},
 		applyWound: (state, action: PayloadAction<AttributePath>) => {
@@ -84,6 +91,7 @@ export const {
 	addCharacterFromScratch,
 	addCharacterFromYAML,
 	applyWound,
+	deleteCharacter,
 	healWound,
 	set,
 	spendBenny,
