@@ -1,8 +1,7 @@
 import { Icon, Tab, Tabs } from '@blueprintjs/core';
-import { User } from '../types';
 import { exitEditMode } from '../data/edit-mode-slice';
 import { selectCharacterId, setCharacterId } from '../data/whoami-slice';
-import { selectUser } from '../data/user-slice';
+import { selectCharacters } from '../data/user-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import CharacterSheet from './character-sheet';
 import NewCharacter from './new-character';
@@ -11,7 +10,7 @@ import React from 'react';
 
 const Characters = () => {
 	const dispatch = useDispatch();
-	const { characters } = useSelector(selectUser) as User;
+	const characters = useSelector(selectCharacters).filter(character => !character.hidden);
 	const id = useSelector(selectCharacterId) || 'new-character-page';
 	return (
 		<>

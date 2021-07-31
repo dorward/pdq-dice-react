@@ -39,9 +39,14 @@ const userSlice = createSlice({
 		updateCharacter: (state, action: PayloadAction<Character>) => {
 			const characterId = action.payload.id;
 			const characterIndex = state.user.characters.findIndex(character => character.id === characterId);
-			console.log({ characterId, characterIndex });
 			state.user.characters.splice(characterIndex, 1, action.payload);
 			saveToServer(state.user);
+			return state;
+		},
+		toggleCharacterVisibility: (state, action: PayloadAction<string>) => {
+			const characterId = action.payload;
+			const character = state.user.characters.find(c => c.id === characterId);
+			character.hidden = !character.hidden;
 			return state;
 		},
 		applyWound: (state, action: PayloadAction<AttributePath>) => {
@@ -82,10 +87,12 @@ export const {
 	healWound,
 	set,
 	spendBenny,
+	toggleCharacterVisibility,
 	unset,
 	updateCharacter,
 } = userSlice.actions;
 export const selectUser = (state: RootState) => state.user.user;
+export const selectCharacters = (state: RootState): Character[] => state.user?.user?.characters ?? [];
 export const selectCharacter = (state: RootState) => {
 	const id = state.whoami.characterId;
 	const character = state.user.user.characters.find(c => c.id === id);

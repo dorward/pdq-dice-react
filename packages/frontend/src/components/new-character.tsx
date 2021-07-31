@@ -1,12 +1,14 @@
-import { Button, Callout } from '@blueprintjs/core';
-import { addCharacterFromYAML } from '../data/user-slice';
+import { Button, Callout, Checkbox, H3, UL } from '@blueprintjs/core';
+import { addCharacterFromYAML, selectCharacters, toggleCharacterVisibility } from '../data/user-slice';
 import { createNewCharacter } from '../data/helpers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import React from 'react';
 
 const NewCharacter = () => {
 	const dispatch = useDispatch();
+	const characters = useSelector(selectCharacters);
+
 	const onDrop = (acceptedFiles: File[]) => {
 		if (acceptedFiles.length === 1) {
 			const reader = new FileReader();
@@ -39,6 +41,17 @@ const NewCharacter = () => {
 					New Character
 				</Button>
 			</Callout>
+			<H3>Active characters</H3>
+			<p>Toggle these characters appearing in the tab bar at the top.</p>
+			<UL>
+				{characters.map(character => (
+					<li key={character.id}>
+						<Checkbox checked={!character.hidden} onChange={() => dispatch(toggleCharacterVisibility(character.id))}>
+							{character.name}
+						</Checkbox>
+					</li>
+				))}
+			</UL>
 		</>
 	);
 };

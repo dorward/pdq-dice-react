@@ -12,6 +12,7 @@ export type Character = {
 	qualities: Attribute[];
 	extras: Extra[];
 	powers: Attribute[];
+	hidden?: boolean;
 };
 
 export type Bennies = {
