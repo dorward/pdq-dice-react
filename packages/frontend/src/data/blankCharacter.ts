@@ -1,5 +1,4 @@
 import { Character } from '../types';
-import { v4 as uuidv4 } from 'uuid';
 import randomName from './random-name';
 
 const blankCharacter = (id: string): Character => {
