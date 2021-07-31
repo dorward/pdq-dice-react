@@ -38,6 +38,10 @@ body {
 	}
 }
 
+main > .bp3-tabs > .bp3-tab-list {
+	flex-wrap: wrap;
+}
+
 .results {
 	width: 400px;
 	min-height: 22em;
