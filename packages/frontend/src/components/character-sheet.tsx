@@ -56,17 +56,19 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 				<Attributes {...{ ...qualities, character }} />
 				<Attributes {...{ ...powers, character }} />
 				<Extras extras={character.extras} />
-				<div className="controls">
-					<FormGroup label="Description of roll" labelFor={descriptionId}>
-						<InputGroup
-							placeholder="What action are you rolling?"
-							id={descriptionId}
-							value={description}
-							onChange={e => setDescription(e.currentTarget.value)}
-						/>
-					</FormGroup>
-					<SkillCheck />
-				</div>
+				{!characterToEdit && (
+					<div className="controls">
+						<FormGroup label="Description of roll" labelFor={descriptionId}>
+							<InputGroup
+								placeholder="What action are you rolling?"
+								id={descriptionId}
+								value={description}
+								onChange={e => setDescription(e.currentTarget.value)}
+							/>
+						</FormGroup>
+						<SkillCheck />
+					</div>
+				)}
 			</div>
 		</>
 	);
