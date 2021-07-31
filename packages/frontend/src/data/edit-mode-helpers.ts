@@ -9,14 +9,14 @@ type Valued = {
 	value: any;
 };
 
-export const mutateName = (array: Named[], id: string, name: string): Named[] => {
+export const mutateName = <T extends Named>(array: T[], id: string, name: string): T[] => {
 	const index = array.findIndex(item => item.id === id);
 	if (index === -1) return array;
 	array[index] = { ...array[index], name };
 	return array;
 };
 
-export const mutateValue = (array: Valued[], id: string, value: any): Valued[] => {
+export const mutateValue = <T extends Valued>(array: T[], id: string, value: any): T[] => {
 	const index = array.findIndex(item => item.id === id);
 	if (index === -1) return array;
 	array[index] = { ...array[index], value };
