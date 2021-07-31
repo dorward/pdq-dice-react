@@ -1,4 +1,4 @@
-import { Callout, H2, Icon } from '@blueprintjs/core';
+import { Callout, Icon } from '@blueprintjs/core';
 import React from 'react';
 import SimpleDice from './simple-dice';
 
@@ -10,7 +10,6 @@ const NoCharacter = ({ showWelcome }: Props) => {
 	return (
 		<>
 			<div className="character-sheet">
-				<H2>Roll some dice</H2>
 				<SimpleDice />
 			</div>
 
