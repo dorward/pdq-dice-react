@@ -4,16 +4,6 @@ module.exports = {
 	plugins: ['@typescript-eslint', 'sort-imports-es6-autofix'],
 	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
 	rules: {
-		// 'sort-imports': [
-		// 	'error',
-		// 	{
-		// 		ignoreCase: false,
-		// 		ignoreDeclarationSort: false,
-		// 		ignoreMemberSort: false,
-		// 		memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
-		// 		allowSeparatedGroups: false,
-		// 	},
-		// ],
 		'no-duplicate-imports': 'error',
 		'sort-imports-es6-autofix/sort-imports-es6': [
 			2,

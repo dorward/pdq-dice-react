@@ -3,8 +3,8 @@ import { attributeValues } from '../consts';
 import { markLoading, setResult } from '../data/results-slice';
 import { selectCharacter } from '../data/user-slice';
 import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
-
 import axios from 'axios';
+
 import store from '../data/redux-store';
 
 const getBase = () => {

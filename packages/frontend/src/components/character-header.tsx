@@ -2,8 +2,12 @@ import React from 'react';
 
 import { FormGroup, H2, HTMLSelect, InputGroup } from '@blueprintjs/core';
 import { selectBennies } from '../data/user-slice';
-import { selectEditingCharacter } from '../data/edit-mode-slice';
-import { updateCurrentBennies, updateMaximumBennies, updateName } from '../data/edit-mode-slice';
+import {
+	selectEditingCharacter,
+	updateCurrentBennies,
+	updateMaximumBennies,
+	updateName,
+} from '../data/edit-mode-slice';
 import { useDispatch, useSelector } from 'react-redux';
 
 type Props = {

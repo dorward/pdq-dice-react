@@ -10,7 +10,8 @@
 	"files": [],
 	"scripts": {
 		"start:dev": "parcel src/index.html --open",
-		"build": "parcel build  --no-source-maps --no-cache src/index.html "
+		"build": "parcel build  --no-source-maps --no-cache src/index.html",
+		"lint:fix": "eslint --fix src/"
 	},
 	"dependencies": {
 		"@blueprintjs/core": "^3.47.0",
