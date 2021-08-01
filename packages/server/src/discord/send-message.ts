@@ -20,7 +20,8 @@ const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) 
 
 	const embed = new discord.MessageEmbed()
 		.setColor(successToColor(success))
-		.setTitle(response.description || 'Skill check')
+		.setTitle(response.rollType)
+		.setDescription(response.description ?? 'Just some roll')
 		.setAuthor(response.rollFor.name, response.rollFor.avatar)
 		.setThumbnail(thumbnail);
 

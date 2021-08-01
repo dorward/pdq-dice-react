@@ -22,12 +22,14 @@ type D6Params = {
 
 export const d6 = async ({ high }: D6Params) => {
 	store.dispatch(markLoading());
-	const description = typeof high === 'undefined' ? 'd6' : `Luck roll (${high ? 'High' : 'Low'})`;
+	const [rollType, description] =
+		typeof high === 'undefined' ? ['d6', undefined] : [`Luck roll`, high ? 'High' : 'Low'];
 	const { auth, url } = getBase();
 	const data = {
 		...auth,
 		dice: '1d6',
 		high,
+		rollType,
 		description,
 	};
 	const response = await axios.post(url, data);
@@ -38,7 +40,6 @@ export const d6 = async ({ high }: D6Params) => {
 
 export const skillCheck = async () => {
 	const { selected, description, circumstance } = store.getState().roll;
-	alert(description);
 	store.dispatch(markLoading());
 	const character = selectCharacter(store.getState());
 	const qualityBonuses = [...character.qualities, ...character.powers]
@@ -66,6 +67,7 @@ export const skillCheck = async () => {
 		dice: '2d6',
 		bonuses,
 		description,
+		rollType: 'Skill Check',
 	};
 	const response = await axios.post(url, data);
 	const result = response.data.result;

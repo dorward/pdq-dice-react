@@ -92,6 +92,7 @@ export type SkillCheckRequestBody = {
 	dice: '1d6' | '2d6';
 	high?: boolean;
 	bonuses?: SkillCheckBonus[];
+	rollType: string;
 	description?: string;
 };
 
@@ -101,6 +102,7 @@ export type SkillCheckResponseBody = {
 	total: number;
 	success?: boolean;
 	description?: string;
+	rollType: string;
 	rollFor: {
 		name: string;
 		avatar: string;

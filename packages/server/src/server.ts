@@ -75,7 +75,7 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 	};
 
 	// Calculate result
-	const { dice, high, bonuses = [], description } = req.body as SkillCheckRequestBody;
+	const { dice, high, bonuses = [], description, rollType } = req.body as SkillCheckRequestBody;
 	// console.log(req.body);
 	if (!supportedDice.includes(dice)) return res.sendStatus(400);
 	const rolls: DiceRollBonus['rolls'] = dice === '1d6' ? [d6()] : [d6(), d6()];
@@ -99,7 +99,7 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 	}, 0);
 
 	// Compile the result
-	const response: SkillCheckResponseBody = { results, total, success, description, rollFor, diceResult };
+	const response: SkillCheckResponseBody = { results, total, success, description, rollFor, rollType, diceResult };
 	sendDiscordMessage(user, response);
 	res.json(response);
 });
