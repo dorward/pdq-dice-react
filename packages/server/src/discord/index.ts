@@ -8,8 +8,6 @@ const config = {
 	db_path: process.env.DB_PATH,
 };
 
-console.log({ config });
-
 const client = new discord.Client();
 
 client.on('ready', () => {

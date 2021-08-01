@@ -17,7 +17,8 @@
 		"start:dist:dev": "npm run build && node -r dotenv/config dist/server.js dotenv_config_path=./.env.development",
 		"build": "npm run clean && npm run compile",
 		"clean": "rm -rf ./dist",
-		"compile": "tsc -p tsconfig.json"
+		"compile": "tsc -p tsconfig.json",
+		"lint:fix": "eslint --fix src/"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
@@ -34,10 +35,13 @@
 		"@types/uuid": "^8.3.0",
 		"@types/ws": "^7.4.4",
 		"discord.js": "^12.5.3",
-		"eslint": "^7.26.0",
 		"kill-port": "^1.6.1",
 		"nodemon": "^2.0.7",
 		"tsconfig-paths": "^3.9.0",
-		"typescript": "^4.2.4"
+		"typescript": "^4.2.4",
+		"@typescript-eslint/eslint-plugin": "^4.28.4",
+		"@typescript-eslint/parser": "^4.28.4",
+		"eslint": "^7.31.0",
+		"eslint-plugin-sort-imports-es6-autofix": "^0.6.0"
 	}
 }

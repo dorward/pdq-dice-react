@@ -81,6 +81,11 @@ export type RollData = {
 export type SkillCheckBonus = {
 	name: string;
 	value: number;
+	rolls?: [number, number?];
+};
+
+export type DiceRollBonus = SkillCheckBonus & {
+	rolls: [number, number?];
 };
 
 export type SkillCheckRequestBody = {
@@ -92,9 +97,14 @@ export type SkillCheckRequestBody = {
 
 export type SkillCheckResponseBody = {
 	results: SkillCheckBonus[];
+	diceResult: SkillCheckBonus;
 	total: number;
 	success?: boolean;
 	description?: string;
+	rollFor: {
+		name: string;
+		avatar: string;
+	};
 };
 
 export type AttributeUpdateName = {

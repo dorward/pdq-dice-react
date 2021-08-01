@@ -3,7 +3,8 @@ import cors from 'cors';
 import discord from './discord';
 import d6 from './util/d6';
 import { getAllUsers, getUserByCode, addOrUpdateUser } from './store/db';
-import { SkillCheckRequestBody, SkillCheckResponseBody, SkillCheckBonus } from './types';
+import { SkillCheckRequestBody, SkillCheckResponseBody, SkillCheckBonus, DiceRollBonus } from './types';
+import sendDiscordMessage from './discord/send-message';
 
 discord.on('ready', () => {
 	console.log(`Logged in as ${discord.user.tag}!`);
@@ -56,21 +57,36 @@ const supportedDice = ['1d6', '2d6'];
 
 // TODO say what character this is for too!
 app.post('/api/roll/:id/:code', async (req, res) => {
-	const characterId = req.body;
-	console.log('request body', characterId);
+	const requestBody = req.body;
+	console.log('request body', JSON.stringify(requestBody, undefined, 2));
+
+	// Get User
 	const user = await getUserByCode(req.params.code);
 	if (!user || user.userId !== req.params.id) {
 		return res.sendStatus(401);
 	}
 
+	// Get Character
+	const { characterId } = req.body;
+	const character = user.characters.find(c => c.id === characterId);
+	const rollFor = {
+		name: character?.name || user.nickname || user.userTag,
+		avatar: 'http://placekitten.com/120/120', // TODO use character avatar
+	};
+
+	// Calculate result
 	const { dice, high, bonuses = [], description } = req.body as SkillCheckRequestBody;
-	console.log(req.body);
+	// console.log(req.body);
 	if (!supportedDice.includes(dice)) return res.sendStatus(400);
-	const rolls = [d6(), d6()];
+	const rolls: DiceRollBonus['rolls'] = [d6(), d6()];
 	const diceResult: SkillCheckBonus =
 		dice === '1d6'
-			? { name: 'Roll', value: rolls[0] }
-			: { name: `Roll (${rolls[0]} + ${rolls[1]})`, value: rolls[0] + rolls[1] };
+			? { name: 'Roll', value: rolls[0], rolls: rolls }
+			: {
+					name: `Roll (${rolls[0]} + ${rolls[1]})`,
+					value: rolls[0] + rolls[1],
+					rolls: rolls,
+			  };
 	let success;
 	if (typeof high !== 'undefined') {
 		success = false;
@@ -82,7 +98,10 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 		return acc + +cur.value;
 	}, 0);
 
-	res.json({ results, total, success, description } as SkillCheckResponseBody);
+	// Compile the result
+	const response: SkillCheckResponseBody = { results, total, success, description, rollFor, diceResult };
+	sendDiscordMessage(user, response);
+	res.json(response);
 });
 
 app.listen(port, () => {
