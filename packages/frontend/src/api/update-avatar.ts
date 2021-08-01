@@ -26,42 +26,10 @@ const updateAvatar = async ({ image }: Props) => {
 		...auth,
 		image,
 	};
-	console.log('data', data);
+	console.log('Making request');
 	const response = await axios.post(url, data);
-	console.log(response.data);
-	// const { selected, description, circumstance } = store.getState().roll;
-	// store.dispatch(markLoading());
-	// const character = selectCharacter(store.getState());
-	// const qualityBonuses = [...character.qualities, ...character.powers]
-	// 	.filter(attribute => selected[attribute.id])
-	// 	.map(attribute => {
-	// 		const value =
-	// 			attributeValues[attributeValues.findIndex(value => value[0] === attribute.value) + (attribute.wounds || 0)][1];
-	// 		return {
-	// 			name: attribute.name,
-	// 			value,
-	// 		};
-	// 	});
-	// const extraBonuses = character.extras
-	// 	.filter(extra => selected[extra.id])
-	// 	.map(extra => ({
-	// 		name: extra.name,
-	// 		value: extra.value,
-	// 	}));
-	// const circumstanceBonus = circumstance.value ? [{ name: circumstance.name, value: circumstance.value }] : [];
-	// const bonuses = [...qualityBonuses, ...extraBonuses, ...circumstanceBonus];
-	// const { auth, url } = getBase();
-	// const data: SkillCheckRequestBody = {
-	// 	...auth,
-	// 	dice: '2d6',
-	// 	bonuses,
-	// 	description,
-	// 	rollType: 'Skill Check',
-	// };
-	// const response = await axios.post(url, data);
-	// const result = response.data.result;
-	// store.dispatch(setResult(response.data));
-	// return result;
+	console.log('Getting response', response.data);
+	return response.data.url;
 };
 
 export default updateAvatar;

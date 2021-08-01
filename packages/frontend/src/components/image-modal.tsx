@@ -2,22 +2,33 @@ import React, { useRef, useState } from 'react';
 import { Button, Card, Slider, Overlay, Intent } from '@blueprintjs/core';
 import AvatarEditor from 'react-avatar-editor';
 import updateAvatar from '../api/update-avatar';
+import { LoadingOverlay } from './loading';
+import { useDispatch } from 'react-redux';
+import { updateAvatar as updateAvatarAction } from '../data/edit-mode-slice';
 
-type Props = { url: string };
+type Props = { url: string; clear: () => void };
 
-const ImageModal = ({ url }: Props) => {
-	// const dispatch = useDispatch();
-
+const ImageModal = ({ url, clear }: Props) => {
+	const dispatch = useDispatch();
 	const editor = useRef(null);
+	const [uploading, setUploading] = useState(false);
+	const [scale, setScale] = useState(1.2);
 
-	const save = () => {
+	const save = async () => {
 		if (editor.current) {
 			const image = editor?.current?.getImage().toDataURL();
-			if (image) updateAvatar({ image });
+			if (image) {
+				setUploading(true);
+				const url = await updateAvatar({ image });
+				dispatch(updateAvatarAction(url));
+				clear();
+			}
 		}
 	};
 
-	const [scale, setScale] = useState(1.2);
+	if (uploading) {
+		return <LoadingOverlay />;
+	}
 
 	return (
 		<Overlay

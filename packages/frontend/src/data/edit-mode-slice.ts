@@ -69,6 +69,10 @@ const EditModeSlice = createSlice({
 			];
 			return state;
 		},
+		updateAvatar: (state: EditModeState, action: PayloadAction<string>) => {
+			state.avatar = action.payload;
+			return state;
+		},
 		updateName: (state: EditModeState, action: PayloadAction<string>) => {
 			state.name = action.payload;
 			return state;
@@ -90,6 +94,7 @@ export const {
 	addAttribute,
 	editCharacter,
 	exitEditMode,
+	updateAvatar,
 	updateCurrentBennies,
 	updateExtra,
 	updateMaximumBennies,

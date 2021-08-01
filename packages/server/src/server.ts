@@ -41,8 +41,11 @@ app.post('/api/user/:id/:code/avatar', express.json({ limit: '10MB' }), async (r
 	const filename = `${uuidv4()}.${ext}`;
 	const path = `${process.env.AVATAR_PATH.replace(/\/$/, '')}/${filename}`;
 	const url = `${process.env.AVATAR_URL.replace(/\/$/, '')}/${filename}`;
+	const response = { test: true, userId, code, characterId, image, url };
+	console.log(response);
 	fs.writeFileSync(path, buffer);
-	res.json({ test: true, userId, code, characterId, image, url });
+	res.json(response);
+	console.log('DONE');
 });
 
 app.use(express.json());

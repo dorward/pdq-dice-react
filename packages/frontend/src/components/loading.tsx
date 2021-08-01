@@ -1,5 +1,6 @@
 import Goo from 'gooey-react';
 import React from 'react';
+import { Overlay, Card } from '@blueprintjs/core';
 
 type Props = {
 	small?: boolean;
@@ -26,6 +27,24 @@ const Loading = ({ small }: Props) => {
 				</g>
 			</svg>
 		</Goo>
+	);
+};
+
+export const LoadingOverlay = () => {
+	return (
+		<Overlay
+			autoFocus
+			enforceFocus
+			onClose={() => {
+				/* Clear state */
+			}}
+			isOpen={true}>
+			<div className="v-center">
+				<Card interactive={true} elevation={1} className="h-center">
+					<Loading />
+				</Card>
+			</div>
+		</Overlay>
 	);
 };
 

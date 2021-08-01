@@ -8,21 +8,26 @@ import {
 	updateMaximumBennies,
 	updateName,
 } from '../data/edit-mode-slice';
+import { selectUser } from '../data/user-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFilePicker } from 'use-file-picker';
 import UploadError from './upload-error';
 import Loading from './loading';
 import ImageModal from './image-modal';
+import { User } from '../types';
 
 type Props = {
 	name: string;
+	avatar?: string;
 };
 
 const bennyValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const CharacterHeader = ({ name }: Props) => {
+const CharacterHeader = ({ name, avatar }: Props) => {
 	const dispatch = useDispatch();
 	const characterToEdit = useSelector(selectEditingCharacter);
+	const { avatar: userAvatar } = useSelector(selectUser) as User;
+
 	const bennies = useSelector(selectBennies) ?? { current: 0, max: 'unknown' };
 
 	const [openFileSelector, { filesContent, loading, errors, clear }] = useFilePicker({
@@ -42,14 +47,14 @@ const CharacterHeader = ({ name }: Props) => {
 
 	if (errors.length) return <UploadError clear={clear} />;
 
-	const avatarUrl = 'http://placekitten.com/60/60';
-
 	const uploadedImage = filesContent?.[0]?.content;
+
+	const avatarUrl = characterToEdit?.avatar ?? avatar ?? userAvatar;
 
 	if (characterToEdit) {
 		return (
 			<>
-				{uploadedImage && <ImageModal url={uploadedImage} />}
+				{uploadedImage && <ImageModal url={uploadedImage} clear={clear} />}
 				<div className="character-id-editor">
 					{loading && <Loading small={true} />}
 					{!loading && (

@@ -37,7 +37,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 		<>
 			<div className="character-sheet">
 				<CharacterMenu character={character} />
-				<CharacterHeader name={character.name} />
+				<CharacterHeader name={character.name} avatar={character.avatar} />
 				<Attributes {...{ ...qualities, character }} />
 				<Attributes {...{ ...powers, character }} />
 				<Extras extras={character.extras} />
