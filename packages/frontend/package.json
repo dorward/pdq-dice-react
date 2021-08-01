@@ -9,9 +9,7 @@
 	"directories": {},
 	"files": [],
 	"scripts": {
-		"start:dev": "parcel src/index.html --open",
-		"build": "parcel build  --no-source-maps --no-cache src/index.html",
-		"build:debug": "parcel build --no-cache src/index.html",
+		"start:dev": "ENVIRONMENT='development' webpack serve --open",
 		"lint:fix": "eslint --fix src/",
 		"webpack:staging": "ENVIRONMENT='staging' webpack"
 	},
@@ -61,6 +59,7 @@
 		"url-loader": "^4.1.1",
 		"webpack": "^5.47.1",
 		"webpack-bundle-analyzer": "^4.4.2",
-		"webpack-cli": "^4.7.2"
+		"webpack-cli": "^4.7.2",
+		"webpack-dev-server": "^3.11.2"
 	}
 }

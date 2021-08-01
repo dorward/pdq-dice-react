@@ -14,6 +14,7 @@ const envFiles = {
 	development: './.env.development',
 };
 const envPath = envFiles[process.env.ENVIRONMENT] ?? './.env';
+
 const dotEnv = new Dotenv({
 	path: envPath,
 });
@@ -21,8 +22,13 @@ const dotEnv = new Dotenv({
 console.log({ envPath });
 
 module.exports = {
+	mode: process.env.ENVIRONMENT === 'development' ? 'development' : 'production',
 	entry: './src/index.tsx',
 	plugins: [new MiniCssExtractPlugin(), htmlPlugin, dotEnv],
+	devServer: {
+		contentBase: './dist',
+		historyApiFallback: true,
+	},
 	module: {
 		rules: [
 			{
