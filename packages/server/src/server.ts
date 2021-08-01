@@ -95,7 +95,7 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 	const character = user.characters.find(c => c.id === characterId);
 	const rollFor = {
 		name: character?.name || user.nickname || user.userTag,
-		avatar: character?.avatar,
+		avatar: character?.avatar ?? user.avatar,
 	};
 
 	// Calculate result

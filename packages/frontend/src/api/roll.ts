@@ -11,6 +11,7 @@ const getBase = () => {
 	const API_URL = process.env.API_URL;
 	const whoami = selectWhoami(store.getState());
 	const characterId = selectCharacterId(store.getState());
+
 	const url = `${API_URL}roll/${whoami.userId}/${whoami.code}/`;
 	const auth = { characterId };
 	return { auth, url };
