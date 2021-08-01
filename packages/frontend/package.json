@@ -11,7 +11,8 @@
 	"scripts": {
 		"start:dev": "ENVIRONMENT='development' webpack serve --open",
 		"lint:fix": "eslint --fix src/",
-		"webpack:staging": "ENVIRONMENT='staging' webpack"
+		"build:staging": "ENVIRONMENT='staging' webpack",
+		"build:production": "ENVIRONMENT='production' webpack"
 	},
 	"dependencies": {
 		"@blueprintjs/core": "^3.47.0",
