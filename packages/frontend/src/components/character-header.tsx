@@ -9,6 +9,9 @@ import {
 	updateName,
 } from '../data/edit-mode-slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFilePicker } from 'use-file-picker';
+import UploadError from './upload-error';
+import Loading from './loading';
 
 type Props = {
 	name: string;
@@ -20,18 +23,41 @@ const CharacterHeader = ({ name }: Props) => {
 	const dispatch = useDispatch();
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const bennies = useSelector(selectBennies) ?? { current: 0, max: 'unknown' };
-	const avatarUrl = 'http://placekitten.com/60/60';
+
+	const [openFileSelector, { filesContent, loading, errors, clear }] = useFilePicker({
+		readAs: 'DataURL',
+		accept: 'image/*',
+		multiple: true,
+		limitFilesConfig: { max: 1 },
+		// minFileSize: 0.1, // in megabytes
+		maxFileSize: 50,
+		imageSizeRestrictions: {
+			maxHeight: 1600, // in pixels
+			maxWidth: 1600,
+			minHeight: 50,
+			minWidth: 50,
+		},
+	});
+
+	if (errors.length) return <UploadError clear={clear} />;
+
+	const avatarUrl = filesContent?.[0]?.content || 'http://placekitten.com/60/60';
 
 	if (characterToEdit) {
 		return (
 			<>
 				<div className="character-id-editor">
-					<Button>
-						<div className="icon-container">
-							<Icon icon="upload" title="Change avatar" size={IconSize.LARGE} color="black" />
-						</div>
-						<img src={avatarUrl} alt="" />
-					</Button>
+					{loading && <Loading small={true} />}
+					{!loading && (
+						<Button onClick={openFileSelector}>
+							<>
+								<div className="icon-container">
+									<Icon icon="upload" title="Change avatar" size={IconSize.LARGE} color="black" />
+								</div>
+								<img src={avatarUrl} alt="" />
+							</>
+						</Button>
+					)}
 					<FormGroup label="Character name" labelFor="character-name-edit">
 						<InputGroup
 							id="character-name-edit"
