@@ -21,7 +21,7 @@ const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) 
 		.setColor(successToColor(success))
 		.setTitle(response.rollType)
 		.setDescription(response.description ?? 'Just some roll')
-		.setAuthor(response.rollFor.name, response.rollFor.avatar)
+		.setAuthor(response.rollFor.name, response.rollFor.avatar || user.avatar)
 		.setThumbnail(thumbnail);
 
 	response.results.forEach(result => embed.addFields(result));
