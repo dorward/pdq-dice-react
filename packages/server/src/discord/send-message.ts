@@ -16,7 +16,6 @@ const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) 
 	const thumbnail = dice[index];
 
 	const { success } = response;
-	console.log({ index, thumbnail, success });
 
 	const embed = new discord.MessageEmbed()
 		.setColor(successToColor(success))
