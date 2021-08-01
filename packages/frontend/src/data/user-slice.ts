@@ -29,18 +29,18 @@ const userSlice = createSlice({
 			const user = state.user;
 			const newUser: User = { ...user, characters: [...user.characters, character] };
 			state.user = newUser;
-			saveToServer(newUser);
+			saveToServer(JSON.parse(JSON.stringify(newUser)));
 		},
 		addCharacterFromScratch: (state, action: PayloadAction<string>) => {
 			state.user.characters = [...state.user.characters, blankCharacter(action.payload)];
-			saveToServer(state.user);
+			saveToServer(JSON.parse(JSON.stringify(state.user)));
 			return state;
 		},
 		updateCharacter: (state, action: PayloadAction<Character>) => {
 			const characterId = action.payload.id;
 			const characterIndex = state.user.characters.findIndex(character => character.id === characterId);
 			state.user.characters.splice(characterIndex, 1, action.payload);
-			saveToServer(state.user);
+			saveToServer(JSON.parse(JSON.stringify(state.user)));
 			return state;
 		},
 		toggleCharacterVisibility: (state, action: PayloadAction<string>) => {
@@ -53,7 +53,7 @@ const userSlice = createSlice({
 			const characterId = action.payload;
 			const characterIndex = state.user.characters.findIndex(c => c.id === characterId);
 			state.user.characters.splice(characterIndex, 1);
-			saveToServer(state.user);
+			saveToServer(JSON.parse(JSON.stringify(state.user)));
 			return state;
 		},
 		applyWound: (state, action: PayloadAction<AttributePath>) => {
