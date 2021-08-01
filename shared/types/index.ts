@@ -5,7 +5,7 @@ export type Sheet = {
 export type Character = {
 	name: string;
 	id: string;
-	avatar: Avatar;
+	avatar?: Avatar;
 	player: string;
 	motivation: string;
 	origin: string;

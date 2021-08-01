@@ -4,11 +4,11 @@ import { addOrUpdateUser, getUserById, getUserByCode } from './db';
 const characters: Character[] = [];
 
 const thingy = {
-	addOrUpdateUser: async (user: Omit<User, 'characters'>): Promise<User> => {
+	addOrUpdateUser: async (user: Omit<User, 'characters'>, updateCode?: boolean): Promise<User> => {
 		const { userId, code } = user;
 		const oldUser: Partial<User> = (await getUserById(userId)) || {};
 		const newUser = { characters: [...characters], ...oldUser, ...user };
-		await addOrUpdateUser(userId, code, newUser);
+		await addOrUpdateUser(userId, code, newUser, updateCode);
 		return newUser;
 	},
 	getUser: async (code: string): Promise<User | undefined> => {

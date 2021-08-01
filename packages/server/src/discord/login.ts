@@ -23,14 +23,17 @@ const login = ({ channel, member }: LoginArgs): string => {
 		guild: channel.guild.name,
 		avatar: channel.guild.iconURL(imageOptions),
 	};
-	store.addOrUpdateUser({
-		avatar,
-		channel: serializableChannel,
-		code,
-		nickname,
-		userId,
-		userTag,
-	});
+	store.addOrUpdateUser(
+		{
+			avatar,
+			channel: serializableChannel,
+			code,
+			nickname,
+			userId,
+			userTag,
+		},
+		true
+	);
 	return code;
 };
 

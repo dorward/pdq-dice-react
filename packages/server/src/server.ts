@@ -22,7 +22,7 @@ app.use(
 	})
 );
 
-console.log('dfdfsdfsdf', process.env.AVATAR_PATH);
+app.use('/', express.static(process.env.DIST_PATH));
 app.use('/avatars', express.static(process.env.AVATAR_PATH));
 
 const splitDataUrl = /^data:.+\/(.+);base64,(.*)$/;
@@ -126,6 +126,10 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 	const response: SkillCheckResponseBody = { results, total, success, description, rollFor, rollType, diceResult };
 	sendDiscordMessage(user, response);
 	res.json(response);
+});
+
+app.get('*', (req, res) => {
+	res.sendFile(`${process.env.DIST_PATH}/index.html`);
 });
 
 app.listen(port, () => {

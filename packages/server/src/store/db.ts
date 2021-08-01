@@ -65,8 +65,7 @@ export const getAllUsers = (): Promise<User[]> => {
 	});
 };
 
-export const addOrUpdateUser = (userId: string, code: string, data: User) => {
-	console.log('addOrUpdateUser');
+export const addOrUpdateUser = (userId: string, code: string, data: User, updateCode?: boolean) => {
 	return new Promise(async (res, rej) => {
 		const user = await getUserById(userId);
 		db.serialize(function () {
@@ -75,7 +74,7 @@ export const addOrUpdateUser = (userId: string, code: string, data: User) => {
 				else res(this);
 			};
 			if (user) {
-				if (user.code !== code) {
+				if (!updateCode && user.code !== code) {
 					throw new Error('Attempt to update user with improper code');
 				}
 				db.run(

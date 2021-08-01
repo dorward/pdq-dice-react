@@ -22,10 +22,14 @@ const Login = () => {
 		} else if (!user) {
 			(async () => {
 				try {
+					console.log('Login');
 					const API_URL = process.env.API_URL;
+					console.log(API_URL);
 					const url = `${API_URL}user/${code}`;
+					console.log(url);
 					const response = await axios.get(url);
 					const user = response.data;
+					console.log(user);
 					if (user) {
 						dispatch(setUser(user));
 						dispatch(setUserCreds({ userId: user.userId, code: user.code }));
