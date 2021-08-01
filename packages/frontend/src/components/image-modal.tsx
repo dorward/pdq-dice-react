@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Card, Slider, Overlay, Intent } from '@blueprintjs/core';
 import AvatarEditor from 'react-avatar-editor';
+import updateAvatar from '../api/update-avatar';
 
 type Props = { url: string };
 
@@ -11,8 +12,8 @@ const ImageModal = ({ url }: Props) => {
 
 	const save = () => {
 		if (editor.current) {
-			const url = editor?.current?.getImage().toDataURL();
-			console.log({ url });
+			const image = editor?.current?.getImage().toDataURL();
+			if (image) updateAvatar({ image });
 		}
 	};
 

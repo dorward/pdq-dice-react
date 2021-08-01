@@ -19,6 +19,14 @@ app.use(
 	})
 );
 
+app.post('/api/user/:id/:code/avatar', express.json({ limit: '10MB' }), async (req, res) => {
+	console.log('Trying to update user avatar');
+	const userId = req.params.id;
+	const code = req.params.code;
+	const { characterId, image } = req.body;
+	res.json({ test: true, userId, code, characterId, image });
+});
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -26,7 +34,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/user/:code', async (req, res) => {
-	// const channel = bot.channels.get("ID");
 	try {
 		const user = await getUserByCode(req.params.code);
 		res.json(user);
@@ -55,11 +62,7 @@ app.get('/api/allUsers', async (req, res) => {
 
 const supportedDice = ['1d6', '2d6'];
 
-// TODO say what character this is for too!
 app.post('/api/roll/:id/:code', async (req, res) => {
-	const requestBody = req.body;
-	console.log('request body', JSON.stringify(requestBody, undefined, 2));
-
 	// Get User
 	const user = await getUserByCode(req.params.code);
 	if (!user || user.userId !== req.params.id) {
