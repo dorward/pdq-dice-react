@@ -5,12 +5,21 @@ import dice from './dice';
 
 const isTextChannel = (channel: Channel): channel is TextChannel => channel?.type === 'text';
 
+const successToColor = (success: boolean | undefined) => {
+	if (typeof success === 'undefined') return '#FFFF00';
+	if (success) return '#76B947';
+	return '#FF2511';
+};
+
 const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) => {
 	const index = response.diceResult.rolls.join('') as keyof typeof dice;
 	const thumbnail = dice[index];
 
+	const { success } = response;
+	console.log({ index, thumbnail, success });
+
 	const embed = new discord.MessageEmbed()
-		.setColor('#006600')
+		.setColor(successToColor(success))
 		.setTitle(response.description || 'Skill check')
 		.setAuthor(response.rollFor.name, response.rollFor.avatar)
 		.setDescription(response.description || `Just some roll`)
@@ -18,7 +27,11 @@ const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) 
 
 	response.results.forEach(result => embed.addFields(result));
 
-	embed.addFields({ name: 'Total', value: response.total, inline: false });
+	if (response.diceResult.rolls.length === 2) embed.addFields({ name: 'Total', value: response.total, inline: false });
+
+	if (typeof success !== 'undefined') {
+		embed.addFields({ name: 'Success', value: success ? 'Yes' : 'No', inline: false });
+	}
 	embed.setFooter('⚀ ⚁ ⚂ ⚃ ⚄ ⚅ '.repeat(5)); // Padding
 	embed.setTimestamp();
 	const channel = await client.channels.fetch(user.channel.id);

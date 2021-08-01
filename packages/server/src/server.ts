@@ -78,7 +78,7 @@ app.post('/api/roll/:id/:code', async (req, res) => {
 	const { dice, high, bonuses = [], description } = req.body as SkillCheckRequestBody;
 	// console.log(req.body);
 	if (!supportedDice.includes(dice)) return res.sendStatus(400);
-	const rolls: DiceRollBonus['rolls'] = [d6(), d6()];
+	const rolls: DiceRollBonus['rolls'] = dice === '1d6' ? [d6()] : [d6(), d6()];
 	const diceResult: SkillCheckBonus =
 		dice === '1d6'
 			? { name: 'Roll', value: rolls[0], rolls: rolls }
