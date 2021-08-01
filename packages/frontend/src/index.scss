@@ -86,6 +86,7 @@ main.tiny {
 	border: solid $pt-divider-black 1px;
 	margin: 0 auto;
 	padding: 1ex;
+	box-shadow: 12px 12px 6px 6px rgba(0, 0, 0, 0.5);
 
 	h1 {
 		text-align: center;
@@ -150,8 +151,17 @@ button.add {
 
 .character-header {
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: flex-end;
+	img {
+		border: solid black 1px;
+	}
+	h2 {
+		margin-left: 1em;
+	}
+	p {
+		margin-left: auto;
+	}
 }
 
 .bonus-name .bp3-control {

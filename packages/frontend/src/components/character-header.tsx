@@ -17,10 +17,10 @@ type Props = {
 const bennyValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const CharacterHeader = ({ name }: Props) => {
+	const dispatch = useDispatch();
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const bennies = useSelector(selectBennies) ?? { current: 0, max: 'unknown' };
-
-	const dispatch = useDispatch();
+	const avatarUrl = 'http://placekitten.com/60/60';
 
 	if (characterToEdit) {
 		return (
@@ -60,6 +60,7 @@ const CharacterHeader = ({ name }: Props) => {
 
 	return (
 		<div className="character-header">
+			<img src={avatarUrl} alt="" />
 			<H2>{name}</H2>
 			<p>
 				Bennies: {bennies.current}/{bennies.max}
