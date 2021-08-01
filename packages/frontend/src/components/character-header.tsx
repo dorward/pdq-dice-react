@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFilePicker } from 'use-file-picker';
 import UploadError from './upload-error';
 import Loading from './loading';
+import ImageModal from './image-modal';
 
 type Props = {
 	name: string;
@@ -41,11 +42,14 @@ const CharacterHeader = ({ name }: Props) => {
 
 	if (errors.length) return <UploadError clear={clear} />;
 
-	const avatarUrl = filesContent?.[0]?.content || 'http://placekitten.com/60/60';
+	const avatarUrl = 'http://placekitten.com/60/60';
+
+	const uploadedImage = filesContent?.[0]?.content;
 
 	if (characterToEdit) {
 		return (
 			<>
+				{uploadedImage && <ImageModal url={uploadedImage} />}
 				<div className="character-id-editor">
 					{loading && <Loading small={true} />}
 					{!loading && (
