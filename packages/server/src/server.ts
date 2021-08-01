@@ -1,5 +1,8 @@
+import fs from 'fs';
 import express from 'express';
 import cors from 'cors';
+import { v4 as uuidv4 } from 'uuid';
+
 import discord from './discord';
 import d6 from './util/d6';
 import { getAllUsers, getUserByCode, addOrUpdateUser } from './store/db';
@@ -19,12 +22,27 @@ app.use(
 	})
 );
 
+console.log('dfdfsdfsdf', process.env.AVATAR_PATH);
+app.use('/avatars', express.static(process.env.AVATAR_PATH));
+
+const splitDataUrl = /^data:.+\/(.+);base64,(.*)$/;
+
 app.post('/api/user/:id/:code/avatar', express.json({ limit: '10MB' }), async (req, res) => {
 	console.log('Trying to update user avatar');
 	const userId = req.params.id;
 	const code = req.params.code;
 	const { characterId, image } = req.body;
-	res.json({ test: true, userId, code, characterId, image });
+
+	var matches = image.match(splitDataUrl);
+	var ext = matches[1];
+	var data = matches[2];
+	var buffer = Buffer.from(data, 'base64');
+
+	const filename = `${uuidv4()}.${ext}`;
+	const path = `${process.env.AVATAR_PATH.replace(/\/$/, '')}/${filename}`;
+	const url = `${process.env.AVATAR_URL.replace(/\/$/, '')}/${filename}`;
+	fs.writeFileSync(path, buffer);
+	res.json({ test: true, userId, code, characterId, image, url });
 });
 
 app.use(express.json());

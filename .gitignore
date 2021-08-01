@@ -7,3 +7,4 @@ node_modules
 .cache
 /packages/frontend/.parcel-cache
 /test-character.json
+/packages/server/avatars
