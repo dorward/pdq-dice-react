@@ -171,6 +171,10 @@ button.add {
 	}
 }
 
+tr.location-heading th {
+	text-align: center;
+}
+
 .bp3-button-group:not(.bp3-minimal) > .bp3-button:not(:last-child).skill-check {
 	margin-right: 1em;
 }

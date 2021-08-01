@@ -64,7 +64,6 @@ export const skillCheck = async () => {
 		bonuses,
 		description,
 	};
-	console.log(data);
 	const response = await axios.post(url, data);
 	const result = response.data.result;
 	store.dispatch(setResult(response.data));

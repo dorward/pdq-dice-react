@@ -26,6 +26,7 @@ export type Extra = {
 	name: string;
 	id: string;
 	value: number;
+	location: string;
 };
 
 export type Attribute = {
@@ -118,8 +119,15 @@ export type ExtraUpdateValue = {
 	value: 'DEL' | number;
 };
 
-export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue;
+export type ExtraUpdateLocation = {
+	id: string;
+	location: string;
+};
 
-export const isAt = (data: AttributeUpdate): data is AttributeUpdateValue => 'value' in data;
+export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue | ExtraUpdateLocation;
+
+export const isAttributeUpdateValue = (data: AttributeUpdate): data is AttributeUpdateValue => 'value' in data;
 
 export const isExtraUpdateValue = (data: ExtraUpdate): data is ExtraUpdateValue => 'value' in data;
+
+export const isExtraUpdateLocation = (data: ExtraUpdate): data is ExtraUpdateLocation => 'location' in data;

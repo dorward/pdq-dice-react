@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import store from '../data/redux-store';
 
 export const finishEditing = () => {
-	console.log('Finish editing');
 	store.dispatch(updateCharacter(store.getState().editMode));
 	store.dispatch(exitEditMode());
 };

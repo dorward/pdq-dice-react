@@ -75,7 +75,6 @@ const userSlice = createSlice({
 			saveToServer(JSON.parse(JSON.stringify(user)));
 		},
 		spendBenny: (state, action: PayloadAction<string>) => {
-			console.log('Spend benny');
 			const { user } = state;
 			const characterId = action.payload;
 			const character = user.characters.find(c => c.id === characterId);
@@ -102,7 +101,7 @@ export const {
 export const selectUser = (state: RootState) => state.user.user;
 export const selectCharacters = (state: RootState): Character[] => state.user?.user?.characters ?? [];
 export const selectCharacter = (state: RootState) => {
-	const id = state.whoami.characterId;
+	const id = state.whoami.characterId || state.user?.user?.characters?.[0]?.id;
 	const character = state.user.user.characters.find(c => c.id === id);
 	return character;
 };

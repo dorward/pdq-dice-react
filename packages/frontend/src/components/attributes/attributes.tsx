@@ -10,7 +10,6 @@ const Attributes = (props: Props) => {
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const Component = characterToEdit ? AttributesEdit : AttributesPlay;
 	const character = characterToEdit ?? props.character;
-	console.log({ character });
 	return <Component {...{ ...props, character }} />;
 };
 

@@ -1,15 +1,13 @@
-import { AttributeUpdate, AttributeUpdateValue, Character, ExtraUpdate, isExtraUpdateValue } from '../types';
+import { AttributeUpdate, Character, ExtraUpdate } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
-import { mutateName, mutateValue } from './edit-mode-helpers';
+import { isAttributeUpdateValue, isExtraUpdateLocation, isExtraUpdateValue } from '../types/guard';
+import { mutateLocation, mutateName, mutateValue } from './edit-mode-helpers';
 import { v4 as uuidv4 } from 'uuid';
 
 type EditModeState = null | Character;
 
 const initialEditModeState: EditModeState = null;
-
-// TODO: Figure out why I can't export this from types/index.ts
-export const isAttributeUpdateValue = (data: AttributeUpdate): data is AttributeUpdateValue => 'value' in data;
 
 const EditModeSlice = createSlice({
 	name: 'EditMode',
@@ -52,6 +50,8 @@ const EditModeSlice = createSlice({
 				} else {
 					state.extras = mutateValue(state.extras, action.payload.id, action.payload.value);
 				}
+			} else if (isExtraUpdateLocation(action.payload)) {
+				state.extras = mutateLocation(state.extras, action.payload.id, action.payload.location);
 			} else {
 				state.extras = mutateName(state.extras, action.payload.id, action.payload.name);
 			}
@@ -64,6 +64,7 @@ const EditModeSlice = createSlice({
 					id: uuidv4(),
 					name: 'New extra',
 					value: 0,
+					location: '',
 				},
 			];
 			return state;

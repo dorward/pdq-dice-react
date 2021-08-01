@@ -11,7 +11,7 @@ const ExtraCircumstanceRow = () => {
 	return (
 		<tr key="circumstance-bonus">
 			<td key="label">
-				<FormGroup inline label="Circumstance bonus" labelFor={`input-${extra.id}`}>
+				<FormGroup>
 					<InputGroup
 						id={`input-${extra.id}`}
 						value={extra.name}
@@ -25,7 +25,7 @@ const ExtraCircumstanceRow = () => {
 			<td>
 				<HTMLSelect
 					value={extra.value}
-					options={extraValues}
+					options={extraValues.filter(value => value !== 'DEL')}
 					onChange={e => {
 						const data = { id: extra.id, value: +e.target.value };
 						dispatch(updateCircumstance(data));

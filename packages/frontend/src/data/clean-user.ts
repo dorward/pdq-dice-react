@@ -10,8 +10,11 @@ const cleanUser = (user: User) => {
 			attribute.wounds ??= 0;
 		});
 		character.extras ??= [];
-		character.extras.forEach(extra => (extra.id ??= uuidv4()));
-		character.bennies ??= { current: 3, max: 3 };
+		character.extras.forEach(extra => {
+			extra.id ??= uuidv4();
+			extra.location ??= '';
+		});
+		character.bennies ??= { current: 3, max: '3' };
 	});
 	return user;
 };

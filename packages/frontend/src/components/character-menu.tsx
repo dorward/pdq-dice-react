@@ -52,7 +52,8 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
 								/>
 							</div>
 						}
-						renderTarget={({ ref, ...targetProps }) => (
+						// eslint-disable-next-line @typescript-eslint/no-unused-vars
+						renderTarget={({ isOpen, ref, ...targetProps }) => (
 							<Button {...targetProps} elementRef={ref} intent={Intent.DANGER}>
 								<Icon icon="trash" title="Delete Character" htmlTitle="Delete Character" />
 							</Button>
