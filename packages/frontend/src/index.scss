@@ -157,10 +157,37 @@ button.add {
 		border: solid black 1px;
 	}
 	h2 {
-		margin-left: 1em;
+		margin-left: 12px;
 	}
 	p {
 		margin-left: auto;
+	}
+}
+
+.character-id-editor {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 15px;
+	button {
+		position: relative;
+		padding: 0;
+		.icon-container {
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: rgba(0, 0, 0, 0.25);
+		}
+	}
+	.bp3-form-group {
+		margin: 0 0 0 12px;
+		flex-grow: 1;
 	}
 }
 

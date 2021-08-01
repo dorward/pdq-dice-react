@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormGroup, H2, HTMLSelect, InputGroup } from '@blueprintjs/core';
+import { FormGroup, Button, H2, HTMLSelect, InputGroup, Icon, IconSize } from '@blueprintjs/core';
 import { selectBennies } from '../data/user-slice';
 import {
 	selectEditingCharacter,
@@ -25,13 +25,21 @@ const CharacterHeader = ({ name }: Props) => {
 	if (characterToEdit) {
 		return (
 			<>
-				<FormGroup label="Character name" labelFor="character-name-edit">
-					<InputGroup
-						id="character-name-edit"
-						value={characterToEdit.name}
-						onChange={e => dispatch(updateName(e.target.value))}
-					/>
-				</FormGroup>
+				<div className="character-id-editor">
+					<Button>
+						<div className="icon-container">
+							<Icon icon="upload" title="Change avatar" size={IconSize.LARGE} color="black" />
+						</div>
+						<img src={avatarUrl} alt="" />
+					</Button>
+					<FormGroup label="Character name" labelFor="character-name-edit">
+						<InputGroup
+							id="character-name-edit"
+							value={characterToEdit.name}
+							onChange={e => dispatch(updateName(e.target.value))}
+						/>
+					</FormGroup>
+				</div>
 
 				<div className="bennies-edit">
 					<FormGroup inline label="Current Bennies" labelFor="current-bennies-edit">
