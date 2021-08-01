@@ -1,6 +1,7 @@
 import { Character, Sheet, User } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
+import { selectCharacterId } from './whoami-slice';
 import blankCharacter from './blankCharacter';
 import cleanUser from './clean-user';
 import saveToServer from '../api/save-to-server';
@@ -106,7 +107,7 @@ export const selectCharacter = (state: RootState) => {
 	return character;
 };
 export const selectBennies = (state: RootState) => {
-	const characterId = state.whoami.characterId;
+	const characterId = selectCharacterId(state);
 	if (!characterId) return null;
 	const character = state.user.user.characters.find(c => c.id === characterId);
 	if (!character) return null;

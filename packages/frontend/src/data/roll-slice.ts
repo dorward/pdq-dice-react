@@ -1,6 +1,7 @@
-import { Extra, ExtraUpdate, isExtraUpdateValue } from '../types';
+import { Extra, ExtraUpdateName, ExtraUpdateValue, isExtraUpdateValue } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
+import { selectCharacterId } from './whoami-slice';
 
 type RollSlice = {
 	description: string;
@@ -12,7 +13,7 @@ type RollSlice = {
 const initialRollState: RollSlice = {
 	description: '',
 	selected: {},
-	circumstance: { id: 'circumstance', name: '', value: 0 },
+	circumstance: { id: 'circumstance', name: '', value: 0, location: '' },
 	usedBenny: false,
 };
 
@@ -25,9 +26,9 @@ const rollSlice = createSlice({
 			state.selected[action.payload] = !state.selected[action.payload];
 			return state;
 		},
-		updateCircumstance: (state, action: PayloadAction<ExtraUpdate>) => {
+		updateCircumstance: (state, action: PayloadAction<ExtraUpdateValue | ExtraUpdateName>) => {
 			const extraToUpdate = state.circumstance;
-			if (isExtraUpdateValue(action.payload)) extraToUpdate.value = action.payload.value;
+			if (isExtraUpdateValue(action.payload)) extraToUpdate.value = action.payload.value as number;
 			else extraToUpdate.name = action.payload.name;
 			return state;
 		},
@@ -44,7 +45,7 @@ export const selectRollData = (state: RootState) => state.roll;
 export const selectCircumstance = (state: RootState) => state.roll.circumstance;
 export const selectBennyUse = (state: RootState) => {
 	if (state.roll.usedBenny) return false; // One benny per roll
-	const characterId = state.whoami.characterId;
+	const characterId = selectCharacterId(state);
 	if (!characterId) return false; // Only characters have bennies
 	const character = state.user.user.characters.find(c => c.id === characterId);
 	if (!character) return false; // Character not found
