@@ -2,13 +2,14 @@ import { Props as AttributesProps } from './attributes/types';
 import { Character } from '../types';
 import { FormGroup, InputGroup } from '@blueprintjs/core';
 import { selectEditingCharacter } from '../data/edit-mode-slice';
-import { useSelector } from 'react-redux';
 import Attributes from './attributes';
 import CharacterHeader from './character-header';
 import CharacterMenu from './character-menu';
 import Extras from './extras';
-import React, { useState } from 'react';
+import React from 'react';
 import SkillCheck from './skill-check';
+import { selectDescription, updateDescription } from '../data/roll-slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 type Props = {
 	character: Character;
@@ -27,9 +28,10 @@ const powers = {
 };
 
 const CharacterSheet = ({ character: characterProp }: Props) => {
+	const dispatch = useDispatch();
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const character = characterToEdit || characterProp;
-	const [description, setDescription] = useState('');
+	const description = useSelector(selectDescription);
 	const descriptionId = `${character.id}-description`;
 	return (
 		<>
@@ -46,7 +48,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 								placeholder="What action are you rolling?"
 								id={descriptionId}
 								value={description}
-								onChange={e => setDescription(e.currentTarget.value)}
+								onChange={e => dispatch(updateDescription(e.currentTarget.value))}
 							/>
 						</FormGroup>
 						<SkillCheck />

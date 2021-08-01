@@ -32,6 +32,10 @@ const rollSlice = createSlice({
 			else extraToUpdate.name = action.payload.name;
 			return state;
 		},
+		updateDescription: (state, action: PayloadAction<string>) => {
+			state.description = action.payload;
+			return state;
+		},
 		useBenny: state => {
 			state.usedBenny = true;
 			return state;
@@ -39,10 +43,11 @@ const rollSlice = createSlice({
 	},
 });
 
-export const { reset, toggleSelected, updateCircumstance, useBenny } = rollSlice.actions;
+export const { reset, toggleSelected, updateCircumstance, useBenny, updateDescription } = rollSlice.actions;
 export const selectSelected = (state: RootState) => state.roll.selected;
 export const selectRollData = (state: RootState) => state.roll;
 export const selectCircumstance = (state: RootState) => state.roll.circumstance;
+export const selectDescription = (state: RootState) => state.roll.description;
 export const selectBennyUse = (state: RootState) => {
 	if (state.roll.usedBenny) return false; // One benny per roll
 	const characterId = selectCharacterId(state);
