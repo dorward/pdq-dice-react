@@ -1,10 +1,10 @@
 import { ControlGroup, HTMLSelect, InputGroup } from '@blueprintjs/core';
-import { ExtraUpdateValue } from '../../types';
-import { RowProps } from './types';
+import type { ExtraUpdateValue } from '../../types';
+import type { RowProps } from './types';
 import { updateExtra } from '../../data/edit-mode-slice';
 import { useDispatch } from 'react-redux';
 import React from 'react';
-import extraValues from './consts';
+import { extraValues, extraCountValues } from '../../types';
 
 const ExtraEditRow = ({ extra }: RowProps) => {
 	const dispatch = useDispatch();
@@ -27,6 +27,15 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 						placeholder="Location"
 						onChange={e => {
 							const data = { id: extra.id, location: e.target.value };
+							dispatch(updateExtra(data));
+						}}
+					/>
+					<HTMLSelect
+						value={extra.count ?? '∞'}
+						options={extraCountValues}
+						onChange={e => {
+							const count = e.target.value;
+							const data = { id: extra.id, count };
 							dispatch(updateExtra(data));
 						}}
 					/>

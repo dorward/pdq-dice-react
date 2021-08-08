@@ -1,3 +1,7 @@
+export const extraValues = ['DEL', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+export const extraCountValues = ['∞', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 export type Sheet = {
 	sheet: Character;
 };
@@ -28,6 +32,7 @@ export type Extra = {
 	id: string;
 	value: number;
 	location: string;
+	count?: '∞' | number;
 };
 
 export type Attribute = {
@@ -129,7 +134,7 @@ export type ExtraUpdateName = {
 
 export type ExtraUpdateValue = {
 	id: string;
-	value: 'DEL' | number;
+	value: typeof extraValues[number];
 };
 
 export type ExtraUpdateLocation = {
@@ -137,7 +142,12 @@ export type ExtraUpdateLocation = {
 	location: string;
 };
 
-export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue | ExtraUpdateLocation;
+export type ExtraUpdateCount = {
+	id: string;
+	count: typeof extraCountValues[number];
+};
+
+export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue | ExtraUpdateLocation | ExtraUpdateCount;
 
 export const isAttributeUpdateValue = (data: AttributeUpdate): data is AttributeUpdateValue => 'value' in data;
 

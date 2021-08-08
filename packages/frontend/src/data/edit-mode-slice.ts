@@ -1,8 +1,8 @@
 import { AttributeUpdate, Character, ExtraUpdate } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
-import { isAttributeUpdateValue, isExtraUpdateLocation, isExtraUpdateValue } from '../types/guard';
-import { mutateLocation, mutateName, mutateValue } from './edit-mode-helpers';
+import { isAttributeUpdateValue, isExtraUpdateLocation, isExtraUpdateValue, isExtraUpdateCount } from '../types/guard';
+import { mutateLocation, mutateName, mutateValue, mutateCount } from './edit-mode-helpers';
 import { v4 as uuidv4 } from 'uuid';
 
 type EditModeState = null | Character;
@@ -52,6 +52,8 @@ const EditModeSlice = createSlice({
 				}
 			} else if (isExtraUpdateLocation(action.payload)) {
 				state.extras = mutateLocation(state.extras, action.payload.id, action.payload.location);
+			} else if (isExtraUpdateCount(action.payload)) {
+				state.extras = mutateCount(state.extras, action.payload.id, action.payload.count);
 			} else {
 				state.extras = mutateName(state.extras, action.payload.id, action.payload.name);
 			}
