@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 import { selectCharacterId } from './whoami-slice';
 import blankCharacter from './blankCharacter';
-import cleanUser from './clean-user';
+import cleanUser, { cleanCharacter } from './clean-user';
 import saveToServer from '../api/save-to-server';
 import yaml from 'js-yaml';
 
@@ -28,6 +28,7 @@ const userSlice = createSlice({
 			if (!parsed)
 				throw new Error('The YAML file could not be parsed. Something is probably wrong with the format of it.');
 			const character = parsed.sheet;
+			cleanCharacter(character);
 			const user = state.user;
 			const newUser: User = { ...user, characters: [...user.characters, character] };
 			state.user = newUser;
