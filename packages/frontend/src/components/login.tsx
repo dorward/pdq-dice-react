@@ -7,13 +7,18 @@ import Loading from './loading';
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import useQuery from '../hooks/use-query';
+import useLocalStorage from 'use-local-storage';
 
 const Login = () => {
-	const query = useQuery();
-	const history = useHistory();
-	const code = query.get('code');
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
+
+	const query = useQuery();
+	const history = useHistory();
+
+	const queryCode = query.get('code');
+	const [savedCode, setCode] = useLocalStorage('code', '');
+	const code = queryCode || savedCode;
 
 	useEffect(() => {
 		if (!code) {
@@ -22,18 +27,16 @@ const Login = () => {
 		} else if (!user) {
 			(async () => {
 				try {
-					console.log('Login');
 					const API_URL = process.env.API_URL;
-					console.log(API_URL);
 					const url = `${API_URL}user/${code}`;
-					console.log(url);
 					const response = await axios.get(url);
 					const user = response.data;
-					console.log(user);
 					if (user) {
+						setCode(code);
 						dispatch(setUser(user));
 						dispatch(setUserCreds({ userId: user.userId, code: user.code }));
 					} else {
+						setCode('');
 						setUser(
 							new Error(
 								"The code you provided doesn't match our records. It might be out of date. Try logging in using Discord again."
