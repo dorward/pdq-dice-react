@@ -12,6 +12,7 @@ type UserState = {
 };
 
 type AttributePath = { characterId: string; attributeId: string };
+type ExtraPath = { characterId: string; extraId: string };
 
 const initialUserState: UserState = { user: null };
 const userSlice = createSlice({
@@ -83,6 +84,17 @@ const userSlice = createSlice({
 			saveToServer(JSON.parse(JSON.stringify(user)));
 			return state;
 		},
+		spendExtra: (state, action: PayloadAction<ExtraPath>) => {
+			const { user } = state;
+			const { characterId, extraId } = action.payload;
+			const character = user.characters.find(c => c.id === characterId);
+			const extra = character.extras.find(extra => extra.id === extraId);
+			if (extra && extra.count !== '∞' && extra.count > 0) {
+				extra.count = extra.count - 1;
+				saveToServer(JSON.parse(JSON.stringify(user)));
+			}
+			return state;
+		},
 		unset: () => null,
 	},
 });
@@ -95,6 +107,7 @@ export const {
 	healWound,
 	set,
 	spendBenny,
+	spendExtra,
 	toggleCharacterVisibility,
 	unset,
 	updateCharacter,

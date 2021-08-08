@@ -1,10 +1,9 @@
+import axios from 'axios';
 import { SkillCheckRequestBody } from '../types';
 import { attributeValues } from '../consts';
 import { markLoading, setResult } from '../data/results-slice';
-import { selectCharacter } from '../data/user-slice';
+import { selectCharacter, spendExtra } from '../data/user-slice';
 import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
-import axios from 'axios';
-
 import store from '../data/redux-store';
 
 const getBase = () => {
@@ -39,7 +38,13 @@ export const d6 = async ({ high }: D6Params) => {
 	return result;
 };
 
-export const skillCheck = async () => {
+const countsThatDoNotReduce = [undefined, '∞', 0];
+
+type SkillCheckProps = {
+	isUsingBenny?: boolean;
+};
+
+export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
 	const { selected, description, circumstance } = store.getState().roll;
 	store.dispatch(markLoading());
 	const character = selectCharacter(store.getState());
@@ -54,11 +59,18 @@ export const skillCheck = async () => {
 			};
 		});
 	const extraBonuses = character.extras
-		.filter(extra => selected[extra.id])
+		.filter(extra => selected[extra.id] && extra.count !== 0)
 		.map(extra => ({
 			name: extra.name,
 			value: extra.value,
 		}));
+	if (!isUsingBenny) {
+		character.extras
+			.filter(extra => selected[extra.id] && !countsThatDoNotReduce.includes(extra.count))
+			.forEach(extra => {
+				store.dispatch(spendExtra({ characterId: character.id, extraId: extra.id }));
+			});
+	}
 	const circumstanceBonus = circumstance.value ? [{ name: circumstance.name, value: circumstance.value }] : [];
 
 	const bonuses = [...qualityBonuses, ...extraBonuses, ...circumstanceBonus];
