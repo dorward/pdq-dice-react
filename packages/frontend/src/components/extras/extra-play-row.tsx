@@ -10,13 +10,13 @@ const ExtraPlayRow = ({ extra }: RowProps) => {
 	const checked = !!selectedExtras[extra.id];
 	const onChange = () => dispatch(toggleSelected(extra.id));
 
-	const count = extra.count && extra.count !== '∞' ? `(×${extra.count})` : null;
+	const count = extra.count !== undefined && extra.count !== '∞' ? `(×${extra.count})` : null;
 
 	return (
 		<tr key={extra.id}>
 			<td key="label" className="bonus-name">
 				<label className="attribute-row-label">
-					<Checkbox checked={checked} onChange={onChange}>
+					<Checkbox checked={checked} onChange={onChange} disabled={extra.count === 0}>
 						{extra.name} {count}
 					</Checkbox>
 				</label>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SkillCheckRequestBody } from '../types';
-import { attributeValues } from '../consts';
+import { attributeValues, countsThatDoNotReduce } from '../consts';
 import { markLoading, setResult } from '../data/results-slice';
 import { selectCharacter, spendExtra } from '../data/user-slice';
 import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
@@ -37,8 +37,6 @@ export const d6 = async ({ high }: D6Params) => {
 	store.dispatch(setResult(response.data));
 	return result;
 };
-
-const countsThatDoNotReduce = [undefined, '∞', 0];
 
 type SkillCheckProps = {
 	isUsingBenny?: boolean;

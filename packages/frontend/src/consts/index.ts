@@ -6,3 +6,5 @@ export const attributeValues = [
 	['PR', -2],
 	['GONE', -Infinity],
 ] as const;
+
+export const countsThatDoNotReduce = [undefined, '∞', 0];
