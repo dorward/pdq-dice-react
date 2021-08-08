@@ -7,11 +7,14 @@
 		"MSTR",
 		"Popover",
 		"VARCHAR",
+		"Woundable",
+		"autofix",
 		"blueprintjs",
 		"consts",
 		"dropzone",
 		"heropoints",
 		"reduxjs",
-		"uuidv"
+		"uuidv",
+		"vars"
 	]
 }

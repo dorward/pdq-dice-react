@@ -1,4 +1,4 @@
-import { Button, Icon, Intent } from '@blueprintjs/core';
+import { Button, Icon, Intent, ButtonGroup, Menu, MenuItem } from '@blueprintjs/core';
 import { Character } from '../types';
 import { Classes, Popover2 } from '@blueprintjs/popover2';
 import { deleteCharacter } from '../data/user-slice';
@@ -8,6 +8,7 @@ import { setCharacterId } from '../data/whoami-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import SimpleDice from './simple-dice';
+import { saveCharacterAsYaml } from '../util/download';
 
 type Props = {
 	character: Character;
@@ -23,12 +24,32 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
 			{!characterToEdit && (
 				<>
 					<SimpleDice hasSkillButton />
-					<Button
-						onClick={() => {
-							dispatch(editCharacter(character));
-						}}>
-						<Icon icon="edit" title="Edit" htmlTitle="Edit" />
-					</Button>
+					<ButtonGroup>
+						<Popover2
+							interactionKind="click"
+							minimal={false}
+							placement="bottom"
+							content={
+								<Menu>
+									<MenuItem
+										icon="horizontal-bar-chart-asc"
+										text="YAML"
+										onClick={() => saveCharacterAsYaml(character)}
+									/>
+								</Menu>
+							}
+							// eslint-disable-next-line @typescript-eslint/no-unused-vars
+							renderTarget={({ isOpen, ref, ...targetProps }) => (
+								<Button {...targetProps} icon="download" title="Download" aria-label="Download" elementRef={ref} />
+							)}
+						/>
+						<Button
+							onClick={() => {
+								dispatch(editCharacter(character));
+							}}>
+							<Icon icon="edit" title="Edit" htmlTitle="Edit" />
+						</Button>
+					</ButtonGroup>
 				</>
 			)}
 			{characterToEdit && (
