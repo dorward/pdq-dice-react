@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Extra } from '../../types';
-import { HTMLTable } from '@blueprintjs/core';
+import { HTMLTable, Button } from '@blueprintjs/core';
 import { Props } from './types';
 import ExtraCircumstanceRow from './extra-circumstance-row';
 import ExtraPlayRow from './extra-play-row';
 
 type CategorisedExtras = [Extra[], Record<string, Extra[]>];
+type OpenLocations = Record<string, boolean>;
 
 const ExtrasPlay = ({ extras }: Props) => {
 	const categorisedExtras: CategorisedExtras = extras.reduce(
@@ -23,6 +24,8 @@ const ExtrasPlay = ({ extras }: Props) => {
 		},
 		[[], {}] as CategorisedExtras
 	);
+
+	const [openLocations, setOpenLocations] = useState<OpenLocations>({});
 
 	return (
 		<>
@@ -41,11 +44,17 @@ const ExtrasPlay = ({ extras }: Props) => {
 				{Object.entries(categorisedExtras[1]).map(([location, extras]) => (
 					<tbody key={location}>
 						<tr key="heading" className="location-heading">
-							<th colSpan={2}>{location}</th>
+							<th colSpan={2}>
+								<Button
+									minimal
+									icon={openLocations[location] ? 'caret-down' : 'caret-right'}
+									aria-label={`${openLocations[location] ? 'Close' : 'Open'} ${location} extras`}
+									onClick={() => setOpenLocations(locations => ({ ...locations, [location]: !locations[location] }))}>
+									{location}
+								</Button>
+							</th>
 						</tr>
-						{extras.map(extra => (
-							<ExtraPlayRow key={extra.id} extra={extra} />
-						))}
+						{openLocations[location] && extras.map(extra => <ExtraPlayRow key={extra.id} extra={extra} />)}
 					</tbody>
 				))}
 				<tbody>
