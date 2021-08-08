@@ -104,4 +104,10 @@ export const {
 	updateAttribute,
 } = EditModeSlice.actions;
 export const selectEditingCharacter = (state: RootState) => state.editMode;
+export const selectLocations = (state: RootState) =>
+	state.editMode.extras
+		.map(extra => extra.location)
+		.filter(location => location !== '')
+		.filter((location, index, array) => array.indexOf(location) === index)
+		.sort();
 export default EditModeSlice.reducer;

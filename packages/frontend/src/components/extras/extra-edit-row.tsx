@@ -1,13 +1,42 @@
-import { ControlGroup, HTMLSelect, InputGroup } from '@blueprintjs/core';
+import { ControlGroup, HTMLSelect, InputGroup, MenuItem } from '@blueprintjs/core';
+import { Suggest, ItemRenderer } from '@blueprintjs/select';
 import type { ExtraUpdateValue } from '../../types';
 import type { RowProps } from './types';
-import { updateExtra } from '../../data/edit-mode-slice';
-import { useDispatch } from 'react-redux';
+import { updateExtra, selectLocations } from '../../data/edit-mode-slice';
+import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import { extraValues, extraCountValues } from '../../types';
 
+const renderLocation: ItemRenderer<string> = (location, { handleClick, modifiers }) => {
+	if (!modifiers.matchesPredicate) {
+		return null;
+	}
+	return (
+		<MenuItem
+			active={modifiers.active}
+			key={location}
+			onClick={handleClick}
+			text={'• ' + renderLocationValue(location)}
+		/>
+	);
+};
+
+const renderLocationValue = (location: string) => (location === blankLocation ? '' : location);
+
+export const renderCreateLocationOption = (
+	query: string,
+	active: boolean,
+	handleClick: React.MouseEventHandler<HTMLElement>
+) => (
+	<MenuItem icon="add" text={`Create "${query}"`} active={active} onClick={handleClick} shouldDismissPopover={false} />
+);
+
+const blankLocation = '* Default';
+
 const ExtraEditRow = ({ extra }: RowProps) => {
 	const dispatch = useDispatch();
+
+	const locations = [blankLocation, ...useSelector(selectLocations)];
 
 	return (
 		<tr key={extra.id}>
@@ -21,14 +50,20 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 							dispatch(updateExtra(data));
 						}}
 					/>
-					<InputGroup
-						id={`input-location-${extra.id}`}
-						value={extra.location}
-						placeholder="Location"
-						onChange={e => {
-							const data = { id: extra.id, location: e.target.value };
+					<Suggest
+						onItemSelect={where => {
+							const location = where === blankLocation ? '' : where;
+							const data = { id: extra.id, location };
 							dispatch(updateExtra(data));
 						}}
+						activeItem={extra.location}
+						defaultSelectedItem={extra.location}
+						items={locations}
+						createNewItemFromQuery={renderLocationValue}
+						inputValueRenderer={renderLocationValue}
+						itemRenderer={renderLocation}
+						createNewItemRenderer={renderCreateLocationOption}
+						inputProps={{ placeholder: '' }}
 					/>
 					<HTMLSelect
 						value={extra.count ?? '∞'}
