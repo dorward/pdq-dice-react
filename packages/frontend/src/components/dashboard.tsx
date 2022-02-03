@@ -1,5 +1,5 @@
 import { Callout, H1, Intent } from '@blueprintjs/core';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { User } from '../types';
 import { selectUser } from '../data/user-slice';
 import { useSelector } from 'react-redux';
@@ -43,7 +43,7 @@ const ErrorCheckingDashboard = () => {
 		return <Dashboard />;
 	}
 
-	return <Redirect to="/" />;
+	return <Navigate to="/" />;
 };
 
 export default ErrorCheckingDashboard;

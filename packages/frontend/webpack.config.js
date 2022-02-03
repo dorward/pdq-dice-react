@@ -26,7 +26,7 @@ module.exports = {
 	entry: './src/index.tsx',
 	plugins: [new MiniCssExtractPlugin(), htmlPlugin, dotEnv],
 	devServer: {
-		contentBase: './dist',
+		static: './dist',
 		historyApiFallback: true,
 	},
 	module: {

@@ -2,7 +2,7 @@ import { Callout, H1, Intent } from '@blueprintjs/core';
 import { selectUser, set as setUser } from '../data/user-slice';
 import { setUserCreds } from '../data/whoami-slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Loading from './loading';
 import React, { useEffect } from 'react';
 import axios from 'axios';
@@ -14,7 +14,7 @@ const Login = () => {
 	const user = useSelector(selectUser);
 
 	const query = useQuery();
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const queryCode = query.get('code');
 	const [savedCode, setCode] = useLocalStorage('code', '');
@@ -49,7 +49,7 @@ const Login = () => {
 			})();
 		} else if (!(user instanceof Error)) {
 			setTimeout(() => {
-				history.push('/dashboard');
+				navigate('/dashboard');
 			}, 2000);
 		}
 	}, [user, code]);

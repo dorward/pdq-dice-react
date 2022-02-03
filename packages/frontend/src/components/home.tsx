@@ -2,12 +2,12 @@ import { H1 } from '@blueprintjs/core';
 import Loading from './loading';
 import React from 'react';
 import useLocalStorage from 'use-local-storage';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const Home = () => {
 	const [code] = useLocalStorage('code', '');
 	if (code) {
-		return <Redirect to="/login" />;
+		return <Navigate to="/login" />;
 	}
 
 	return (
