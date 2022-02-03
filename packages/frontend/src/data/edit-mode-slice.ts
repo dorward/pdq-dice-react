@@ -1,11 +1,15 @@
-import { AttributeUpdate, Character, ExtraUpdate } from '../types';
+import { AttributeUpdate, Character, ExtraUpdate, SelectExtra } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 import { isAttributeUpdateValue, isExtraUpdateLocation, isExtraUpdateValue, isExtraUpdateCount } from '../types/guard';
 import { mutateLocation, mutateName, mutateValue, mutateCount } from './edit-mode-helpers';
 import { v4 as uuidv4 } from 'uuid';
 
-type EditModeState = null | Character;
+type SelectedExtra = {
+	selectedExtraId?: string;
+};
+
+type EditModeState = null | (Character & SelectedExtra);
 
 const initialEditModeState: EditModeState = null;
 
@@ -59,6 +63,10 @@ const EditModeSlice = createSlice({
 			}
 			return state;
 		},
+		promptExtraCount: (state: EditModeState, action: PayloadAction<SelectExtra>) => {
+			const { id } = action.payload;
+			return { ...state, selectedExtraId: id };
+		},
 		addExtra: (state: EditModeState) => {
 			state.extras = [
 				...state.extras,
@@ -102,6 +110,7 @@ export const {
 	updateMaximumBennies,
 	updateName,
 	updateAttribute,
+	promptExtraCount,
 } = EditModeSlice.actions;
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export const selectLocations = (state: RootState) =>

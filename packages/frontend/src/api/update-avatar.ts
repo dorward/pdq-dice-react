@@ -26,9 +26,7 @@ const updateAvatar = async ({ image }: Props) => {
 		...auth,
 		image,
 	};
-	console.log('Making request');
 	const response = await axios.post(url, data);
-	console.log('Getting response', response.data);
 	return response.data.url;
 };
 

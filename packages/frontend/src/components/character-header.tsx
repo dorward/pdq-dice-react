@@ -14,6 +14,7 @@ import { useFilePicker } from 'use-file-picker';
 import UploadError from './upload-error';
 import Loading from './loading';
 import ImageModal from './image-modal';
+import InventorySizeModal from './inventory-size-modal';
 import { User } from '../types';
 
 type Props = {
@@ -55,6 +56,7 @@ const CharacterHeader = ({ name, avatar }: Props) => {
 		return (
 			<>
 				{uploadedImage && <ImageModal url={uploadedImage} clear={clear} />}
+				{characterToEdit.selectedExtraId && <InventorySizeModal id={characterToEdit.selectedExtraId} />}
 				<div className="character-id-editor">
 					{loading && <Loading small={true} />}
 					{!loading && (

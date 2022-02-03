@@ -2,10 +2,10 @@ import { ControlGroup, HTMLSelect, InputGroup, MenuItem } from '@blueprintjs/cor
 import { Suggest, ItemRenderer } from '@blueprintjs/select';
 import type { ExtraUpdateValue } from '../../types';
 import type { RowProps } from './types';
-import { updateExtra, selectLocations } from '../../data/edit-mode-slice';
+import { updateExtra, selectLocations, promptExtraCount } from '../../data/edit-mode-slice';
 import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
-import { extraValues, extraCountValues } from '../../types';
+import React, { useMemo } from 'react';
+import { extraValues, extraCountValues as defaultExtraCountValues } from '../../types';
 
 const renderLocation: ItemRenderer<string> = (location, { handleClick, modifiers }) => {
 	if (!modifiers.matchesPredicate) {
@@ -37,6 +37,20 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 	const dispatch = useDispatch();
 
 	const locations = [blankLocation, ...useSelector(selectLocations)];
+
+	const extraCountValues = useMemo(() => {
+		if (!extra.count) {
+			return defaultExtraCountValues;
+		}
+		const included = defaultExtraCountValues.findIndex(count => count.toString() === extra.count.toString()) >= 0;
+		if (included) {
+			return defaultExtraCountValues;
+		}
+		const customExtraCountValues = [...defaultExtraCountValues];
+		customExtraCountValues.pop();
+		customExtraCountValues.push(extra.count, 'Other');
+		return customExtraCountValues;
+	}, [extra.count]);
 
 	return (
 		<tr key={extra.id}>
@@ -70,6 +84,11 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 						options={extraCountValues}
 						onChange={e => {
 							const count = e.target.value;
+							if (count === extraCountValues[extraCountValues.length - 1]) {
+								dispatch(promptExtraCount({ id: extra.id }));
+								return;
+							}
+
 							const data = { id: extra.id, count };
 							dispatch(updateExtra(data));
 						}}

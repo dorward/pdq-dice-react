@@ -1,6 +1,6 @@
 export const extraValues = ['DEL', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export const extraCountValues = ['∞', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+export const extraCountValues = ['∞', 0, 1, 2, 3, 4, 5, '>5'];
 
 export type Sheet = {
 	sheet: Character;
@@ -145,6 +145,10 @@ export type ExtraUpdateLocation = {
 export type ExtraUpdateCount = {
 	id: string;
 	count: typeof extraCountValues[number];
+};
+
+export type SelectExtra = {
+	id: string;
 };
 
 export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue | ExtraUpdateLocation | ExtraUpdateCount;
