@@ -12,7 +12,6 @@ COPY ./shared ./
 EXPOSE 3001
 WORKDIR /usr/src/app/packages/server/
 COPY ./packages/server/package*.json ./
-# RUN npm install --production && npm rebuild sqlite3 --build-from-source && npm cache clean --force  && mv node_modules ../
 RUN apk add --no-cache --virtual .gyp \
         python3 \
         make \
@@ -21,7 +20,9 @@ ENV PYTHON=python3
 RUN npm install \
     && apk del .gyp
 
+WORKDIR /usr/src/app/
 COPY ["./packages/server/", "./packages/server/"]
+COPY ["./shared/types/", "./packages/server/src/types/"]
 
 # TODO set up client
 
@@ -38,4 +39,5 @@ USER node
 # Start
 
 WORKDIR /usr/src/app/packages/server/
+RUN npm install
 CMD npm run start:dist:dev

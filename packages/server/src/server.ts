@@ -27,7 +27,10 @@ app.use('/avatars', express.static(process.env.AVATAR_PATH));
 
 const splitDataUrl = /^data:.+\/(.+);base64,(.*)$/;
 
-app.post('/api/user/:id/:code/avatar', express.json({ limit: '10MB' }), async (req, res) => {
+const json = express.json({ limit: '10MB' });
+app.use(json);
+
+app.post('/api/user/:id/:code/avatar', async (req, res) => {
 	console.log('Trying to update user avatar');
 	const userId = req.params.id;
 	const code = req.params.code;
