@@ -1,0 +1,44 @@
+{
+	"sheet": {
+		"name": "Mordred",
+		"player": "David",
+		"motivation": "To be better than he is",
+		"origin": "Son of Mordred",
+		"heropoints": { "max": 3, "current": 3 },
+		"qualities": [
+			{ "name": "A knight's training", "value": "MSTR" },
+			{ "name": "Sword Scholar", "value": "EXP" },
+			{ "name": "Ask the right questions", "value": "GD" },
+			{ "name": "Criminal connections", "value": "GD" },
+			{ "name": "Illegal is always faster", "value": "GD" },
+			{ "name": "Nothing swifter than a serpent's tongue", "value": "GD" },
+			{ "name": "Strong willpower", "value": "GD" },
+			{ "name": "Planes, Trains, and Automobiles", "value": "GD" },
+			{ "name": "You can run but you can't hide", "value": "GD" },
+			{ "name": "The sins of the father weigh heavy on the son", "value": "PR" }
+		],
+		"powers": [
+			{
+				"name": "Shadow Hide",
+				"value": "GD",
+				"notes": "You can hide unnoticed in any area of shadow big enough to hide your body. Someone with super hearing or smell will be able to make a contested roll to know that you are there."
+			},
+			{
+				"name": "The Kladenets, Sword of Darkness",
+				"value": "GD",
+				"notes": "You can use the sword to cast an area of darkness. This can work in conjunction with your shadow hide."
+			},
+			{
+				"name": "Blessing",
+				"value": "AVG",
+				"notes": "Takes time to prepare. Target (which can be self) rolls 3d6k2 instead of 2d6 until the blessing expires. Level affects range."
+			},
+			{
+				"name": "Create Ice",
+				"value": "EXP",
+				"notes": "Creates ice out of moisture in the air. Effectiveness varies with the weather conditions."
+			},
+			{ "name": "Rituals", "value": "GD" }
+		]
+	}
+}
