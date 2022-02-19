@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./packages",
+		"paths": {
+			"@pdq-dice/server": ["server/lib"]
+		},
+		"module": "commonjs",
+		"target": "es2015",
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"noImplicitAny": true,
+		"noUnusedLocals": true,
+		"outDir": "./dist/",
+		"jsx": "react"
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules", "dist"],
+	"lib": ["es2015", "es2017", "dom"]
+}
