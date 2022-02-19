@@ -1,0 +1,1 @@
+ENVIRONMENT=development docker-compose up --build --remove-orphans pdq-api

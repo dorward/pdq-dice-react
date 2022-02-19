@@ -1,0 +1,60 @@
+services:
+  pdq-frontend:
+    container_name: pdq-frontend
+    build:
+      context: ./client/
+      dockerfile: '.Dockerfile.${ENVIRONMENT}'
+    volumes:
+      - './client/:/app'
+      - '/app/node_modules'
+    ports:
+      - 5100:5100
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - ENVIRONMENT
+      - API_URL
+      - FRONTEND_URL
+    depends_on:
+      - pdq-api
+  pdq-api:
+    container_name: pdq-api
+    build:
+      context: ./server/
+      dockerfile: .Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      API_URL: '${API_URL}'
+      FRONTEND_URL: '${FRONTEND_URL}'
+      DATABASE_URL: postgres://postgres:newPassword@postgres:5432/pdq
+      NODE_ENV: '${ENVIRONMENT}'
+      AVATAR_PATH: '${AVATAR_PATH}'
+      AVATAR_URL: '${AVATAR_URL}'
+      TOKEN: '${TOKEN}'
+      PORT: 5101
+      WAIT_HOSTS: postgres:5432
+    ports:
+      - '5101:5101'
+    volumes:
+      - ./static:/var/pdq/static
+      - ./server/src:/usr/app/src
+      - ./server/nodemon.json:/usr/app/nodemon.json
+      - ./avatars:/var/pdq/avatars
+  postgres:
+    container_name: postgres
+    image: postgres:14.2-alpine
+    ports:
+      - target: 5432
+        published: 5102
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data
+      - ./server/src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: newPassword
+      POSTGRES_DB: pdq
+
+volumes:
+  db-data:
+  pgadmin-data:

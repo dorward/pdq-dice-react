@@ -1,0 +1,1 @@
+env $(cat .env.production) docker-compose down
