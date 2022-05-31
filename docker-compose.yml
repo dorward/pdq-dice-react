@@ -16,6 +16,7 @@ services:
       - FRONTEND_URL
     depends_on:
       - pdq-api
+    restart: unless-stopped
   pdq-api:
     container_name: pdq-api
     build:
@@ -40,6 +41,7 @@ services:
       - ./server/src:/usr/app/src
       - ./server/nodemon.json:/usr/app/nodemon.json
       - ./avatars:/var/pdq/avatars
+    restart: unless-stopped
   postgres:
     container_name: postgres
     image: postgres:14.2-alpine
@@ -54,7 +56,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: newPassword
       POSTGRES_DB: pdq
-
 volumes:
   db-data:
   pgadmin-data:
