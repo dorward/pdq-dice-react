@@ -29,7 +29,7 @@ const Results = () => {
 					{results?.roll?.results && (
 						<>
 							<div>
-								<h2>Result</h2>
+								<h2>Result: {results.roll.total}</h2>
 								<HTMLTable>
 									<tbody>
 										{results.roll.results.map(result => (
