@@ -1,4 +1,4 @@
-import { GuildMember, ImageURLOptions, TextChannel } from 'discord.js';
+import { BaseImageURLOptions, GuildMember, TextChannel } from 'discord.js';
 import { v4 as uuidv4 } from 'uuid';
 
 import addOrUpdateUserCredentials from '../model/addOrUpdateUserCredentials';
@@ -8,7 +8,7 @@ type LoginArgs = {
     channel: TextChannel;
 };
 
-const imageOptions: ImageURLOptions = { format: 'png', size: 128 };
+const imageOptions: BaseImageURLOptions = { size: 128 };
 
 const login = ({ channel, member }: LoginArgs): string | undefined => {
     if (!channel) return;
