@@ -12,7 +12,6 @@ const responses: Record<string, number> = {
 
 const authHelper = async (code: string, userId: string, res: Response) => {
     const user = await getUserByCodeAndId(code, userId);
-    console.log({ code, userId, user });
     const statusCode = responses[`${user}`];
     if (statusCode) {
         res.sendStatus(statusCode);
