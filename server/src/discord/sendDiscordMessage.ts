@@ -1,17 +1,11 @@
-import {
-    AnyChannel,
-    EmbedAuthorData,
-    EmbedFieldData,
-    MessageEmbed,
-    TextChannel,
-} from 'discord.js';
+import { Channel, ChannelType, EmbedAuthorData, EmbedBuilder, TextChannel } from 'discord.js';
 
 import client from '.';
 import { SkillCheckResponseBody, User } from '../types';
 import dice from './dice';
 
-const isTextChannel = (channel: AnyChannel | null): channel is TextChannel =>
-    channel?.type === 'GUILD_TEXT';
+const isTextChannel = (channel: Channel | null): channel is TextChannel =>
+    channel?.type === ChannelType.GuildText;
 
 const successToColor = (success: boolean | undefined) => {
     if (typeof success === 'undefined') return '#FFFF00';
@@ -32,16 +26,16 @@ const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) 
         iconURL: response.rollFor.avatar ?? user.avatar ?? undefined,
     };
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor(successToColor(success))
         .setTitle(response.rollType)
-        .setDescription(response.description ?? 'Just some roll')
+        .setDescription(response.description || 'Just some roll')
         .setAuthor(author)
         .setThumbnail(thumbnail);
 
-    const embeds: EmbedFieldData[] = response.results.map((result) => {
+    const embeds = response.results.map((result) => {
         const { name, value } = result;
-        return { name, value: `${value}` };
+        return { name: name || '-', value: `${value}` || '-' };
     });
 
     embed.addFields(embeds);

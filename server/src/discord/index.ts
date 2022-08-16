@@ -1,4 +1,4 @@
-import { Client, Intents, TextChannel } from 'discord.js';
+import { ActivityType, Client, GatewayIntentBits, TextChannel } from 'discord.js';
 
 import login from './login';
 
@@ -11,9 +11,10 @@ const config = {
 
 const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGES,
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.MessageContent,
     ],
 });
 
@@ -33,7 +34,7 @@ client.once('ready', () => {
         activities: [
             {
                 name: 'Legends Walk',
-                type: 'PLAYING',
+                type: ActivityType.Playing,
             },
         ],
     });
