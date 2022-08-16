@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { SkillCheckRequestBody } from '../types';
 import { attributeValues, countsThatDoNotReduce } from '../consts';
-import { markLoading, setResult } from '../data/results-slice';
-import { selectCharacter, spendExtra } from '../data/user-slice';
+import { markLoading, setResult, markClear } from '../data/results-slice';
+import { selectCharacter, spendExtra, setUserError } from '../data/user-slice';
 import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
 import store from '../data/redux-store';
 
@@ -80,8 +80,16 @@ export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
 		description,
 		rollType: 'Skill Check',
 	};
-	const response = await axios.post(url, data);
-	const result = response.data.result;
-	store.dispatch(setResult(response.data));
-	return result;
+	try {
+		const response = await axios.post(url, data);
+		const {
+			data: { result },
+		} = response;
+		store.dispatch(setResult(response.data));
+		return result;
+	} catch (error) {
+		console.error({ error });
+		store.dispatch(markClear());
+		store.dispatch(setUserError('There was an unexpected error. Try logging in using Discord again.'));
+	}
 };

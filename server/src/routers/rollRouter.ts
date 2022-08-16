@@ -8,7 +8,6 @@ import {
     E_UNSUPPORTED_DICE_FORMAT,
 } from '../errors';
 import filterCharacterIdentityFromUser from '../model/filterCharacterIdentityFromUser';
-import getUserByCodeAndId from '../model/getUserByCodeAndId';
 import { SkillCheckRequestBody, SkillCheckResponseBody } from '../types';
 import authHelper from '../util/authHelper';
 import measureSuccess from '../util/measureSuccess';
