@@ -52,7 +52,11 @@ client.on('messageCreate', (msg) => {
 
     const code = login({ channel, member });
     if (code) {
-        void msg.author.send(`Login at ${config.FRONTEND_URL}login?code=${code}`);
+        void msg.author.send(`Login at ${config.FRONTEND_URL}login?code=${code}
+
+This token will remain valid until you refresh it by running the login command as well.
+
+It will also be saved in your browser, so you can simply bookmark \`${config.FRONTEND_URL}\` and go directly to the app in future.`);
     }
 });
 
