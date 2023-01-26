@@ -30,10 +30,10 @@ const userSlice = createSlice({
 			state.error = action.payload;
 		},
 		addCharacterFromYAML: (state, action: PayloadAction<string>) => {
-			const parsed = yaml.load(action.payload) as Sheet | null;
+			const parsed = yaml.load(action.payload) as Sheet | Character | null;
 			if (!parsed)
 				throw new Error('The YAML file could not be parsed. Something is probably wrong with the format of it.');
-			const character = parsed.sheet;
+			const character = 'sheet' in parsed ? parsed.sheet : parsed;
 			cleanCharacter(character);
 			const user = state.user;
 			const newUser: User = { ...user, characters: [...user.characters, character] };
