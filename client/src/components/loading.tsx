@@ -1,5 +1,5 @@
 import Goo from 'gooey-react';
-import React from 'react';
+
 import { Overlay, Card } from '@blueprintjs/core';
 
 type Props = {

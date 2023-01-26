@@ -4,7 +4,7 @@ import { setUserCreds } from '../data/whoami-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Loading from './loading';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import useQuery from '../hooks/use-query';
 import useLocalStorage from 'use-local-storage';

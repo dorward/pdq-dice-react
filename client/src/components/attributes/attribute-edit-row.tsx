@@ -4,7 +4,7 @@ import { RowProps } from './types';
 import { attributeValues } from '../../consts';
 import { updateAttribute } from '../../data/edit-mode-slice';
 import { useDispatch } from 'react-redux';
-import React from 'react';
+
 import classnames from 'classnames';
 
 const options = ['DEL', ...attributeValues.map(v => v[0])];

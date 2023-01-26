@@ -4,7 +4,7 @@ import { User } from '../types';
 import { selectUser } from '../data/user-slice';
 import { useSelector } from 'react-redux';
 import Characters from './characters';
-import React from 'react';
+
 import Results from './results';
 import UserMenu from './user-menu';
 

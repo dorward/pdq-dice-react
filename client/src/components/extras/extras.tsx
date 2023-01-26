@@ -1,7 +1,6 @@
 import { Props } from './types';
 import ExtrasEdit from './extras-edit';
 import ExtrasPlay from './extras-play';
-import React from 'react';
 
 import { selectEditingCharacter } from '../../data/edit-mode-slice';
 import { useSelector } from 'react-redux';

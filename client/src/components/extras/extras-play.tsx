@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { Extra } from '../../types';
 import { HTMLTable, Button } from '@blueprintjs/core';

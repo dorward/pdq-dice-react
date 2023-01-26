@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FormGroup, Button, H2, HTMLSelect, InputGroup, Icon, IconSize } from '@blueprintjs/core';
 import { selectBennies } from '../data/user-slice';
 import {

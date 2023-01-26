@@ -1,5 +1,4 @@
 import { Button, Card, Intent, Overlay } from '@blueprintjs/core';
-import React from 'react';
 
 // type Error = {
 // 	name: string;

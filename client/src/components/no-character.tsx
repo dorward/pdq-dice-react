@@ -1,5 +1,5 @@
 import { Callout, Icon } from '@blueprintjs/core';
-import React from 'react';
+
 import SimpleDice from './simple-dice';
 
 type Props = {

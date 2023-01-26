@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Card, Overlay, Intent, InputGroup } from '@blueprintjs/core';
 import { useDispatch } from 'react-redux';
 import { updateExtra, promptExtraCount } from '../data/edit-mode-slice';

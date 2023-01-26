@@ -1,7 +1,7 @@
 import { FormGroup, HTMLSelect, InputGroup } from '@blueprintjs/core';
 import { selectCircumstance, updateCircumstance } from '../../data/roll-slice';
 import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
+
 import { extraValues } from '../../types';
 
 const ExtraCircumstanceRow = () => {

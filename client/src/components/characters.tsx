@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import CharacterSheet from './character-sheet';
 import NewCharacter from './new-character';
 import NoCharacter from './no-character';
-import React from 'react';
 
 const Characters = () => {
 	const dispatch = useDispatch();

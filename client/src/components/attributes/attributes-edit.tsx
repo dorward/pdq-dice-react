@@ -3,7 +3,6 @@ import { Props } from './types';
 import { addAttribute } from '../../data/edit-mode-slice';
 import { useDispatch } from 'react-redux';
 import AttributeEditRow from './attribute-edit-row';
-import React from 'react';
 
 const AttributesEdit = ({ dataSource, title, character, isWoundable = false }: Props) => {
 	const dispatch = useDispatch();

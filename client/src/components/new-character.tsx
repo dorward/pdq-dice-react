@@ -3,7 +3,6 @@ import { addCharacterFromYAML, selectCharacters, toggleCharacterVisibility } fro
 import { createNewCharacter } from '../data/helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone';
-import React from 'react';
 
 const NewCharacter = () => {
 	const dispatch = useDispatch();

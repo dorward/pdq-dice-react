@@ -2,7 +2,6 @@ import { Attribute, Character } from '../../types';
 import { Icon } from '@blueprintjs/core';
 import { applyWound, healWound } from '../../data/user-slice';
 import { useDispatch } from 'react-redux';
-import React from 'react';
 
 type AttributeStateProps = {
 	firstBought: number;
