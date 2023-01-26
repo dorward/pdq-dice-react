@@ -14,6 +14,7 @@ const Characters = () => {
 	return (
 		<>
 			<Tabs
+				className="character-tabs"
 				onChange={id => {
 					dispatch(exitEditMode());
 					dispatch(setCharacterId(id as string));

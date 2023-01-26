@@ -57,7 +57,7 @@ const ExtrasPlay = ({ extras }: Props) => {
 						{openLocations[location] && extras.map(extra => <ExtraPlayRow key={extra.id} extra={extra} />)}
 					</tbody>
 				))}
-				<tbody>
+				<tbody className="circumstance-bonus">
 					<tr key="circumstance-heading" className="location-heading">
 						<th colSpan={2}>Circumstance Bonus</th>
 					</tr>

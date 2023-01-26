@@ -264,3 +264,25 @@ svg.goo {
 		}
 	}
 }
+
+@media only print {
+	#root > header,
+	.character-tabs > [role='tablist'],
+	.character-menu,
+	.circumstance-bonus,
+	.controls {
+		display: none;
+	}
+
+	.bonus-name > label.bp4-control {
+		padding: 0;
+		input,
+		span {
+			display: none;
+		}
+	}
+
+	table {
+		page-break-inside: avoid;
+	}
+}
