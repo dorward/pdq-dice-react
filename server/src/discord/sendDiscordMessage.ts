@@ -13,6 +13,12 @@ const successToColor = (success: boolean | undefined) => {
     return '#FF2511';
 };
 
+const resultIndicator = (success: boolean | undefined, total: number) => {
+    if (typeof success === 'undefined') return total;
+    if (success) return '👍';
+    return '👎';
+};
+
 const footer = { text: '⚀ ⚁ ⚂ ⚃ ⚄ ⚅ '.repeat(5) };
 
 const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) => {
@@ -29,7 +35,12 @@ const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) 
     const embed = new EmbedBuilder()
         .setColor(successToColor(success))
         .setTitle(response.rollType)
-        .setDescription(response.description || 'Just some roll')
+        .setDescription(
+            `${response.description || 'Just some roll'} (${resultIndicator(
+                success,
+                response.total,
+            )})`,
+        )
         .setAuthor(author)
         .setThumbnail(thumbnail);
 
