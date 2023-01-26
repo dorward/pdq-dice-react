@@ -1,6 +1,5 @@
 import { Button } from '@blueprintjs/core';
 import { skillCheck } from '../api/roll';
-import React from 'react';
 
 const SkillCheck = () => {
 	return (

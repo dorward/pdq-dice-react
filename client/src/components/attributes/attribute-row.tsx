@@ -4,7 +4,7 @@ import { attributeValues } from '../../consts';
 import { selectSelected, toggleSelected } from '../../data/roll-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import AttributeState from './attribute-state';
-import React from 'react';
+
 import classnames from 'classnames';
 
 const AttributeRow = ({ attribute, character, isWoundable }: RowProps) => {

@@ -1,6 +1,6 @@
 import { H1 } from '@blueprintjs/core';
 import Loading from './loading';
-import React from 'react';
+
 import useLocalStorage from 'use-local-storage';
 import { Navigate } from 'react-router-dom';
 

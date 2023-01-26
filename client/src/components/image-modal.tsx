@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button, Card, Slider, Overlay, Intent } from '@blueprintjs/core';
 import AvatarEditor from 'react-avatar-editor';
 import updateAvatar from '../api/update-avatar';

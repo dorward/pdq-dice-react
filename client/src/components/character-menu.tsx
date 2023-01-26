@@ -6,7 +6,7 @@ import { editCharacter, selectEditingCharacter } from '../data/edit-mode-slice';
 import { finishEditing } from '../data/helpers';
 import { setCharacterId } from '../data/whoami-slice';
 import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
+
 import SimpleDice from './simple-dice';
 import { saveCharacterAsYaml } from '../util/download';
 

@@ -1,6 +1,6 @@
 import { Button, ButtonGroup } from '@blueprintjs/core';
 import { d6 } from '../api/roll';
-import React from 'react';
+
 import SkillCheck from './skill-check';
 
 type Props = {

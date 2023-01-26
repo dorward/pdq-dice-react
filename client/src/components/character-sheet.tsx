@@ -6,7 +6,7 @@ import Attributes from './attributes';
 import CharacterHeader from './character-header';
 import CharacterMenu from './character-menu';
 import Extras from './extras';
-import React from 'react';
+
 import SkillCheck from './skill-check';
 import { selectDescription, updateDescription } from '../data/roll-slice';
 import { useDispatch, useSelector } from 'react-redux';

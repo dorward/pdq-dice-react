@@ -8,7 +8,6 @@ import { spendBenny } from '../data/user-slice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Loading from './loading';
-import React from 'react';
 
 const Results = () => {
 	const dispatch = useDispatch();

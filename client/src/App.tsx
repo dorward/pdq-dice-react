@@ -9,7 +9,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Dashboard from './components/dashboard';
 import Home from './components/home';
 import Login from './components/login';
-import React from 'react';
+
 import store from './data/redux-store';
 
 const App: React.FC = () => {
