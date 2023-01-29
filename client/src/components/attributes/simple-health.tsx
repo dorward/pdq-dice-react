@@ -10,14 +10,17 @@ type Props = {
 	attributeId: string;
 	isWoundable: boolean;
 };
+const GONE = 'Gone';
 
 const SimpleHealth = ({ isWoundable, firstUnwounded, firstBought, characterId, attributeId }: Props) => {
 	const dispatch = useDispatch();
 
-	const bonus = new Intl.NumberFormat('en-GB', {
-		signDisplay: 'exceptZero',
-	}).format(attributeValues[firstUnwounded][1]);
-
+	const unwoundedAttribute = attributeValues[firstUnwounded]?.[1];
+	const bonus = [undefined, -Infinity].includes(unwoundedAttribute)
+		? GONE
+		: new Intl.NumberFormat('en-GB', {
+				signDisplay: 'exceptZero',
+		  }).format(unwoundedAttribute);
 	const wounded = firstUnwounded !== firstBought;
 
 	return (
@@ -36,7 +39,7 @@ const SimpleHealth = ({ isWoundable, firstUnwounded, firstBought, characterId, a
 				</Button>
 			)}
 			<span className="bonus"> ({bonus}) </span>
-			{isWoundable && (
+			{isWoundable && bonus !== GONE && (
 				<Button
 					onClick={() => {
 						dispatch(
