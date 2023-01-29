@@ -1,8 +1,14 @@
 import { AttributeUpdate, Character, ExtraUpdate, SelectExtra } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
-import { isAttributeUpdateValue, isExtraUpdateLocation, isExtraUpdateValue, isExtraUpdateCount } from '../types/guard';
-import { mutateLocation, mutateName, mutateValue, mutateCount } from './edit-mode-helpers';
+import {
+	isAttributeUpdateValue,
+	isAttributeUpdateNotes,
+	isExtraUpdateLocation,
+	isExtraUpdateValue,
+	isExtraUpdateCount,
+} from '../types/guard';
+import { mutateLocation, mutateName, mutateValue, mutateCount, mutateNotes } from './edit-mode-helpers';
 import { v4 as uuidv4 } from 'uuid';
 
 type SelectedExtra = {
@@ -27,6 +33,9 @@ const EditModeSlice = createSlice({
 				}
 				state.qualities = mutateValue(state.qualities, action.payload.id, action.payload.value);
 				state.powers = mutateValue(state.powers, action.payload.id, action.payload.value);
+			} else if (isAttributeUpdateNotes(action.payload)) {
+				state.qualities = mutateNotes(state.qualities, action.payload.id, action.payload.notes);
+				state.powers = mutateNotes(state.powers, action.payload.id, action.payload.notes);
 			} else {
 				state.qualities = mutateName(state.qualities, action.payload.id, action.payload.name);
 				state.powers = mutateName(state.powers, action.payload.id, action.payload.name);

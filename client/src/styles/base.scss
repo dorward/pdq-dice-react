@@ -97,6 +97,15 @@ main.tiny {
 	margin-bottom: 2em;
 }
 
+.character-sheet {
+	padding-bottom: 1ex;
+}
+
+.power-description {
+	margin: 6px 0;
+	page-break-inside: avoid;
+}
+
 table.attributes,
 table.extras {
 	table-layout: fixed;

@@ -6,7 +6,7 @@ import Attributes from './attributes';
 import CharacterHeader from './character-header';
 import CharacterMenu from './character-menu';
 import Extras from './extras';
-
+import PowerNotes from './power-notes';
 import SkillCheck from './skill-check';
 import { selectDescription, updateDescription } from '../data/roll-slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -61,6 +61,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 						<SkillCheck />
 					</div>
 				)}
+				<PowerNotes powers={character.powers} />
 			</div>
 		</>
 	);

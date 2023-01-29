@@ -121,12 +121,17 @@ export type AttributeUpdateName = {
 	name: string;
 };
 
+export type AttributeUpdateNotes = {
+	id: string;
+	notes: string;
+};
+
 export type AttributeUpdateValue = {
 	id: string;
 	value: 'DEL' | QualityValue;
 };
 
-export type AttributeUpdate = AttributeUpdateName | AttributeUpdateValue;
+export type AttributeUpdate = AttributeUpdateName | AttributeUpdateValue | AttributeUpdateNotes;
 
 export type ExtraUpdateName = {
 	id: string;

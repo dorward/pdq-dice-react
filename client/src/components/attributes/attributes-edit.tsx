@@ -27,7 +27,7 @@ const AttributesEdit = ({ dataSource, title, character, isWoundable = false }: P
 				</thead>
 				<tbody>
 					{attributes.map(attribute => (
-						<AttributeEditRow key={attribute.id} {...{ attribute, character, isWoundable }} />
+						<AttributeEditRow key={attribute.id} {...{ attribute, character, isWoundable, dataSource }} />
 					))}
 				</tbody>
 			</HTMLTable>
