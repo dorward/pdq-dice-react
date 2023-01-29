@@ -29,7 +29,7 @@ const Characters = () => {
 					<Tab
 						id={character.id}
 						key={character.id}
-						title={character.name}
+						title={character.codeName || 'Missing Code Name'}
 						panel={<CharacterSheet character={character} />}
 					/>
 				))}
