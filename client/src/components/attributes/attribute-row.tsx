@@ -23,13 +23,16 @@ const AttributeRow = ({ attribute, character, isWoundable }: RowProps) => {
 				<Checkbox checked={checked} onChange={onChange}>
 					{attribute.name}
 				</Checkbox>
-				<SimpleHealth
-					characterId={character.id}
-					attributeId={attribute.id}
-					firstUnwounded={firstUnwounded}
-					firstBought={firstBought}
-				/>
 			</td>
+			<SimpleHealth
+				key="health"
+				isWoundable={isWoundable}
+				characterId={character.id}
+				attributeId={attribute.id}
+				firstUnwounded={firstUnwounded}
+				firstBought={firstBought}
+			/>
+
 			{attributeValues.map(([name], index) => (
 				<td key={name}>
 					<AttributeState {...{ firstBought, firstUnwounded, index, name, character, attribute, isWoundable }} />

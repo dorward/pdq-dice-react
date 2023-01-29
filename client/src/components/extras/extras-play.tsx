@@ -29,7 +29,7 @@ const ExtrasPlay = ({ extras }: Props) => {
 
 	return (
 		<>
-			<HTMLTable className="extras edit">
+			<HTMLTable className="extras play">
 				<thead>
 					<tr>
 						<th>Extras</th>

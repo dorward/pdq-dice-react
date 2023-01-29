@@ -11,16 +11,18 @@ const ExtraPlayRow = ({ extra }: RowProps) => {
 
 	const count = extra.count !== undefined && extra.count !== '∞' ? `(×${extra.count})` : null;
 
+	const bonus = new Intl.NumberFormat('en-GB', {
+		signDisplay: 'exceptZero',
+	}).format(extra.value);
+
 	return (
 		<tr key={extra.id}>
 			<td key="label" className="bonus-name">
-				<label className="attribute-row-label">
-					<Checkbox checked={checked} onChange={onChange} disabled={extra.count === 0}>
-						{extra.name} {count}
-					</Checkbox>
-				</label>
+				<Checkbox checked={checked} onChange={onChange} disabled={extra.count === 0}>
+					{extra.name} {count}
+				</Checkbox>
 			</td>
-			<td>{extra.value}</td>
+			<td>{bonus}</td>
 		</tr>
 	);
 };

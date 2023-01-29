@@ -8,9 +8,10 @@ type Props = {
 	firstBought: number;
 	characterId: string;
 	attributeId: string;
+	isWoundable: boolean;
 };
 
-const SimpleHealth = ({ firstUnwounded, firstBought, characterId, attributeId }: Props) => {
+const SimpleHealth = ({ isWoundable, firstUnwounded, firstBought, characterId, attributeId }: Props) => {
 	const dispatch = useDispatch();
 
 	const bonus = new Intl.NumberFormat('en-GB', {
@@ -20,8 +21,8 @@ const SimpleHealth = ({ firstUnwounded, firstBought, characterId, attributeId }:
 	const wounded = firstUnwounded !== firstBought;
 
 	return (
-		<span className="health">
-			{wounded && (
+		<td className="health-column">
+			{isWoundable && wounded && (
 				<Button
 					onClick={() => {
 						dispatch(
@@ -35,18 +36,20 @@ const SimpleHealth = ({ firstUnwounded, firstBought, characterId, attributeId }:
 				</Button>
 			)}
 			<span className="bonus"> ({bonus}) </span>
-			<Button
-				onClick={() => {
-					dispatch(
-						applyWound({
-							characterId: characterId,
-							attributeId: attributeId,
-						})
-					);
-				}}>
-				<Icon icon="heart-broken" intent={Intent.DANGER} title="Wound" htmlTitle="Wound" />
-			</Button>
-		</span>
+			{isWoundable && (
+				<Button
+					onClick={() => {
+						dispatch(
+							applyWound({
+								characterId: characterId,
+								attributeId: attributeId,
+							})
+						);
+					}}>
+					<Icon icon="heart-broken" intent={Intent.DANGER} title="Wound" htmlTitle="Wound" />
+				</Button>
+			)}
+		</td>
 	);
 };
 
