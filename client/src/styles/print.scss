@@ -1,0 +1,54 @@
+@page {
+	size: portrait;
+	margin: 5mm;
+}
+
+@media only print {
+	html,
+	body {
+		background: white;
+	}
+
+	#root {
+		width: auto;
+		max-width: 100%;
+		margin: 1ex;
+	}
+
+	#root > header,
+	.character-tabs > [role='tablist'],
+	.character-menu,
+	.circumstance-bonus,
+	.controls {
+		display: none;
+	}
+
+	.bonus-name > label.bp4-control {
+		padding: 0;
+		input,
+		span {
+			display: none;
+		}
+	}
+
+	table {
+		page-break-inside: avoid;
+	}
+
+	.circumstance-bonus {
+		display: none;
+	}
+
+	.remoteInventory {
+		display: table-row;
+	}
+
+	.location-heading {
+		.bp4-button-text {
+			font-style: italic;
+		}
+		.bp4-icon {
+			display: none;
+		}
+	}
+}

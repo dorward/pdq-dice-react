@@ -1,0 +1,61 @@
+@media only screen and (max-width: 560px) {
+	.character-menu > .bp4-button-group {
+		flex-direction: column;
+		align-content: flex-start;
+
+		&:nth-child > * {
+			flex: 0 0;
+		}
+	}
+	table.attributes,
+	table.extras {
+		table-layout: fixed;
+		thead > tr {
+			> th + th + th {
+				display: none;
+			}
+		}
+		td {
+			display: none;
+		}
+		&.extras td,
+		.bonus-name,
+		.health-column {
+			display: table-cell;
+		}
+		.health-column {
+			width: 130px;
+			text-align: right;
+		}
+	}
+
+	.bennies-edit {
+		flex-direction: column;
+
+		.bp4-form-group {
+			display: flex;
+			> * {
+				flex: 1 1 50%;
+			}
+		}
+	}
+
+	.attributes,
+	.extras {
+		&.edit {
+			tr {
+				display: table-row;
+				border: none;
+			}
+			td:first-child,
+			td:first-child + td {
+				display: table-cell;
+				box-shadow: none;
+				padding: 3px;
+				.bp4-form-group {
+					margin: 0;
+				}
+			}
+		}
+	}
+}
