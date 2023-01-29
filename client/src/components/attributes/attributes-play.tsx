@@ -10,6 +10,7 @@ const AttributesPlay = ({ dataSource, title, character, isWoundable = false }: P
 				<thead>
 					<tr>
 						<th>{title}</th>
+						<th className="health-column">Health</th>
 						<th>
 							MSTR
 							<br />
