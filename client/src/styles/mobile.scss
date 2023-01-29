@@ -28,4 +28,34 @@
 			text-align: right;
 		}
 	}
+
+	.bennies-edit {
+		flex-direction: column;
+
+		.bp4-form-group {
+			display: flex;
+			> * {
+				flex: 1 1 50%;
+			}
+		}
+	}
+
+	.attributes,
+	.extras {
+		&.edit {
+			tr {
+				display: table-row;
+				border: none;
+			}
+			td:first-child,
+			td:first-child + td {
+				display: table-cell;
+				box-shadow: none;
+				padding: 3px;
+				.bp4-form-group {
+					margin: 0;
+				}
+			}
+		}
+	}
 }
