@@ -4,6 +4,11 @@ type Named = {
 	name: string;
 };
 
+type Notesd = {
+	id: string;
+	notes?: string;
+};
+
 type Valued = {
 	id: string;
 	value: any;
@@ -27,6 +32,13 @@ export const mutateValue = <T extends Valued>(array: T[], id: string, value: any
 	const index = array.findIndex(item => item.id === id);
 	if (index === -1) return array;
 	array[index] = { ...array[index], value };
+	return array;
+};
+
+export const mutateNotes = <T extends Notesd>(array: T[], id: string, notes: any): T[] => {
+	const index = array.findIndex(item => item.id === id);
+	if (index === -1) return array;
+	array[index] = { ...array[index], notes };
 	return array;
 };
 

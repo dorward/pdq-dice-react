@@ -45,7 +45,7 @@ const AttributesPlay = ({ dataSource, title, character, isWoundable = false }: P
 				</thead>
 				<tbody>
 					{attributes.map(attribute => (
-						<AttributeRow key={attribute.name} {...{ attribute, character, isWoundable }} />
+						<AttributeRow key={attribute.name} {...{ attribute, character, isWoundable, dataSource }} />
 					))}
 				</tbody>
 			</HTMLTable>
