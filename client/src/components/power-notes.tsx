@@ -13,7 +13,7 @@ const PowerNotes = ({ powers }: Props) => {
 			{powers
 				.filter(power => Boolean(power.notes))
 				.map(power => (
-					<PowerDescription power={power} />
+					<PowerDescription key={power.id} power={power} />
 				))}
 		</div>
 	);
