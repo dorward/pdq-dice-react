@@ -61,7 +61,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 						<SkillCheck />
 					</div>
 				)}
-				<PowerNotes powers={character.powers} />
+				{!characterToEdit && <PowerNotes powers={character.powers} />}
 			</div>
 		</>
 	);
