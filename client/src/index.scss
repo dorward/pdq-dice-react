@@ -265,6 +265,83 @@ svg.goo {
 	}
 }
 
+@media only screen and (max-width: 560px) {
+	.character-menu > .bp4-button-group {
+		flex-direction: column;
+		align-content: flex-start;
+
+		&:nth-child > * {
+			flex: 0 0;
+		}
+	}
+	.attributes {
+		// display: block;
+		thead {
+			display: none;
+		}
+		tbody {
+			// display: block;
+		}
+		// .attributeRow {
+		// 	// display: block;
+		// 	td {
+		// 		display: none;
+		// 	}
+		// 	.bonus-name {
+		// 		display: flex;
+		// 		justify-content: space-between;
+
+		// 		& > label.bp4-control {
+		// 			flex: 1 0 auto;
+		// 			padding: 0;
+		// 			.bp4-control-indicator {
+		// 				margin: 0 6px 0 -3px;
+		// 			}
+		// 		}
+		// 		& > .health {
+		// 			flex: 1 0 auto;
+		// 			display: flex;
+		// 			justify-content: flex-end;
+		// 			align-items: center;
+		// 			> * {
+		// 				margin: 0 3px;
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+		.attributeRow {
+			td {
+				display: none;
+			}
+			.bonus-name {
+				display: contents;
+				> * {
+					display: table-cell;
+				}
+
+				& > .health {
+					text-align: right;
+					width: 110px;
+				}
+
+				// & > label.bp4-control {
+				// 	display: table-cell;
+				// }
+				// & > .health {
+				// 	flex: 1 0 auto;
+				// 	display: flex;
+				// 	justify-content: flex-end;
+				// 	align-items: center;
+				// 	> * {
+				// 		margin: 0 3px;
+				// 	}
+				// }
+			}
+		}
+	}
+}
+
 @media only print {
 	#root > header,
 	.character-tabs > [role='tablist'],
