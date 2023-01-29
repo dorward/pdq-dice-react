@@ -54,7 +54,9 @@ const ExtrasPlay = ({ extras }: Props) => {
 								</Button>
 							</th>
 						</tr>
-						{openLocations[location] && extras.map(extra => <ExtraPlayRow key={extra.id} extra={extra} />)}
+						{extras.map(extra => (
+							<ExtraPlayRow key={extra.id} extra={extra} isOpen={openLocations[location]} />
+						))}
 					</tbody>
 				))}
 				<tbody className="circumstance-bonus">
