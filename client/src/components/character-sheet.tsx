@@ -37,7 +37,14 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 		<>
 			<div className="character-sheet">
 				<CharacterMenu character={character} />
-				<CharacterHeader name={character.name} avatar={character.avatar} />
+				<CharacterHeader
+					avatar={character.avatar}
+					codeName={character.codeName}
+					motivation={character.motivation}
+					name={character.name}
+					origin={character.origin}
+					player={character.player}
+				/>
 				<Attributes {...{ ...qualities, character }} />
 				<Attributes {...{ ...powers, character }} />
 				<Extras extras={character.extras} />

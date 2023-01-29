@@ -20,13 +20,17 @@ import InventorySizeModal from './inventory-size-modal';
 import { User } from '../types';
 
 type Props = {
-	name: string;
 	avatar?: string;
+	codeName: string;
+	motivation: string;
+	name: string;
+	origin: string;
+	player: string;
 };
 
 const bennyValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const CharacterHeader = ({ name, avatar }: Props) => {
+const CharacterHeader = ({ avatar, player, name, origin, codeName, motivation }: Props) => {
 	const dispatch = useDispatch();
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const { avatar: userAvatar } = useSelector(selectUser) as User;
@@ -143,41 +147,47 @@ const CharacterHeader = ({ name, avatar }: Props) => {
 
 	return (
 		<div className="character-header">
-			<img src={avatarUrl} alt="" />
-			<div className="header-group">
-				<span className="label">Character Name</span>
-				<span className="field" id="field-character-name">
-					Pending
+			<img src={avatarUrl} alt="" className="avatar" />
+			<div className="header-group" id="group-character-name">
+				<span className="label character-name-label">Character Name</span>
+				<span className="field character-name-value" id="field-character-name">
+					{name}
 				</span>
 			</div>
-			<div className="header-group">
-				<span className="label">Player Name</span>
-				<span className="field" id="field-player-name">
-					Pending
+			<div className="header-group" id="group-player-name">
+				<span className="label player-name-label">Player Name</span>
+				<span className="field player-name-value" id="field-player-name">
+					{player}
 				</span>
 			</div>
 			<div className="header-group" id="group-code-name">
-				<span className="label">Code Name</span>
-				<H2 className="field" id="field-code-name">
-					{name}
+				<span className="label code-name-label">Code Name</span>
+				<H2 className="field code-name-value" id="field-code-name">
+					{codeName}
 				</H2>
 			</div>
-			<div className="header-group">
-				<span className="label">Motivation</span>
-				<span className="field" id="field-motivation">
-					Pending
+			<div className="header-group" id="group-motivation">
+				<span className="label motivation-label">Motivation</span>
+				<span className="field motivation-value" id="field-motivation">
+					{motivation}
 				</span>
 			</div>
-			<div className="header-group">
-				<span className="label">Origin</span>
-				<span className="field" id="field-origin">
-					Pending
+			<div className="header-group" id="group-origin">
+				<span className="label origin-label">Origin</span>
+				<span className="field origin-value" id="field-origin">
+					{origin}
 				</span>
 			</div>
 			<div className="header-group" id="group-bennies">
-				<span className="label">Bennies</span>
-				<span className="field" id="field-bennies">
-					{bennies.current}/{bennies.max}
+				<span className="label bennies-label">Bennies</span>
+				<span className="field bennies-value" id="field-bennies">
+					<span className="bennies-current">
+						<span className="description">Current: </span> {bennies.current}
+					</span>
+					<span className="sep"> / </span>
+					<span className="bennies-max">
+						<span className="description">Max: </span> {bennies.max}
+					</span>
 				</span>
 			</div>
 		</div>
