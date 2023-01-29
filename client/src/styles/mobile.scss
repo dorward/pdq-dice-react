@@ -10,8 +10,10 @@
 	table.attributes,
 	table.extras {
 		table-layout: fixed;
-		thead {
-			display: none;
+		thead > tr {
+			> th + th + th {
+				display: none;
+			}
 		}
 		td {
 			display: none;
