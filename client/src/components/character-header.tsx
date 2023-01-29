@@ -5,6 +5,10 @@ import {
 	updateCurrentBennies,
 	updateMaximumBennies,
 	updateName,
+	updateCodeName,
+	updateMotivation,
+	updateOrigin,
+	updatePlayer,
 } from '../data/edit-mode-slice';
 import { selectUser } from '../data/user-slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,7 +56,7 @@ const CharacterHeader = ({ name, avatar }: Props) => {
 
 	if (characterToEdit) {
 		return (
-			<>
+			<div className="character-header-editor">
 				{uploadedImage && <ImageModal url={uploadedImage} clear={clear} />}
 				{characterToEdit.selectedExtraId && <InventorySizeModal id={characterToEdit.selectedExtraId} />}
 				<div className="character-id-editor">
@@ -70,8 +74,44 @@ const CharacterHeader = ({ name, avatar }: Props) => {
 					<FormGroup label="Character name" labelFor="character-name-edit">
 						<InputGroup
 							id="character-name-edit"
-							value={characterToEdit.name}
+							value={characterToEdit.name ?? ''}
 							onChange={e => dispatch(updateName(e.target.value))}
+						/>
+					</FormGroup>
+				</div>
+				<div className="header-edit-field">
+					<FormGroup label="Player" labelFor="player-edit">
+						<InputGroup
+							id="player-edit"
+							value={characterToEdit.player ?? ''}
+							onChange={e => dispatch(updatePlayer(e.target.value))}
+						/>
+					</FormGroup>
+				</div>
+				<div className="header-edit-field">
+					<FormGroup label="Code Name" labelFor="code-name-edit">
+						<InputGroup
+							id="code-name-edit"
+							value={characterToEdit.codeName ?? ''}
+							onChange={e => dispatch(updateCodeName(e.target.value))}
+						/>
+					</FormGroup>
+				</div>
+				<div className="header-edit-field">
+					<FormGroup label="Motivation" labelFor="motivation-edit">
+						<InputGroup
+							id="motivation-edit"
+							value={characterToEdit.motivation ?? ''}
+							onChange={e => dispatch(updateMotivation(e.target.value))}
+						/>
+					</FormGroup>
+				</div>
+				<div className="header-edit-field">
+					<FormGroup label="Origin" labelFor="origin-edit">
+						<InputGroup
+							id="origin-edit"
+							value={characterToEdit.origin ?? ''}
+							onChange={e => dispatch(updateOrigin(e.target.value))}
 						/>
 					</FormGroup>
 				</div>
@@ -80,7 +120,7 @@ const CharacterHeader = ({ name, avatar }: Props) => {
 					<FormGroup inline label="Current Bennies" labelFor="current-bennies-edit">
 						<HTMLSelect
 							id="current-bennies-edit"
-							value={characterToEdit.bennies.current}
+							value={characterToEdit.bennies.current ?? '0'}
 							options={bennyValues}
 							onChange={e => {
 								const count = +e.target.value;
@@ -92,22 +132,54 @@ const CharacterHeader = ({ name, avatar }: Props) => {
 					<FormGroup inline label="Maximum Bennies" labelFor="max-bennies-edit">
 						<InputGroup
 							id="max-bennies-edit"
-							value={characterToEdit.bennies.max}
+							value={characterToEdit.bennies.max ?? '3'}
 							onChange={e => dispatch(updateMaximumBennies(e.target.value))}
 						/>
 					</FormGroup>
 				</div>
-			</>
+			</div>
 		);
 	}
 
 	return (
 		<div className="character-header">
 			<img src={avatarUrl} alt="" />
-			<H2>{name}</H2>
-			<p>
-				Bennies: {bennies.current}/{bennies.max}
-			</p>
+			<div className="header-group">
+				<span className="label">Character Name</span>
+				<span className="field" id="field-character-name">
+					Pending
+				</span>
+			</div>
+			<div className="header-group">
+				<span className="label">Player Name</span>
+				<span className="field" id="field-player-name">
+					Pending
+				</span>
+			</div>
+			<div className="header-group" id="group-code-name">
+				<span className="label">Code Name</span>
+				<H2 className="field" id="field-code-name">
+					{name}
+				</H2>
+			</div>
+			<div className="header-group">
+				<span className="label">Motivation</span>
+				<span className="field" id="field-motivation">
+					Pending
+				</span>
+			</div>
+			<div className="header-group">
+				<span className="label">Origin</span>
+				<span className="field" id="field-origin">
+					Pending
+				</span>
+			</div>
+			<div className="header-group" id="group-bennies">
+				<span className="label">Bennies</span>
+				<span className="field" id="field-bennies">
+					{bennies.current}/{bennies.max}
+				</span>
+			</div>
 		</div>
 	);
 };

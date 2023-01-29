@@ -7,17 +7,18 @@ export type Sheet = {
 };
 
 export type Character = {
-	name: string;
-	id: string;
 	avatar?: Avatar;
-	player: string;
-	motivation: string;
-	origin: string;
 	bennies: Bennies;
-	qualities: Attribute[];
+	codeName: string;
 	extras: Extra[];
-	powers: Attribute[];
 	hidden?: boolean;
+	id: string;
+	motivation: string;
+	name: string;
+	origin: string;
+	player: string;
+	powers: Attribute[];
+	qualities: Attribute[];
 };
 
 export type Bennies = {

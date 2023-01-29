@@ -12,6 +12,7 @@ const blankCharacter = (id: string): Character => {
 		qualities: [],
 		extras: [],
 		powers: [],
+		codeName: '',
 	};
 };
 

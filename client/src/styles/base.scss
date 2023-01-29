@@ -154,17 +154,33 @@ button.add {
 .character-header {
 	display: flex;
 	justify-content: flex-start;
-	align-items: flex-end;
+	align-items: center;
+
+	.header-group {
+		display: none;
+	}
+	#group-code-name,
+	#group-bennies {
+		display: block;
+		> span {
+			display: inline-block;
+		}
+		.field {
+			margin-left: 3px;
+		}
+	}
+	#group-code-name {
+		.label {
+			display: none;
+		}
+	}
+	#group-bennies {
+		margin-left: auto;
+	}
 	img {
 		border: solid black 1px;
 		width: 60px;
 		height: 60px;
-	}
-	h2 {
-		margin-left: 12px;
-	}
-	p {
-		margin-left: auto;
 	}
 }
 

@@ -87,6 +87,22 @@ const EditModeSlice = createSlice({
 			state.name = action.payload;
 			return state;
 		},
+		updateCodeName: (state: EditModeState, action: PayloadAction<string>) => {
+			state.codeName = action.payload;
+			return state;
+		},
+		updateMotivation: (state: EditModeState, action: PayloadAction<string>) => {
+			state.motivation = action.payload;
+			return state;
+		},
+		updateOrigin: (state: EditModeState, action: PayloadAction<string>) => {
+			state.origin = action.payload;
+			return state;
+		},
+		updatePlayer: (state: EditModeState, action: PayloadAction<string>) => {
+			state.player = action.payload;
+			return state;
+		},
 		updateCurrentBennies: (state: EditModeState, action: PayloadAction<number>) => {
 			state.bennies.current = action.payload;
 			return state;
@@ -111,6 +127,10 @@ export const {
 	updateName,
 	updateAttribute,
 	promptExtraCount,
+	updateCodeName,
+	updateOrigin,
+	updatePlayer,
+	updateMotivation,
 } = EditModeSlice.actions;
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export const selectLocations = (state: RootState) =>
