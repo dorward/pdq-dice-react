@@ -1,5 +1,5 @@
 import { ControlGroup, HTMLSelect, InputGroup, MenuItem } from '@blueprintjs/core';
-import { Suggest, ItemRenderer } from '@blueprintjs/select';
+import { ItemRenderer, Suggest2 } from '@blueprintjs/select';
 import type { ExtraUpdateValue } from '../../types';
 import type { RowProps } from './types';
 import { updateExtra, selectLocations, promptExtraCount } from '../../data/edit-mode-slice';
@@ -64,7 +64,7 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 							dispatch(updateExtra(data));
 						}}
 					/>
-					<Suggest
+					<Suggest2
 						onItemSelect={where => {
 							const location = where === blankLocation ? '' : where;
 							const data = { id: extra.id, location };
