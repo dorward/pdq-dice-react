@@ -33,7 +33,7 @@ export const saveYaml = ({ filename, data }: SaveYaml) => {
 
 export const saveCharacterAsYaml = (internal: Character) => {
 	const character = removeIds(internal) as Character;
-	saveYaml({ filename: `${character.name}.yml`, data: character });
+	saveYaml({ filename: `${character.name || character.codeName || 'Unnamed Character'}.yml`, data: character });
 };
 
 const removeIds = (input: unknown): unknown => {
