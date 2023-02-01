@@ -47,7 +47,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 				/>
 				<Attributes {...{ ...qualities, character }} />
 				<Attributes {...{ ...powers, character }} />
-				<Extras extras={character.extras} />
+				{character.extras.length ? <Extras extras={character.extras} /> : null}
 				{!characterToEdit && (
 					<div className="controls">
 						<FormGroup label="Description of roll" labelFor={descriptionId}>
