@@ -1,10 +1,10 @@
-import { ControlGroup, HTMLSelect, InputGroup, MenuItem } from '@blueprintjs/core';
+import { Button, Card, ControlGroup, HTMLSelect, InputGroup, MenuItem, Overlay, Slider } from '@blueprintjs/core';
 import { ItemRenderer, Suggest2 } from '@blueprintjs/select';
 import type { ExtraUpdateValue } from '../../types';
 import type { RowProps } from './types';
-import { updateExtra, selectLocations, promptExtraCount } from '../../data/edit-mode-slice';
+import { updateExtra, selectLocations, promptExtraCount, moveSomeExtra } from '../../data/edit-mode-slice';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { extraValues, extraCountValues as defaultExtraCountValues } from '../../types';
 
 const renderLocation: ItemRenderer<string> = (location, { handleClick, modifiers }) => {
@@ -32,6 +32,9 @@ export const renderCreateLocationOption = (
 );
 
 const blankLocation = '* Default';
+type SimpleTransferAmount = number | '∞';
+const simpleTransferAmount: SimpleTransferAmount[] = [undefined, 0, 1, '∞'];
+const defaultMoveData = { count: 0, location: '' };
 
 const ExtraEditRow = ({ extra }: RowProps) => {
 	const dispatch = useDispatch();
@@ -52,6 +55,8 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 		return customExtraCountValues;
 	}, [extra.count]);
 
+	const [moveData, setMoveData] = useState(defaultMoveData);
+
 	return (
 		<tr key={extra.id}>
 			<td key="label">
@@ -68,10 +73,12 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 						onItemSelect={where => {
 							const location = where === blankLocation ? '' : where;
 							const data = { id: extra.id, location };
-							dispatch(updateExtra(data));
+							if (simpleTransferAmount.includes(extra.count)) return dispatch(updateExtra(data));
+							console.log('Advanced mode!', extra.count, typeof extra.count);
+							setMoveData({ count: 1, location });
 						}}
 						activeItem={extra.location}
-						defaultSelectedItem={extra.location}
+						selectedItem={extra.location}
 						items={locations}
 						createNewItemFromQuery={renderLocationValue}
 						inputValueRenderer={renderLocationValue}
@@ -79,6 +86,33 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 						createNewItemRenderer={renderCreateLocationOption}
 						inputProps={{ placeholder: '' }}
 					/>
+					<Overlay isOpen={Boolean(moveData.count)}>
+						<div className="v-center">
+							<Card interactive={true} elevation={1} className="h-center">
+								<p>Moving {extra.name}.</p>
+								<Slider
+									min={1}
+									max={typeof extra.count === 'number' ? extra.count : 1}
+									value={moveData.count}
+									onChange={count => setMoveData({ ...moveData, count })}
+								/>
+								<Button
+									onClick={() => {
+										dispatch(moveSomeExtra({ id: extra.id, ...moveData }));
+										setMoveData(defaultMoveData);
+									}}>
+									Move {moveData.count}
+								</Button>
+								<Button
+									onClick={() => {
+										dispatch(updateExtra({ id: extra.id, location: moveData.location }));
+										setMoveData(defaultMoveData);
+									}}>
+									Move all
+								</Button>
+							</Card>
+						</div>
+					</Overlay>
 					<HTMLSelect
 						value={extra.count ?? '∞'}
 						options={extraCountValues}

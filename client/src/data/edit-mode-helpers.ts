@@ -49,9 +49,11 @@ export const mutateLocation = <T extends Locationed>(array: T[], id: string, loc
 	return array;
 };
 
-export const mutateCount = <T extends Counted>(array: T[], id: string, count: any): T[] => {
+export const mutateCount = <T extends Counted>(array: T[], id: string, rawCount: any): T[] => {
 	const index = array.findIndex(item => item.id === id);
 	if (index === -1) return array;
+	const numericCount = parseInt(rawCount, 10);
+	const count = '∞' === rawCount || isNaN(numericCount) ? '∞' : numericCount;
 	array[index] = { ...array[index], count };
 	return array;
 };
