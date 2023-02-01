@@ -7,4 +7,5 @@ export type Props = {
 export type RowProps = {
 	extra: Extra;
 	isOpen?: boolean;
+	remoteInventory?: boolean;
 };
