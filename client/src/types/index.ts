@@ -19,6 +19,7 @@ export type Character = {
 	player: string;
 	powers: Attribute[];
 	qualities: Attribute[];
+	background?: string;
 };
 
 export type Bennies = {

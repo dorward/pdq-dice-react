@@ -10,6 +10,7 @@ import PowerNotes from './power-notes';
 import SkillCheck from './skill-check';
 import { selectDescription, updateDescription } from '../data/roll-slice';
 import { useDispatch, useSelector } from 'react-redux';
+import CharacterBackground from './character-background';
 
 type Props = {
 	character: Character;
@@ -61,6 +62,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 						<SkillCheck />
 					</div>
 				)}
+				{<CharacterBackground background={character.background} />}
 				{!characterToEdit && <PowerNotes powers={character.powers} />}
 			</div>
 		</>
