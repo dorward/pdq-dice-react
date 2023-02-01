@@ -120,6 +120,10 @@ const EditModeSlice = createSlice({
 			state.bennies.max = action.payload;
 			return state;
 		},
+		updateBackground: (state: EditModeState, action: PayloadAction<string>) => {
+			state.background = action.payload;
+			return state;
+		},
 		exitEditMode: () => null,
 	},
 });
@@ -140,6 +144,7 @@ export const {
 	updateOrigin,
 	updatePlayer,
 	updateMotivation,
+	updateBackground,
 } = EditModeSlice.actions;
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export const selectLocations = (state: RootState) =>

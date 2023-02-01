@@ -58,4 +58,17 @@
 			}
 		}
 	}
+
+	.background-editor-content {
+		flex-direction: column-reverse;
+		.help {
+			width: auto;
+			flex: 1 1;
+			margin: initial;
+			ul {
+				margin: 1em 0 0 0;
+				padding-left: 2em;
+			}
+		}
+	}
 }

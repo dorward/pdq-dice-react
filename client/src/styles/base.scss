@@ -309,3 +309,16 @@ svg.goo {
 		display: table-row;
 	}
 }
+
+.background-editor-content {
+	display: flex;
+	.help {
+		width: 25em;
+		flex: 1 1 25e;
+		margin-right: 1em;
+		ul {
+			margin: 0;
+			padding-left: 1em;
+		}
+	}
+}
