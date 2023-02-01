@@ -3,9 +3,11 @@ import { Props } from './types';
 import { addExtra } from '../../data/edit-mode-slice';
 import { useDispatch } from 'react-redux';
 import ExtrasEditRow from './extra-edit-row';
+import sortExtras from './sort-extras';
 
 const ExtrasEdit = ({ extras }: Props) => {
 	const dispatch = useDispatch();
+	const sorted = sortExtras(extras);
 	return (
 		<>
 			<HTMLTable className="extras edit">
@@ -21,7 +23,7 @@ const ExtrasEdit = ({ extras }: Props) => {
 					</tr>
 				</thead>
 				<tbody>
-					{extras.map(extra => (
+					{sorted.map(extra => (
 						<ExtrasEditRow key={extra.id} extra={extra} />
 					))}
 				</tbody>

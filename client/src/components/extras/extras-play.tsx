@@ -5,6 +5,7 @@ import { HTMLTable, Button } from '@blueprintjs/core';
 import { Props } from './types';
 import ExtraCircumstanceRow from './extra-circumstance-row';
 import ExtraPlayRow from './extra-play-row';
+import sortExtras from './sort-extras';
 
 type CategorisedExtras = [Extra[], Record<string, Extra[]>];
 type OpenLocations = Record<string, boolean>;
@@ -37,7 +38,7 @@ const ExtrasPlay = ({ extras }: Props) => {
 					</tr>
 				</thead>
 				<tbody key="about-person-key">
-					{categorisedExtras[0].map(extra => (
+					{sortExtras(categorisedExtras[0]).map(extra => (
 						<ExtraPlayRow key={extra.id} extra={extra} />
 					))}
 				</tbody>
@@ -54,8 +55,8 @@ const ExtrasPlay = ({ extras }: Props) => {
 								</Button>
 							</th>
 						</tr>
-						{extras.map(extra => (
-							<ExtraPlayRow key={extra.id} extra={extra} isOpen={openLocations[location]} />
+						{sortExtras(extras).map(extra => (
+							<ExtraPlayRow key={extra.id} extra={extra} isOpen={openLocations[location]} remoteInventory={true} />
 						))}
 					</tbody>
 				))}
