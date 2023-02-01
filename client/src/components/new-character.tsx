@@ -46,7 +46,7 @@ const NewCharacter = () => {
 				{characters.map(character => (
 					<li key={character.id}>
 						<Checkbox checked={!character.hidden} onChange={() => dispatch(toggleCharacterVisibility(character.id))}>
-							{character.name}
+							{character.codeName || 'Missing Code Name'}
 						</Checkbox>
 					</li>
 				))}
