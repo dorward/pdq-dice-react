@@ -63,7 +63,7 @@
 			'motivation-label motivation-value motivation-value motivation-value avatar'
 			'origin-label origin-value origin-value origin-value avatar'
 			'bennies-label bennies-current bennies-max . avatar';
-		align-items: start;
+		align-items: end;
 
 		.header-group,
 		#group-bennies,
@@ -137,12 +137,23 @@
 
 		img {
 			border: solid black 1px;
-			width: 60px;
-			height: 60px;
+			width: auto;
+			height: 115px;
+			margin-left: auto;
 		}
 
 		.description {
 			display: inline;
+		}
+
+		.character-name-value,
+		.player-name-value {
+			&:empty {
+				border: solid black 1px;
+				display: block;
+				min-height: 1.5em;
+				margin-right: 1em;
+			}
 		}
 	}
 }
