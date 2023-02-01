@@ -160,6 +160,14 @@ table.extras {
 	}
 }
 
+table.extras {
+	td + td,
+	th + th {
+		width: 90px;
+		text-align: center;
+	}
+}
+
 button.add {
 	margin-left: 1em;
 }
