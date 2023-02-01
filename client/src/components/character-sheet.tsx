@@ -64,6 +64,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 				)}
 				{<CharacterBackground background={character.background} />}
 				{!characterToEdit && <PowerNotes powers={character.powers} />}
+				{characterToEdit && <CharacterMenu character={character} />}
 			</div>
 		</>
 	);
