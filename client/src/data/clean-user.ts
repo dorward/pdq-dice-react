@@ -1,5 +1,6 @@
 import { User, Character } from '../types';
 import { v4 as uuidv4 } from 'uuid';
+import cleanCount from './cleanCount';
 
 const cleanUser = (user: User) => {
 	user.characters ??= [];
@@ -17,6 +18,7 @@ export const cleanCharacter = (character: Character) => {
 	character.extras.forEach(extra => {
 		extra.id ??= uuidv4();
 		extra.location ??= '';
+		extra.count = cleanCount(extra.count);
 	});
 	character.bennies ??= { current: 3, max: '3' };
 };

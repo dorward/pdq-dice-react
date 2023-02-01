@@ -1,4 +1,4 @@
-import { AttributeUpdate, Character, ExtraUpdate, SelectExtra } from '../types';
+import { AttributeUpdate, Character, ExtraUpdate, SelectExtra, ExtraPartialMove } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 import {
@@ -18,6 +18,13 @@ type SelectedExtra = {
 type EditModeState = null | (Character & SelectedExtra);
 
 const initialEditModeState: EditModeState = null;
+
+const createExtra = () => ({
+	id: uuidv4(),
+	name: '__New extra',
+	value: 0,
+	location: '',
+});
 
 const EditModeSlice = createSlice({
 	name: 'EditMode',
@@ -72,20 +79,31 @@ const EditModeSlice = createSlice({
 			}
 			return state;
 		},
+		moveSomeExtra: (state: EditModeState, action: PayloadAction<ExtraPartialMove>) => {
+			const fromIndex = state.extras.findIndex(extra => extra.id === action.payload.id);
+			const from = state.extras[fromIndex];
+			const toIndex = state.extras.findIndex(
+				extra => extra.name === from.name && extra.location === action.payload.location
+			);
+			const to = state.extras[toIndex] ?? { ...from, id: uuidv4(), location: action.payload.location, count: 0 };
+			const change = action.payload.count;
+			if (typeof from.count !== 'number') throw new Error(`Trying to move some of an element with ${from.count} items`);
+			if (typeof to.count !== 'number') return state;
+			state.extras[fromIndex] = { ...from, count: from.count - change };
+			to.count += change;
+			if (toIndex === -1) {
+				state.extras = [...state.extras, to];
+				return state;
+			}
+			state.extras[toIndex] = to;
+			return state;
+		},
 		promptExtraCount: (state: EditModeState, action: PayloadAction<SelectExtra>) => {
 			const { id } = action.payload;
 			return { ...state, selectedExtraId: id };
 		},
 		addExtra: (state: EditModeState) => {
-			state.extras = [
-				...state.extras,
-				{
-					id: uuidv4(),
-					name: 'New extra',
-					value: 0,
-					location: '',
-				},
-			];
+			state.extras = [...state.extras, createExtra()];
 			return state;
 		},
 		updateAvatar: (state: EditModeState, action: PayloadAction<string>) => {
@@ -129,22 +147,23 @@ const EditModeSlice = createSlice({
 });
 
 export const {
-	addExtra,
 	addAttribute,
+	addExtra,
 	editCharacter,
 	exitEditMode,
+	moveSomeExtra,
+	promptExtraCount,
+	updateAttribute,
 	updateAvatar,
+	updateBackground,
+	updateCodeName,
 	updateCurrentBennies,
 	updateExtra,
 	updateMaximumBennies,
+	updateMotivation,
 	updateName,
-	updateAttribute,
-	promptExtraCount,
-	updateCodeName,
 	updateOrigin,
 	updatePlayer,
-	updateMotivation,
-	updateBackground,
 } = EditModeSlice.actions;
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export const selectLocations = (state: RootState) =>

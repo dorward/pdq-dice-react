@@ -158,6 +158,12 @@ export type SelectExtra = {
 	id: string;
 };
 
+export type ExtraPartialMove = {
+	id: string;
+	location: string;
+	count: number;
+};
+
 export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue | ExtraUpdateLocation | ExtraUpdateCount;
 
 export const isAttributeUpdateValue = (data: AttributeUpdate): data is AttributeUpdateValue => 'value' in data;
