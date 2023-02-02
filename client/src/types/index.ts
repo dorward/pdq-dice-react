@@ -27,7 +27,7 @@ export type Bennies = {
 	current: number;
 };
 
-export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'GONE';
+export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'PR' | 'GONE';
 
 export type Extra = {
 	name: string;
@@ -161,7 +161,7 @@ export type SelectExtra = {
 export type ExtraPartialMove = {
 	id: string;
 	location: string;
-	count: number;
+	count: number | '∞';
 };
 
 export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue | ExtraUpdateLocation | ExtraUpdateCount;
