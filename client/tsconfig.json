@@ -16,6 +16,6 @@
 		"jsx": "react-jsx"
 	},
 	"include": ["**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules", "dist"],
+	"exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"],
 	"lib": ["es2015", "es2017", "dom"]
 }
