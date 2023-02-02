@@ -37,6 +37,8 @@ export type Extra = {
 	count?: '∞' | number;
 };
 
+export type ExtraSortOrder = 'name' | 'location';
+
 export type Attribute = {
 	name: string;
 	id: string;
