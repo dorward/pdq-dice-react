@@ -73,8 +73,8 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 						onItemSelect={where => {
 							const location = where === blankLocation ? '' : where;
 							const data = { id: extra.id, location };
-							if (simpleTransferAmount.includes(extra.count)) return dispatch(updateExtra(data));
-							console.log('Advanced mode!', extra.count, typeof extra.count);
+							if (simpleTransferAmount.includes(extra.count))
+								return dispatch(moveSomeExtra({ ...data, count: extra.count }));
 							setMoveData({ count: 1, location });
 						}}
 						activeItem={extra.location}
@@ -105,7 +105,7 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 								</Button>
 								<Button
 									onClick={() => {
-										dispatch(updateExtra({ id: extra.id, location: moveData.location }));
+										dispatch(moveSomeExtra({ id: extra.id, location: moveData.location, count: extra.count }));
 										setMoveData(defaultMoveData);
 									}}>
 									Move all

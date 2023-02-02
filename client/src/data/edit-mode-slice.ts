@@ -80,22 +80,59 @@ const EditModeSlice = createSlice({
 			return state;
 		},
 		moveSomeExtra: (state: EditModeState, action: PayloadAction<ExtraPartialMove>) => {
+			console.log({ action });
+
+			// Find the elements we are dealing with
+
 			const fromIndex = state.extras.findIndex(extra => extra.id === action.payload.id);
-			const from = state.extras[fromIndex];
+			const from = { ...state.extras[fromIndex] };
+
 			const toIndex = state.extras.findIndex(
 				extra => extra.name === from.name && extra.location === action.payload.location
 			);
-			const to = state.extras[toIndex] ?? { ...from, id: uuidv4(), location: action.payload.location, count: 0 };
+			const to = state.extras[toIndex]
+				? { ...state.extras[toIndex] }
+				: { ...from, id: uuidv4(), location: action.payload.location, count: 0 };
+
+			// Calculate how those two elements are going to change
+
 			const change = action.payload.count;
-			if (typeof from.count !== 'number') throw new Error(`Trying to move some of an element with ${from.count} items`);
-			if (typeof to.count !== 'number') return state;
-			state.extras[fromIndex] = { ...from, count: from.count - change };
-			to.count += change;
+			if (change === '∞') {
+				from.count = 0;
+				to.count = '∞';
+			} else if (to.count === '∞') {
+				if (from.count !== '∞') {
+					from.count = from.count - change;
+				}
+			} else if (from.count === '∞') {
+				// We have already established that to.count isn't infinity
+				to.count = to.count + change;
+			} else {
+				// They are both numbers!
+				from.count = from.count - change;
+				to.count = to.count + change;
+			}
+
+			console.log({ from, to });
+
+			// Delete or update FROM
+
+			if (from.count === 0) {
+				// Remove empty item
+				state.extras = state.extras.filter(e => e.id !== from.id);
+			} else {
+				// Update reduced but non-empty item
+				state.extras = state.extras.map((extra, index) => (index === fromIndex ? from : extra));
+			}
+
+			// Insert or update TO
+
 			if (toIndex === -1) {
 				state.extras = [...state.extras, to];
-				return state;
+			} else {
+				state.extras = state.extras.map((extra, index) => (index === toIndex ? to : extra));
 			}
-			state.extras[toIndex] = to;
+
 			return state;
 		},
 		promptExtraCount: (state: EditModeState, action: PayloadAction<SelectExtra>) => {
