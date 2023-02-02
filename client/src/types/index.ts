@@ -161,7 +161,7 @@ export type SelectExtra = {
 export type ExtraPartialMove = {
 	id: string;
 	location: string;
-	count: number;
+	count: number | '∞';
 };
 
 export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue | ExtraUpdateLocation | ExtraUpdateCount;
