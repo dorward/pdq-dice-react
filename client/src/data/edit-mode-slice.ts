@@ -1,4 +1,4 @@
-import { AttributeUpdate, Character, ExtraUpdate, SelectExtra, ExtraPartialMove } from '../types';
+import { AttributeUpdate, Character, ExtraUpdate, SelectExtra, ExtraPartialMove, Extra } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 import {
@@ -11,9 +11,11 @@ import {
 import { mutateLocation, mutateName, mutateValue, mutateCount, mutateNotes } from './edit-mode-helpers';
 import { v4 as uuidv4 } from 'uuid';
 
-type SelectedExtra = {
+export type SelectedExtra = {
 	selectedExtraId?: string;
 };
+
+const INF = '∞';
 
 type EditModeState = null | (Character & SelectedExtra);
 
@@ -80,59 +82,43 @@ const EditModeSlice = createSlice({
 			return state;
 		},
 		moveSomeExtra: (state: EditModeState, action: PayloadAction<ExtraPartialMove>) => {
-			console.log({ action });
-
 			// Find the elements we are dealing with
 
 			const fromIndex = state.extras.findIndex(extra => extra.id === action.payload.id);
-			const from = { ...state.extras[fromIndex] };
+			const from = state.extras[fromIndex];
 
 			const toIndex = state.extras.findIndex(
 				extra => extra.name === from.name && extra.location === action.payload.location
 			);
-			const to = state.extras[toIndex]
-				? { ...state.extras[toIndex] }
-				: { ...from, id: uuidv4(), location: action.payload.location, count: 0 };
+			const to = state.extras[toIndex] ?? { ...from, id: uuidv4(), location: action.payload.location, count: 0 };
+
+			const deleteExtra = (target: Extra) => {
+				state.extras = state.extras.filter(e => e.id !== target.id);
+			};
 
 			// Calculate how those two elements are going to change
-
 			const change = action.payload.count;
-			if (change === '∞') {
-				from.count = 0;
-				to.count = '∞';
-			} else if (to.count === '∞') {
-				if (from.count !== '∞') {
-					from.count = from.count - change;
+			if (change === INF || change === from.count) {
+				// We are moving *all* of the items in the from box
+				if (toIndex === -1) {
+					// This is a complete move
+					from.location = action.payload.location;
+				} else {
+					// This is a merge
+					if (change === INF) to.count = INF;
+					else if (to.count !== INF) to.count = to.count + change;
+					deleteExtra(from);
 				}
-			} else if (from.count === '∞') {
-				// We have already established that to.count isn't infinity
-				to.count = to.count + change;
 			} else {
-				// They are both numbers!
-				from.count = from.count - change;
-				to.count = to.count + change;
+				// We are moving **some** of the items in the from box
+				if (toIndex === -1) state.extras.push(to);
+				if (to.count !== INF) to.count = to.count + change;
+				if (from.count !== INF) from.count = from.count - change;
 			}
-
-			console.log({ from, to });
-
-			// Delete or update FROM
-
-			if (from.count === 0) {
-				// Remove empty item
-				state.extras = state.extras.filter(e => e.id !== from.id);
-			} else {
-				// Update reduced but non-empty item
-				state.extras = state.extras.map((extra, index) => (index === fromIndex ? from : extra));
-			}
-
-			// Insert or update TO
-
-			if (toIndex === -1) {
-				state.extras = [...state.extras, to];
-			} else {
-				state.extras = state.extras.map((extra, index) => (index === toIndex ? to : extra));
-			}
-
+			// Clean up
+			[to, from].forEach(extra => {
+				if (extra.count === 0) deleteExtra(extra);
+			});
 			return state;
 		},
 		promptExtraCount: (state: EditModeState, action: PayloadAction<SelectExtra>) => {

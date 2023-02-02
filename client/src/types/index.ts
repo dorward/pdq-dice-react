@@ -27,7 +27,7 @@ export type Bennies = {
 	current: number;
 };
 
-export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'GONE';
+export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'PR' | 'GONE';
 
 export type Extra = {
 	name: string;
