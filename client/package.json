@@ -12,7 +12,8 @@
 		"start:dev": "ENVIRONMENT='development' webpack serve --open",
 		"lint:fix": "eslint --fix src/",
 		"build:production": "ENVIRONMENT='production' webpack",
-		"lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+		"test": "jest"
 	},
 	"dependencies": {
 		"@blueprintjs/core": "^4.8.0",
