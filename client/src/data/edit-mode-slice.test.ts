@@ -107,6 +107,30 @@ describe('Edit Mode Slice', () => {
 				expect(foundFrom.count).toBe(INF);
 				expect(foundTo.count).toBe(1);
 			});
+
+			it('should move 1 of 5 items item', () => {
+				const { extras, from } = getResult(5, 1);
+				expect(extras.length).toBe(2);
+				const foundFrom = extras.find(extra => extra.id === from.id);
+				const foundTo = extras.find(extra => extra.id !== from.id);
+				expect(foundFrom).toBeTruthy();
+				expect(foundTo).toBeTruthy();
+				expect(foundFrom.location).toBe('A');
+				expect(foundTo.location).toBe('B');
+				expect(foundFrom.count).toBe(4);
+				expect(foundTo.count).toBe(1);
+			});
+
+			it('should move 5 of 5 items item', () => {
+				const { extras, from } = getResult(5, 5);
+				expect(extras.length).toBe(1);
+				const foundFrom = extras.find(extra => extra.id === from.id);
+				const foundTo = extras.find(extra => extra.id !== from.id);
+				expect(foundFrom).toBeTruthy();
+				expect(foundTo).toBeFalsy();
+				expect(foundFrom.location).toBe('B');
+				expect(foundFrom.count).toBe(5);
+			});
 		});
 
 		describe('and you move some of the items to a location which already has items', () => {
@@ -134,6 +158,52 @@ describe('Edit Mode Slice', () => {
 				const { extras, to } = getResult(INF, 1, INF);
 				expect(extras.length).toBe(1);
 				expect(extras[0].id).toEqual(to.id);
+				expect(extras[0].count).toEqual(INF);
+			});
+
+			it('should move 1 of an infinite item to a location with 1', () => {
+				const { extras, from } = getResult(INF, 1, 1);
+				expect(extras.length).toBe(2);
+				const foundFrom = extras.find(extra => extra.id === from.id);
+				const foundTo = extras.find(extra => extra.id !== from.id);
+				expect(foundFrom).toBeTruthy();
+				expect(foundTo).toBeTruthy();
+				expect(foundFrom.location).toBe('A');
+				expect(foundTo.location).toBe('B');
+				expect(foundFrom.count).toBe(INF);
+				expect(foundTo.count).toBe(2);
+			});
+
+			it('should move 10 of an infinite item to a location with 1', () => {
+				const { extras, from } = getResult(INF, 1, 10);
+				expect(extras.length).toBe(2);
+				const foundFrom = extras.find(extra => extra.id === from.id);
+				const foundTo = extras.find(extra => extra.id !== from.id);
+				expect(foundFrom).toBeTruthy();
+				expect(foundTo).toBeTruthy();
+				expect(foundFrom.location).toBe('A');
+				expect(foundTo.location).toBe('B');
+				expect(foundFrom.count).toBe(INF);
+				expect(foundTo.count).toBe(11);
+			});
+
+			it('should move all of 5 items to a location with 1', () => {
+				const { extras, to } = getResult(5, 1, 5);
+				expect(extras.length).toBe(1);
+				expect(extras[0].id).toEqual(to.id);
+				expect(extras[0].count).toEqual(6);
+			});
+			it('should move 2 of 5 items to a location with 1', () => {
+				const { extras, to, from } = getResult(5, 1, 2);
+				expect(extras.length).toBe(2);
+				const foundFrom = extras.find(extra => extra.id === from.id);
+				const foundTo = extras.find(extra => extra.id === to.id);
+				expect(foundFrom).toBeTruthy();
+				expect(foundTo).toBeTruthy();
+				expect(foundFrom.location).toBe('A');
+				expect(foundTo.location).toBe('B');
+				expect(foundFrom.count).toBe(3);
+				expect(foundTo.count).toBe(3);
 			});
 		});
 	});
