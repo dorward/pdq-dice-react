@@ -157,6 +157,22 @@ table.extras {
 			width: 100px;
 			text-align: center;
 		}
+
+		.header {
+			display: flex;
+			align-items: center;
+			vertical-align: middle;
+			min-height: 33px;
+			.add {
+				margin-left: 1em;
+			}
+			.sort-by-menu {
+				margin-left: 1em;
+			}
+			.bonus {
+				margin-left: auto;
+			}
+		}
 	}
 }
 
