@@ -38,10 +38,10 @@ const Editor = () => {
 						</li>
 						<li>Use two new lines to start a new paragraph</li>
 						<li>
-							Wrap a word with <code>*</code> to make it <b>bold</b>
+							Wrap a word with <code>**</code> to make it <b>bold</b>
 						</li>
 						<li>
-							Wrap a word with <code>/</code> to make it <b>italic</b>
+							Wrap a word with <code>*</code> to make it <i>italic</i>
 						</li>
 					</ul>
 				</div>
