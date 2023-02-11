@@ -54,6 +54,6 @@ export const selectBennyUse = (state: RootState) => {
 	if (!characterId) return false; // Only characters have bennies
 	const character = state.user.user.characters.find(c => c.id === characterId);
 	if (!character) return false; // Character not found
-	return character.bennies.current > 0; // Can't spend what you don't have
+	return character.bennies.current; // Can't spend what you don't have
 };
 export default rollSlice.reducer;
