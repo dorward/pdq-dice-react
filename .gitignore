@@ -7,3 +7,4 @@
 /avatars
 /.env.development
 /.env.production
+/client/stats.json
