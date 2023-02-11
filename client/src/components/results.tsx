@@ -12,7 +12,7 @@ import Loading from './loading';
 const Results = () => {
 	const dispatch = useDispatch();
 	const results = useSelector(selectResults);
-	const bennyAvailable = useSelector(selectBennyUse);
+	const benniesAvailable = useSelector(selectBennyUse);
 	const characterId = useSelector(selectCharacterId);
 	return (
 		<Overlay
@@ -50,17 +50,18 @@ const Results = () => {
 									OK
 								</Button>
 
-								{bennyAvailable && (
+								{benniesAvailable ? (
 									<Button
 										onClick={() => {
 											dispatch(useBenny());
 											dispatch(spendBenny(characterId));
 											skillCheck({ isUsingBenny: true });
 										}}
+										className="bennyButton"
 										intent={Intent.NONE}>
-										Benny
+										Benny ({benniesAvailable})
 									</Button>
-								)}
+								) : null}
 							</ButtonGroup>
 						</>
 					)}
