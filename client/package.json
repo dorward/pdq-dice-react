@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@blueprintjs/core": "^4.17.6",
-		"@blueprintjs/popover2": "^1.13.8",
+		"@blueprintjs/popover2": "^1.13.12",
 		"@blueprintjs/select": "^4.9.8",
 		"@reduxjs/toolkit": "^1.9.2",
 		"axios": "^1.3.1",
