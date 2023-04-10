@@ -22,7 +22,7 @@
         "@types/node": "^18.15.3",
         "@types/pg": "^8.6.5",
         "@typescript-eslint/eslint-plugin": "^5.55.0",
-        "@typescript-eslint/parser": "^5.54.1",
+        "@typescript-eslint/parser": "^5.57.1",
         "eslint": "^8.37.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-import-resolver-typescript": "^3.4.1",
