@@ -20,7 +20,7 @@
 	"dependencies": {
 		"@blueprintjs/core": "^4.17.6",
 		"@blueprintjs/popover2": "^1.13.12",
-		"@blueprintjs/select": "^4.9.12",
+		"@blueprintjs/select": "^4.9.14",
 		"@reduxjs/toolkit": "^1.9.2",
 		"axios": "^1.4.0",
 		"classnames": "^2.3.1",
