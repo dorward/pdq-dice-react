@@ -125,7 +125,7 @@ export const selectUser = (state: RootState) => state.user.user;
 export const selectUserError = (state: RootState) => state.user.error;
 export const selectCharacters = (state: RootState): Character[] => state.user?.user?.characters ?? [];
 export const selectCharacter = (state: RootState) => {
-	const id = state.whoami.characterId || state.user?.user?.characters?.[0]?.id;
+	const id = state.whoami.characterId || state.user?.user?.characters?.find(character => !character.hidden)?.id;
 	const character = state.user.user.characters.find(c => c.id === id);
 	return character;
 };
