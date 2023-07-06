@@ -1,10 +1,11 @@
-import axios from 'axios';
-import { SkillCheckRequestBody } from '../types';
 import { attributeValues, countsThatDoNotReduce } from '../consts';
+import { updateLastRoll } from '../data/last-roll-slice';
+import store from '../data/redux-store';
 import { markLoading, setResult, markClear } from '../data/results-slice';
 import { selectCharacter, spendExtra, setUserError } from '../data/user-slice';
 import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
-import store from '../data/redux-store';
+import { SkillCheckRequestBody } from '../types';
+import axios from 'axios';
 
 const getBase = () => {
 	const API_URL = process.env.API_URL;
@@ -43,43 +44,56 @@ type SkillCheckProps = {
 };
 
 export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
-	const { selected, description, circumstance } = store.getState().roll;
-	store.dispatch(markLoading());
-	const character = selectCharacter(store.getState());
-	const qualityBonuses = [...character.qualities, ...character.powers]
-		.filter(attribute => selected[attribute.id])
-		.map(attribute => {
-			const value =
-				attributeValues[attributeValues.findIndex(value => value[0] === attribute.value) + (attribute.wounds || 0)][1];
-			return {
-				name: attribute.name,
-				value,
-			};
-		});
-	const extraBonuses = character.extras
-		.filter(extra => selected[extra.id] && extra.count !== 0)
-		.map(extra => ({
-			name: extra.name,
-			value: extra.value,
-		}));
-	if (!isUsingBenny) {
+	let body: SkillCheckRequestBody;
+
+	if (isUsingBenny) {
+		body = store.getState().lastRoll.roll;
+	} else {
+		const { selected, description, circumstance } = store.getState().roll;
+		store.dispatch(markLoading());
+		const character = selectCharacter(store.getState());
+		const qualityBonuses = [...character.qualities, ...character.powers]
+			.filter(attribute => {
+				console.log(selected[attribute.id], attribute);
+				return selected[attribute.id];
+			})
+			.map(attribute => {
+				const value =
+					attributeValues[
+						attributeValues.findIndex(value => value[0] === attribute.value) + (attribute.wounds || 0)
+					][1];
+				return {
+					name: attribute.name,
+					value,
+				};
+			});
+		const extraBonuses = character.extras
+			.filter(extra => selected[extra.id] && extra.count !== 0)
+			.map(extra => ({
+				name: extra.name,
+				value: extra.value,
+			}));
 		character.extras
 			.filter(extra => selected[extra.id] && !countsThatDoNotReduce.includes(extra.count))
 			.forEach(extra => {
 				store.dispatch(spendExtra({ characterId: character.id, extraId: extra.id }));
 			});
-	}
-	const circumstanceBonus = circumstance.value ? [{ name: circumstance.name, value: circumstance.value }] : [];
+		const circumstanceBonus = circumstance.value ? [{ name: circumstance.name, value: circumstance.value }] : [];
 
-	const bonuses = [...qualityBonuses, ...extraBonuses, ...circumstanceBonus];
+		const bonuses = [...qualityBonuses, ...extraBonuses, ...circumstanceBonus];
+
+		body = {
+			dice: '2d6',
+			bonuses,
+			description,
+			rollType: 'Skill Check',
+		};
+		store.dispatch(updateLastRoll(body));
+	}
+
 	const { auth, url } = getBase();
-	const data: SkillCheckRequestBody = {
-		...auth,
-		dice: '2d6',
-		bonuses,
-		description,
-		rollType: 'Skill Check',
-	};
+	const data = { ...auth, ...body };
+
 	try {
 		const response = await axios.post(url, data);
 		const {
