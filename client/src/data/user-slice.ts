@@ -1,10 +1,10 @@
+import saveToServer from '../api/save-to-server';
 import { Character, Sheet, User } from '../types';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { RootState } from './redux-store';
-import { selectCharacterId } from './whoami-slice';
 import blankCharacter from './blankCharacter';
 import cleanUser, { cleanCharacter } from './clean-user';
-import saveToServer from '../api/save-to-server';
+import { RootState } from './redux-store';
+import { selectCharacterId } from './whoami-slice';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import yaml from 'js-yaml';
 
 type UserState = {
@@ -56,6 +56,7 @@ const userSlice = createSlice({
 			const characterId = action.payload;
 			const character = state.user.characters.find(c => c.id === characterId);
 			character.hidden = !character.hidden;
+			saveToServer(JSON.parse(JSON.stringify(state.user)));
 			return state;
 		},
 		deleteCharacter: (state, action: PayloadAction<string>) => {
