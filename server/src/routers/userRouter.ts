@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { E_BAD_CODE, E_NOT_FOUND } from '../errors';
 import addOrUpdateUser from '../model/addOrUpdateUser';
-import getUserByCode from '../model/getUserByCode';
+import { getUserByCode } from '../model/getUserByCode';
 import authHelper from '../util/authHelper';
 import saveDataUrl from '../util/saveDataUrl';
 

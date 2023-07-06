@@ -1,6 +1,6 @@
 import { User } from '../types';
 import addOrUpdateUser from './addOrUpdateUser';
-import getUserById from './getUserById';
+import { getUserById } from './getUserById';
 
 const addOrUpdateUserCredentials = async (
     user: Omit<User, 'characters'>,

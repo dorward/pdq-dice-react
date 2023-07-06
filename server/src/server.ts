@@ -1,5 +1,4 @@
 import express from 'express';
-import fs from 'fs';
 
 import pool from './dbConfig/dbConnector';
 import apiRouter from './routers/apiRouter';

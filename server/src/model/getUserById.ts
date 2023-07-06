@@ -16,5 +16,3 @@ export const getUserById = async (
         return E_UNEXPECTED_ERROR;
     }
 };
-
-export default getUserById;

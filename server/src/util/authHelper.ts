@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { E_BAD_CODE, E_NOT_FOUND, E_UNEXPECTED_ERROR } from '../errors';
-import getUserByCodeAndId from '../model/getUserByCodeAndId';
+import { getUserByCodeAndId } from '../model/getUserByCodeAndId';
 import { User } from '../types';
 
 const responses: Record<string, number> = {

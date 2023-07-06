@@ -1,4 +1,3 @@
-import { FormGroup, Button, HTMLSelect, InputGroup, Icon, IconSize } from '@blueprintjs/core';
 import {
 	selectEditingCharacter,
 	updateCurrentBennies,
@@ -10,18 +9,19 @@ import {
 	updatePlayer,
 } from '../../data/edit-mode-slice';
 import { selectUser } from '../../data/user-slice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFilePicker } from 'use-file-picker';
-import UploadError from '../upload-error';
-import Loading from '../loading';
+import { User } from '../../types';
 import ImageModal from '../image-modal';
 import InventorySizeModal from '../inventory-size-modal';
-import { User } from '../../types';
+import Loading from '../loading';
+import UploadError from '../upload-error';
 import type { Props } from './character-header-types';
+import { FormGroup, Button, HTMLSelect, InputGroup, Icon, IconSize } from '@blueprintjs/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFilePicker } from 'use-file-picker';
 
 const bennyValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const CharacterHeaderEdit = ({ avatar, player, name, origin, codeName, motivation }: Props) => {
+const CharacterHeaderEdit = ({ avatar }: Props) => {
 	const dispatch = useDispatch();
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const { avatar: userAvatar } = useSelector(selectUser) as User;

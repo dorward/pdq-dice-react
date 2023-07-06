@@ -1,12 +1,7 @@
 import { Router } from 'express';
 
 import sendDiscordMessage from '../discord/sendDiscordMessage';
-import {
-    E_BAD_CODE,
-    E_NOT_FOUND,
-    E_UNEXPECTED_ERROR,
-    E_UNSUPPORTED_DICE_FORMAT,
-} from '../errors';
+import { E_UNSUPPORTED_DICE_FORMAT } from '../errors';
 import filterCharacterIdentityFromUser from '../model/filterCharacterIdentityFromUser';
 import { SkillCheckRequestBody, SkillCheckResponseBody } from '../types';
 import authHelper from '../util/authHelper';
