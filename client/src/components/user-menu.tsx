@@ -1,5 +1,4 @@
-import { Button, Menu, MenuItem } from '@blueprintjs/core';
-import { Popover2 } from '@blueprintjs/popover2';
+import { Button, Menu, MenuItem, Popover } from '@blueprintjs/core';
 
 type Props = {
 	userTag?: string;
@@ -32,19 +31,12 @@ const Label = ({ userTag, nickname }: Props) => {
 const UserMenu = ({ userTag, nickname, avatar }: Props) => {
 	return (
 		<div className="userMenu">
-			<Popover2
-				interactionKind="click"
-				minimal={false}
-				placement="bottom"
-				content={<Dropdown />}
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				renderTarget={({ isOpen, ref, ...targetProps }) => (
-					<Button {...targetProps} elementRef={ref}>
-						<Label userTag={userTag} nickname={nickname} />
-						<img src={avatar} height={32} width={32} />
-					</Button>
-				)}
-			/>
+			<Popover interactionKind="click" minimal={false} placement="bottom" content={<Dropdown />}>
+				<Button>
+					<Label userTag={userTag} nickname={nickname} />
+					<img src={avatar} height={32} width={32} />
+				</Button>
+			</Popover>
 		</div>
 	);
 };
