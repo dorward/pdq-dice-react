@@ -1,6 +1,6 @@
 import { E_BAD_CODE, E_NOT_FOUND, E_UNEXPECTED_ERROR } from '../errors';
 import { User } from '../types';
-import getUserById from './getUserById';
+import { getUserById } from './getUserById';
 
 export const getUserByCodeAndId = async (
     code: User['code'],
@@ -12,5 +12,3 @@ export const getUserByCodeAndId = async (
     if (code !== user.code) return E_BAD_CODE;
     return user;
 };
-
-export default getUserByCodeAndId;

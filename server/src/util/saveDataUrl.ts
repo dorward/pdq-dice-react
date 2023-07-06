@@ -28,7 +28,7 @@ const saveDataUrl = async (image: string) => {
     const filename = `${uuidv4()}.${ext}`;
     const path = `${avatarPaths.AVATAR_PATH}/${filename}`;
     const url = `${avatarPaths.AVATAR_URL}/${filename}`;
-    const result = await writeFile(path, buffer, { mode: 0o660 });
+    await writeFile(path, buffer, { mode: 0o660 });
     return { path, url };
 };
 

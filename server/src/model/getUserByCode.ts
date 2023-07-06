@@ -16,5 +16,3 @@ export const getUserByCode = async (
         return;
     }
 };
-
-export default getUserByCode;
