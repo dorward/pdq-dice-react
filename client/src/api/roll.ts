@@ -53,10 +53,7 @@ export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
 		store.dispatch(markLoading());
 		const character = selectCharacter(store.getState());
 		const qualityBonuses = [...character.qualities, ...character.powers]
-			.filter(attribute => {
-				console.log(selected[attribute.id], attribute);
-				return selected[attribute.id];
-			})
+			.filter(attribute => selected[attribute.id])
 			.map(attribute => {
 				const value =
 					attributeValues[
