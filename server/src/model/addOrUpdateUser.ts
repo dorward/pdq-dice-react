@@ -1,7 +1,7 @@
 import pool from '../dbConfig/dbConnector';
 import { E_BAD_CODE, E_NOT_FOUND, E_UNEXPECTED_ERROR } from '../errors';
 import { User } from '../types';
-import getUserById from './getUserById';
+import { getUserById } from './getUserById';
 
 const addOrUpdateUser = async (
     userId: string,
