@@ -1,14 +1,12 @@
-import { Button, Icon, Intent, ButtonGroup, Menu, MenuItem } from '@blueprintjs/core';
-import { Character } from '../types';
-import { Classes, Popover2 } from '@blueprintjs/popover2';
-import { deleteCharacter } from '../data/user-slice';
 import { editCharacter, selectEditingCharacter } from '../data/edit-mode-slice';
 import { finishEditing } from '../data/helpers';
+import { deleteCharacter } from '../data/user-slice';
 import { setCharacterId } from '../data/whoami-slice';
-import { useDispatch, useSelector } from 'react-redux';
-
-import SimpleDice from './simple-dice';
+import { Character } from '../types';
 import { saveCharacterAsYaml } from '../util/download';
+import SimpleDice from './simple-dice';
+import { Button, Icon, Intent, ButtonGroup, Menu, MenuItem, Popover, Classes } from '@blueprintjs/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 type Props = {
 	character: Character;
@@ -25,7 +23,7 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
 				<>
 					<SimpleDice hasSkillButton />
 					<ButtonGroup>
-						<Popover2
+						<Popover
 							interactionKind="click"
 							minimal={false}
 							placement="bottom"
@@ -39,10 +37,9 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
 								</Menu>
 							}
 							// eslint-disable-next-line @typescript-eslint/no-unused-vars
-							renderTarget={({ isOpen, ref, ...targetProps }) => (
-								<Button {...targetProps} icon="download" title="Download" aria-label="Download" elementRef={ref} />
-							)}
-						/>
+						>
+							<Button icon="download" title="Download" aria-label="Download" />
+						</Popover>
 						<Button
 							onClick={() => {
 								dispatch(editCharacter(character));
@@ -54,9 +51,9 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
 			)}
 			{characterToEdit && (
 				<>
-					<Popover2
+					<Popover
 						interactionKind="click"
-						popoverClassName={Classes.POPOVER2_CONTENT_SIZING}
+						popoverClassName={Classes.POPOVER_CONTENT_SIZING}
 						placement="auto"
 						content={
 							<div>
@@ -68,18 +65,15 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
 										dispatch(setCharacterId('new-character-page'));
 									}}
 									intent={Intent.DANGER}
-									className={Classes.POPOVER2_DISMISS}
+									className={Classes.POPOVER_DISMISS}
 									text="Yes"
 								/>
 							</div>
-						}
-						// eslint-disable-next-line @typescript-eslint/no-unused-vars
-						renderTarget={({ isOpen, ref, ...targetProps }) => (
-							<Button {...targetProps} elementRef={ref} intent={Intent.DANGER}>
-								<Icon icon="trash" title="Delete Character" htmlTitle="Delete Character" />
-							</Button>
-						)}
-					/>
+						}>
+						<Button intent={Intent.DANGER}>
+							<Icon icon="trash" title="Delete Character" htmlTitle="Delete Character" />
+						</Button>
+					</Popover>
 
 					<Button onClick={finishEditing} intent={Intent.PRIMARY}>
 						<Icon icon="floppy-disk" title="Save" htmlTitle="Save" />
