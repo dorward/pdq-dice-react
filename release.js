@@ -12,7 +12,7 @@ program.parse();
 console.log('Options: ', program.opts());
 
 const read = path => JSON.parse(readFileSync(path, 'utf-8'));
-const write = (path, obj) => writeFileSync(path, JSON.stringify(obj, null, 2));
+const write = (path, obj) => writeFileSync(path, JSON.stringify(obj, null, '\t'));
 
 const rootName = path.resolve(__dirname, 'package.json');
 const serverName = path.resolve(__dirname, 'server', 'package.json');
