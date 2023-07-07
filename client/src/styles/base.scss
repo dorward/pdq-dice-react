@@ -340,7 +340,7 @@ svg.goo {
 		display: flex;
 		.help {
 			width: 25em;
-			flex: 1 1 25e;
+			flex: 1 1 25em;
 			margin-right: 1em;
 			ul {
 				margin: 0;
@@ -352,4 +352,14 @@ svg.goo {
 
 .bennyButton {
 	margin-left: auto;
+}
+
+.custom-skill-check {
+	padding-top: 1em;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	> :not(:first-child) {
+		margin-left: 2rem;
+	}
 }
