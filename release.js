@@ -30,6 +30,6 @@ const server = read(serverName);
 server.version = newVersion;
 write(serverName, server);
 
-const client = read(serverName);
+const client = read(clientName);
 client.version = newVersion;
 write(clientName, client);
