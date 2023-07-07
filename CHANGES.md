@@ -1,5 +1,11 @@
 # Changes
 
+## v2.4.1
+
+### Bugfixes
+
+- Fix package.json after a release script saved the wrong data over it
+
 ## v2.4.0
 
 ### Features
