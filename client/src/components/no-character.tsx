@@ -1,6 +1,6 @@
-import { Callout, Icon } from '@blueprintjs/core';
-
+import CustomSkillCheck from './custom-skill-check';
 import SimpleDice from './simple-dice';
+import { Callout, Icon } from '@blueprintjs/core';
 
 type Props = {
 	showWelcome: boolean;
@@ -11,6 +11,7 @@ const NoCharacter = ({ showWelcome }: Props) => {
 		<>
 			<div className="character-sheet">
 				<SimpleDice />
+				<CustomSkillCheck />
 			</div>
 
 			{showWelcome && (
