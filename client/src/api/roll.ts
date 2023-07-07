@@ -43,6 +43,29 @@ type SkillCheckProps = {
 	isUsingBenny?: boolean;
 };
 
+type SimpleSkillCheckProps = {
+	description: string;
+	modifier: number;
+};
+
+export const simpleSkillCheck = async ({ description, modifier }: SimpleSkillCheckProps) => {
+	const { auth, url } = getBase();
+
+	const body: SkillCheckRequestBody = {
+		dice: '2d6',
+		bonuses: [
+			{
+				name: 'Modifiers',
+				value: modifier,
+			},
+		],
+		description,
+		rollType: 'Skill Check',
+	};
+	const response = await axios.post(url, { ...auth, ...body });
+	return response.data;
+};
+
 export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
 	let body: SkillCheckRequestBody;
 
