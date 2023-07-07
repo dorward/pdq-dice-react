@@ -8,6 +8,7 @@ export type Sheet = {
 
 export type Character = {
     name: string;
+    codeName: string;
     id: string;
     avatar?: Avatar;
     player: string;
@@ -134,7 +135,7 @@ export type ExtraUpdateName = {
 
 export type ExtraUpdateValue = {
     id: string;
-    value: typeof extraValues[number];
+    value: (typeof extraValues)[number];
 };
 
 export type ExtraUpdateLocation = {
@@ -144,7 +145,7 @@ export type ExtraUpdateLocation = {
 
 export type ExtraUpdateCount = {
     id: string;
-    count: typeof extraCountValues[number];
+    count: (typeof extraCountValues)[number];
 };
 
 export type SelectExtra = {
