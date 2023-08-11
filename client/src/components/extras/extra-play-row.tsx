@@ -3,6 +3,7 @@ import { RowProps } from './types';
 import { selectSelected, toggleSelected } from '../../data/roll-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
+import Expend from './expend';
 
 const ExtraPlayRow = ({ extra, isOpen, remoteInventory }: RowProps) => {
 	const dispatch = useDispatch();
@@ -20,7 +21,10 @@ const ExtraPlayRow = ({ extra, isOpen, remoteInventory }: RowProps) => {
 		<tr key={extra.id} className={classNames({ isOpen, remoteInventory })}>
 			<td key="label" className="bonus-name">
 				<Checkbox checked={checked} onChange={onChange} disabled={extra.count === 0}>
-					{extra.name} {count}
+					{extra.name} {count}{' '}
+					{typeof extra.count === 'number' && extra.count > 0 ? (
+						<Expend extraName={extra.name} extraId={extra.id} />
+					) : null}
 				</Checkbox>
 			</td>
 			<td>{bonus}</td>

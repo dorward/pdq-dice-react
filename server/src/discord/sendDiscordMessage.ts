@@ -1,16 +1,20 @@
 import { Channel, ChannelType, EmbedAuthorData, EmbedBuilder, TextChannel } from 'discord.js';
-
+import a from 'indefinite';
 import client from '.';
-import { SkillCheckResponseBody, User } from '../types';
+import { ExpendResponseBody, SkillCheckResponseBody, User } from '../types';
 import dice from './dice';
 
 const isTextChannel = (channel: Channel | null): channel is TextChannel =>
     channel?.type === ChannelType.GuildText;
 
+const COLOR_NEUTRAL = '#FFFF00';
+const COLOR_POSITIVE = '#76B947';
+const COLOR_NEGATIVE = '#FF2511';
+
 const successToColor = (success: boolean | undefined) => {
-    if (typeof success === 'undefined') return '#FFFF00';
-    if (success) return '#76B947';
-    return '#FF2511';
+    if (typeof success === 'undefined') return COLOR_NEUTRAL;
+    if (success) return COLOR_POSITIVE;
+    return COLOR_NEGATIVE;
 };
 
 const resultIndicator = (success: boolean | undefined, total: number) => {
@@ -20,6 +24,33 @@ const resultIndicator = (success: boolean | undefined, total: number) => {
 };
 
 const footer = { text: '⚀ ⚁ ⚂ ⚃ ⚄ ⚅ '.repeat(5) };
+
+export const sendDiscordExpendNotification = async (
+    user: User,
+    response: ExpendResponseBody,
+) => {
+    const author: EmbedAuthorData = {
+        name: response.expendFor.name,
+        iconURL: response.expendFor.avatar ?? user.avatar ?? undefined,
+    };
+
+    const embed = new EmbedBuilder()
+        .setColor(COLOR_NEUTRAL)
+        .setTitle('Expending!')
+        .setDescription(
+            `Using ${a(
+                response.extraName
+                    .split('')
+                    .map((char, index) => (index ? char : char.toLowerCase()))
+                    .join(''),
+            )}`,
+        )
+        .setAuthor(author)
+        .setTimestamp();
+
+    const channel = await client.channels.fetch(user.channel.id);
+    if (isTextChannel(channel)) channel.send({ embeds: [embed] });
+};
 
 const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) => {
     const index = response.diceResult.rolls.join('') as keyof typeof dice;
