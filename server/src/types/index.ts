@@ -95,12 +95,27 @@ export type DiceRollBonus = SkillCheckBonus & {
     rolls: [number, number?];
 };
 
+export type CharacterIdentity = {
+    name: string;
+    avatar: Avatar;
+};
+
+export type ExpendRequestBody = {
+    characterId: string;
+    extraName: string;
+};
+
 export type SkillCheckRequestBody = {
     dice: '1d6' | '2d6';
     high?: boolean;
     bonuses?: SkillCheckBonus[];
     rollType: string;
     description?: string;
+};
+
+export type ExpendResponseBody = {
+    expendFor: CharacterIdentity;
+    extraName: string;
 };
 
 export type SkillCheckResponseBody = {

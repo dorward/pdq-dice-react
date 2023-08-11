@@ -6,22 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CharacterSheet from './character-sheet';
 import NewCharacter from './new-character';
 import NoCharacter from './no-character';
-import type { Character } from '../types';
-
-const NEW_CHARACTER_PAGE = 'new-character-page';
-const SIMPLE_DICE_PAGE = 'simple-dice';
-const extraPages = [NEW_CHARACTER_PAGE, SIMPLE_DICE_PAGE];
-
-const pickCharacter = (id: string, characters: Character[]) => {
-	const defaultId = characters[0]?.id || NEW_CHARACTER_PAGE;
-	if (!id) return defaultId;
-	if (extraPages.includes(id)) return id;
-	const matchedCharacter = characters.find(character => character.id === id);
-	if (matchedCharacter) {
-		return matchedCharacter.id;
-	}
-	return defaultId;
-};
+import pickCharacter, { NEW_CHARACTER_PAGE, SIMPLE_DICE_PAGE } from '../data/pickCharacter';
 
 const Characters = () => {
 	const dispatch = useDispatch();

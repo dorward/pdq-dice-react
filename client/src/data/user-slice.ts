@@ -121,6 +121,7 @@ export const {
 	unset,
 	updateCharacter,
 } = userSlice.actions;
+
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserError = (state: RootState) => state.user.error;
 export const selectCharacters = (state: RootState): Character[] => state.user?.user?.characters ?? [];
