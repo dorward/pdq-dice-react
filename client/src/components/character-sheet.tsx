@@ -1,6 +1,6 @@
 import { Props as AttributesProps } from './attributes/types';
 import { Character } from '../types';
-import { FormGroup, InputGroup } from '@blueprintjs/core';
+import { FormGroup, InputGroup, Tab, Tabs } from '@blueprintjs/core';
 import { selectEditingCharacter } from '../data/edit-mode-slice';
 import Attributes from './attributes';
 import CharacterHeader from './character-header';
@@ -38,19 +38,51 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 		<>
 			<div className="character-sheet">
 				<CharacterMenu character={character} />
-				<CharacterHeader
-					avatar={character.avatar}
-					codeName={character.codeName}
-					motivation={character.motivation}
-					name={character.name}
-					origin={character.origin}
-					player={character.player}
-				/>
-				<Attributes {...{ ...qualities, character }} />
-				<Attributes {...{ ...powers, character }} />
-				<Extras extras={character.extras} />
 				{!characterToEdit && (
-					<div className="controls">
+					<CharacterHeader
+						avatar={character.avatar}
+						codeName={character.codeName}
+						motivation={character.motivation}
+						name={character.name}
+						origin={character.origin}
+						player={character.player}
+					/>
+				)}
+				<Tabs className="character-sheet-sections" large>
+					{characterToEdit && (
+						<Tab
+							id="character-core"
+							title="Character"
+							panel={
+								<CharacterHeader
+									avatar={character.avatar}
+									codeName={character.codeName}
+									motivation={character.motivation}
+									name={character.name}
+									origin={character.origin}
+									player={character.player}
+								/>
+							}
+						/>
+					)}
+					<Tab id="attributes" title="Attributes" panel={<Attributes {...{ ...qualities, character }} />} />
+					<Tab id="powers" title="Powers" panel={<Attributes {...{ ...powers, character }} />} />
+					<Tab id="extras" title="Extras" panel={<Extras extras={character.extras} />} />
+					{!characterToEdit && (
+						<Tab
+							id="power-notes"
+							title="Power Notes"
+							panel={!characterToEdit && <PowerNotes powers={character.powers} />}
+						/>
+					)}
+					<Tab
+						id="character-background"
+						title="Background"
+						panel={<CharacterBackground background={character.background} />}
+					/>
+				</Tabs>
+				{!characterToEdit && (
+					<div className="controls footer">
 						<FormGroup label="Description of roll" labelFor={descriptionId}>
 							<InputGroup
 								placeholder="What action are you rolling?"
@@ -62,8 +94,6 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 						<SkillCheck />
 					</div>
 				)}
-				{<CharacterBackground background={character.background} />}
-				{!characterToEdit && <PowerNotes powers={character.powers} />}
 				{characterToEdit && <CharacterMenu character={character} />}
 			</div>
 		</>

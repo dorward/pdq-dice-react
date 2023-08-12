@@ -45,12 +45,12 @@ const Editor = () => {
 						</li>
 					</ul>
 				</div>
-				<TextArea
-					growVertically={true}
-					fill={true}
-					onChange={e => dispatch(updateBackground(e.target.value))}
-					value={characterToEdit.background || ''}
-				/>
+				<div className="text">
+					<TextArea
+						onChange={e => dispatch(updateBackground(e.target.value))}
+						value={characterToEdit.background || ''}
+					/>
+				</div>
 			</div>
 		</div>
 	);
