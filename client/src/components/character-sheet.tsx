@@ -38,15 +38,33 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 		<>
 			<div className="character-sheet">
 				<CharacterMenu character={character} />
-				<CharacterHeader
-					avatar={character.avatar}
-					codeName={character.codeName}
-					motivation={character.motivation}
-					name={character.name}
-					origin={character.origin}
-					player={character.player}
-				/>
+				{!characterToEdit && (
+					<CharacterHeader
+						avatar={character.avatar}
+						codeName={character.codeName}
+						motivation={character.motivation}
+						name={character.name}
+						origin={character.origin}
+						player={character.player}
+					/>
+				)}
 				<Tabs className="character-sheet-sections" large>
+					{characterToEdit && (
+						<Tab
+							id="character-core"
+							title="Character"
+							panel={
+								<CharacterHeader
+									avatar={character.avatar}
+									codeName={character.codeName}
+									motivation={character.motivation}
+									name={character.name}
+									origin={character.origin}
+									player={character.player}
+								/>
+							}
+						/>
+					)}
 					<Tab id="attributes" title="Attributes" panel={<Attributes {...{ ...qualities, character }} />} />
 					<Tab id="powers" title="Powers" panel={<Attributes {...{ ...powers, character }} />} />
 					<Tab id="extras" title="Extras" panel={<Extras extras={character.extras} />} />
