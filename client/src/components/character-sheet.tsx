@@ -68,11 +68,13 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 					<Tab id="attributes" title="Attributes" panel={<Attributes {...{ ...qualities, character }} />} />
 					<Tab id="powers" title="Powers" panel={<Attributes {...{ ...powers, character }} />} />
 					<Tab id="extras" title="Extras" panel={<Extras extras={character.extras} />} />
-					<Tab
-						id="power-notes"
-						title="Power Notes"
-						panel={!characterToEdit && <PowerNotes powers={character.powers} />}
-					/>
+					{!characterToEdit && (
+						<Tab
+							id="power-notes"
+							title="Power Notes"
+							panel={!characterToEdit && <PowerNotes powers={character.powers} />}
+						/>
+					)}
 					<Tab
 						id="character-background"
 						title="Background"
