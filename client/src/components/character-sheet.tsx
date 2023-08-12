@@ -82,7 +82,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 					/>
 				</Tabs>
 				{!characterToEdit && (
-					<div className="controls">
+					<div className="controls footer">
 						<FormGroup label="Description of roll" labelFor={descriptionId}>
 							<InputGroup
 								placeholder="What action are you rolling?"
