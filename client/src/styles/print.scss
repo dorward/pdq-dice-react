@@ -52,6 +52,15 @@
 		}
 	}
 
+	.character-sheet-sections {
+		> [role='tablist'] {
+			display: none;
+		}
+		> .bp5-tab-panel[aria-hidden='true'] {
+			display: block;
+		}
+	}
+
 	.character-header {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
