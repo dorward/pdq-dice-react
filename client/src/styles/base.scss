@@ -284,6 +284,9 @@ button.add {
 
 .controls {
 	padding: 4px;
+	&.footer {
+		margin-top: 4rem;
+	}
 	label {
 		color: $dark-gray1;
 		font-weight: 600;
