@@ -1,6 +1,6 @@
 import { Props as AttributesProps } from './attributes/types';
 import { Character } from '../types';
-import { FormGroup, InputGroup } from '@blueprintjs/core';
+import { FormGroup, InputGroup, Tab, Tabs } from '@blueprintjs/core';
 import { selectEditingCharacter } from '../data/edit-mode-slice';
 import Attributes from './attributes';
 import CharacterHeader from './character-header';
@@ -46,9 +46,21 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 					origin={character.origin}
 					player={character.player}
 				/>
-				<Attributes {...{ ...qualities, character }} />
-				<Attributes {...{ ...powers, character }} />
-				<Extras extras={character.extras} />
+				<Tabs className="character-sheet-sections" large>
+					<Tab id="attributes" title="Attributes" panel={<Attributes {...{ ...qualities, character }} />} />
+					<Tab id="powers" title="Powers" panel={<Attributes {...{ ...powers, character }} />} />
+					<Tab id="extras" title="Extras" panel={<Extras extras={character.extras} />} />
+					<Tab
+						id="power-notes"
+						title="Power Notes"
+						panel={!characterToEdit && <PowerNotes powers={character.powers} />}
+					/>
+					<Tab
+						id="character-background"
+						title="Background"
+						panel={<CharacterBackground background={character.background} />}
+					/>
+				</Tabs>
 				{!characterToEdit && (
 					<div className="controls">
 						<FormGroup label="Description of roll" labelFor={descriptionId}>
@@ -62,8 +74,6 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
 						<SkillCheck />
 					</div>
 				)}
-				{<CharacterBackground background={character.background} />}
-				{!characterToEdit && <PowerNotes powers={character.powers} />}
 				{characterToEdit && <CharacterMenu character={character} />}
 			</div>
 		</>
