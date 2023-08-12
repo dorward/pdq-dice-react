@@ -28,8 +28,8 @@ const AttributeEditRow = ({ attribute, dataSource }: RowProps) => {
 					<FormGroup>
 						<TextArea
 							placeholder="Notes…"
-							growVertically={true}
 							className="bp4-fill"
+							fill
 							id={`input-${attribute.id}-description`}
 							value={attribute.notes ?? ''}
 							onChange={e => {
