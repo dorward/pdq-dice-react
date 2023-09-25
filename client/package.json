@@ -35,7 +35,7 @@
 		"react-router-dom": "^6.15.0",
 		"react-spinners": "^0.13.8",
 		"unique-names-generator": "^4.7.1",
-		"use-file-picker": "^1.7.0",
+		"use-file-picker": "^2.0.0",
 		"use-local-storage": "^3.0.0",
 		"uuid": "^9.0.0"
 	},
