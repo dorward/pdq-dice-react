@@ -37,7 +37,7 @@
 		"unique-names-generator": "^4.7.1",
 		"use-file-picker": "^2.1.0",
 		"use-local-storage": "^3.0.0",
-		"uuid": "^9.0.0"
+		"uuid": "^9.0.1"
 	},
 	"devDependencies": {
 		"@jest/globals": "^29.6.4",
@@ -49,7 +49,7 @@
 		"@types/react-dom": "^18.2.7",
 		"@types/react-redux": "^7.1.26",
 		"@types/react-router-dom": "^5.3.3",
-		"@types/uuid": "^9.0.3",
+		"@types/uuid": "^9.0.6",
 		"css-loader": "^6.8.1",
 		"dotenv-webpack": "^8.0.1",
 		"ejs-loader": "^0.5.0",
