@@ -44,7 +44,7 @@
 		"@types/jest": "^29.5.5",
 		"@types/js-yaml": "^4.0.5",
 		"@types/node": "^20.6.2",
-		"@types/react": "^18.2.28",
+		"@types/react": "^18.2.33",
 		"@types/react-avatar-editor": "^13.0.0",
 		"@types/react-dom": "^18.2.7",
 		"@types/react-redux": "^7.1.26",
