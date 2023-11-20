@@ -26,7 +26,7 @@
 		"typescript": "^5.2.2"
 	},
 	"dependencies": {
-		"@discordjs/rest": "^2.0.1",
+		"@discordjs/rest": "^2.2.0",
 		"@types/uuid": "^9.0.6",
 		"cors": "^2.8.5",
 		"discord-api-types": "^0.37.63",
