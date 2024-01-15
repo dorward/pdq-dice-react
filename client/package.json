@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@blueprintjs/core": "^5.6.0",
-		"@blueprintjs/select": "^5.0.10",
+		"@blueprintjs/select": "^5.0.23",
 		"@reduxjs/toolkit": "^2.0.1",
 		"axios": "^1.6.3",
 		"classnames": "^2.3.1",
