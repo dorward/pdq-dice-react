@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:lts-alpine3.18
 
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
