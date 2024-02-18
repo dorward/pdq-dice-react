@@ -26,7 +26,7 @@ const CharacterHeaderEdit = ({ avatar }: Props) => {
 	const characterToEdit = useSelector(selectEditingCharacter);
 	const { avatar: userAvatar } = useSelector(selectUser) as User;
 
-	const [openFileSelector, { filesContent, loading, errors, clear }] = useFilePicker({
+	const { openFilePicker, filesContent, loading, errors, clear } = useFilePicker({
 		readAs: 'DataURL',
 		accept: 'image/*',
 		multiple: true,
@@ -47,6 +47,8 @@ const CharacterHeaderEdit = ({ avatar }: Props) => {
 
 	const avatarUrl = uploadedImage ?? avatar ?? userAvatar;
 
+	console.log({ loading, openFilePicker });
+
 	return (
 		<div className="character-header-editor">
 			{uploadedImage && <ImageModal url={uploadedImage} clear={clear} />}
@@ -54,9 +56,10 @@ const CharacterHeaderEdit = ({ avatar }: Props) => {
 			<div className="character-id-editor">
 				{loading && <Loading small={true} />}
 				{!loading && (
-					<Button onClick={openFileSelector}>
+					<Button onClick={openFilePicker}>
 						<>
 							<div className="icon-container">
+								xx
 								<Icon icon="upload" title="Change avatar" size={IconSize.LARGE} color="black" />
 							</div>
 							<img src={avatarUrl} alt="" />
