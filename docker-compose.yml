@@ -23,7 +23,7 @@ services:
       context: ./server/
       dockerfile: .Dockerfile
     depends_on:
-      - postgres
+      - postgres16
     environment:
       API_URL: '${API_URL}'
       FRONTEND_URL: '${FRONTEND_URL}'
@@ -33,15 +33,30 @@ services:
       AVATAR_URL: '${AVATAR_URL}'
       TOKEN: '${TOKEN}'
       PORT: 5101
-      WAIT_HOSTS: postgres:5432
+      WAIT_HOSTS: postgres16:5432
     ports:
       - '5101:5101'
     volumes:
       - ./static:/var/pdq/static
       - ./server/src:/usr/app/src
       - ./server/nodemon.json:/usr/app/nodemon.json
-      - ./avatars:/var/pdq/avatars
+      - ~/.pdq/avatars:/var/pdq/avatars
     restart: unless-stopped
+  postgres16:
+    container_name: postgres16
+    image: postgres:16-alpine
+    ports:
+      - target: 5432
+        published: 5102
+    volumes:
+      - ~/.pdq/postgres16/:/var/lib/postgresql/data
+      - ./server/src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: newPassword
+      POSTGRES_DB: pdq
+  # Legacy postgres for migration purposes only
   postgres:
     container_name: postgres
     image: postgres:14.2-alpine
@@ -56,9 +71,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: newPassword
       POSTGRES_DB: pdq
-    build:
-      context: ./postgres/
-      dockerfile: .Dockerfile
 volumes:
   db-data:
   pgadmin-data:
