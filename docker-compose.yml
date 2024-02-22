@@ -1,6 +1,7 @@
 services:
   pdq-frontend:
     container_name: pdq-frontend
+    profiles: ['production']
     build:
       context: ./client/
       dockerfile: '.Dockerfile.${ENVIRONMENT}'
@@ -19,6 +20,7 @@ services:
     restart: unless-stopped
   pdq-api:
     container_name: pdq-api
+    profiles: ['production', 'development']
     build:
       context: ./server/
       dockerfile: .Dockerfile
@@ -44,6 +46,7 @@ services:
     restart: unless-stopped
   postgres16:
     container_name: postgres16
+    profiles: ['production', 'development']
     image: postgres:16-alpine
     ports:
       - target: 5432
@@ -59,6 +62,7 @@ services:
   # Legacy postgres for migration purposes only
   postgres:
     container_name: postgres
+    profiles: ['upgrade']
     image: postgres:14.2-alpine
     ports:
       - target: 5432
@@ -66,7 +70,7 @@ services:
     volumes:
       - ./postgresdata:/var/lib/postgresql/data
       - ./server/src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
-    restart: always
+    restart: never
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: newPassword
