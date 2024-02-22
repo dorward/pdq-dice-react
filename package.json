@@ -1,6 +1,6 @@
 {
 	"name": "pdq-dice-react",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "This is a dice bot and character management app for the [PDQ system for TTRPGs](http://evilhat.wikidot.com/pdq).",
 	"devDependencies": {
 		"@trivago/prettier-plugin-sort-imports": "^4.3.0",
