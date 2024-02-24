@@ -10,7 +10,8 @@ export type Character = {
 	avatar?: Avatar;
 	bennies: Bennies;
 	codeName: string;
-	extras: Extra[];
+	extras: Extra[]; // deprecated
+	inventory: Extra[];
 	hidden?: boolean;
 	id: string;
 	motivation: string;
