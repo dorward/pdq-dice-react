@@ -1,6 +1,6 @@
 import { Checkbox, Tree, TreeNodeInfo } from '@blueprintjs/core';
 import useCharacter from '../../data/useCharacter';
-import { Extra } from '../../types';
+import { Extra, ExtraContainer } from '../../types';
 import { v4 as uuidv4 } from 'uuid';
 import Expend from './expend';
 
@@ -72,7 +72,7 @@ type ItemProps = {
 
 const Count = ({ extra }: { extra: Extra }) => {
 	const { count } = extra;
-	if (count === '∞') {
+	if (!count || count === '∞') {
 		return null;
 	}
 	if (count === 0) {
@@ -110,20 +110,13 @@ const Item = ({ extra }: ItemProps) => {
 };
 
 const convertFlatToTreeData = (extras: Extra[]): TreeNodeInfo<Extra>[] => {
-	// In the long run a lot of this transformation will need to be done on the original data.
-	// Doing it client side will let me test it though
-	//
-	// Maybe a one short API call to loop over all characters on all users in the database as a migration?
-	//
-	// Make that a stand-alone script?
-
 	// On the first pass we add a lot of data and duplicate the originals
 	// to ensure this function has no side effects.
 	const basicTreeNodeInfo: TreeNodeInfo<Extra>[] = extras.map(extra => {
 		const node: TreeNodeInfo<Extra> = {
 			id: extra.id,
 			label: <Item extra={extra} />,
-			icon: extra.count === 0 ? 'cube' : undefined,
+			icon: 'count' in extra && extra.count === 0 ? 'cube' : undefined,
 			//children: ...
 			nodeData: { ...extra },
 		};
@@ -131,22 +124,22 @@ const convertFlatToTreeData = (extras: Extra[]): TreeNodeInfo<Extra>[] => {
 		return node;
 	});
 
-	console.log(basicTreeNodeInfo);
-
 	const createLocation = (name: string): TreeNodeInfo<Extra> => {
 		const id = uuidv4();
+		const extra: ExtraContainer = {
+			id,
+			name,
+			location: '',
+			isExpanded: true,
+			count: null,
+			value: null,
+		};
 		const node: TreeNodeInfo<Extra> = {
 			id,
 			label: name,
 			icon: 'folder-close',
 			isExpanded: true,
-			nodeData: {
-				id,
-				name,
-				location: '',
-				value: 0,
-				isExpanded: true,
-			},
+			nodeData: extra,
 		};
 		basicTreeNodeInfo.push(node);
 		hierarchicalTreeNodeInfo.push(node);

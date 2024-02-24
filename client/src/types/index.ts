@@ -29,14 +29,24 @@ export type Bennies = {
 
 export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'PR' | 'GONE';
 
-export type Extra = {
+export type ExtraItem = {
 	name: string;
 	id: string;
-	value: number;
 	location: string;
 	count?: '∞' | number;
-	isExpanded?: boolean;
+	value: number;
 };
+
+export type ExtraContainer = {
+	name: string;
+	id: string;
+	location: string;
+	isExpanded: boolean;
+	count: null;
+	value: null;
+};
+
+export type Extra = ExtraItem | ExtraContainer;
 
 export type ExtraSortOrder = 'name' | 'location';
 
