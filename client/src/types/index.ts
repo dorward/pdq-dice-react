@@ -29,21 +29,22 @@ export type Bennies = {
 
 export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'PR' | 'GONE';
 
-export type ExtraItem = {
+export type ExtraBase = {
 	name: string;
 	id: string;
 	location: string;
-	count?: '∞' | number;
+};
+
+export type ExtraItem = ExtraBase & {
+	count: '∞' | number;
 	value: number;
 };
 
-export type ExtraContainer = {
-	name: string;
-	id: string;
-	location: string;
+export type ExtraContainer = ExtraBase & {
 	isExpanded: boolean;
 	count: null;
 	value: null;
+	capacity: 0;
 };
 
 export type Extra = ExtraItem | ExtraContainer;

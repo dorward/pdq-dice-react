@@ -4,62 +4,6 @@ import { Extra, ExtraContainer } from '../../types';
 import { v4 as uuidv4 } from 'uuid';
 import Expend from './expend';
 
-// type InventoryEntityBase = {
-// 	id: string;
-// 	label: string;
-// 	inside?: string;
-// };
-
-// type InventoryItem = InventoryEntityBase & {
-// 	isContainer: false;
-// };
-
-// type InventoryContainer = InventoryEntityBase & {
-// 	isContainer: true;
-// 	isExpanded: boolean;
-// };
-
-// type InventoryEntity = InventoryItem | InventoryContainer;
-
-// const flatData: InventoryEntity[] = [
-// 	{
-// 		id: 'a',
-// 		label: 'Bag of Holding',
-// 		isContainer: true,
-// 		isExpanded: true,
-// 	},
-// 	{
-// 		id: 'b',
-// 		label: 'Rations',
-// 		isContainer: false,
-// 		inside: 'a',
-// 	},
-// 	{
-// 		id: 'c',
-// 		label: 'Sword',
-// 		isContainer: false,
-// 	},
-// 	{
-// 		id: 'd',
-// 		label: 'Stone',
-// 		isContainer: false,
-// 	},
-// 	{
-// 		id: 'f',
-// 		label: 'Another Bag',
-// 		isContainer: true,
-// 		isExpanded: true,
-// 	},
-// 	{
-// 		id: 'e',
-// 		label: 'Headband of intellect',
-// 		isContainer: false,
-// 		inside: 'f',
-// 	},
-// ];
-
-// type TreeNodeInfoExtended = TreeNodeInfo & Pick<InventoryEntity, 'inside'>;
-
 // const sortInventory = (a: TreeNodeInfo<Extra>, b: TreeNodeInfo<Extra>) => {
 // 	if (a.childNodes && !b.childNodes) return -1;
 // 	if (!a.childNodes && b.childNodes) return 1;
@@ -92,10 +36,18 @@ const Item = ({ extra }: ItemProps) => {
 		signDisplay: 'exceptZero',
 	}).format(extra.value);
 
+	if (count === null) {
+		return (
+			<div className="extra-tree-row">
+				<span>{name} </span>
+			</div>
+		);
+	}
+
 	if (count === 0) {
 		return (
 			<div className="extra-tree-row">
-				<span>{name} '×0'</span> <span className="bonus">{bonus}</span>
+				<span>{name} ×0</span> <span className="bonus">{bonus}</span>
 			</div>
 		);
 	}
@@ -109,98 +61,81 @@ const Item = ({ extra }: ItemProps) => {
 	);
 };
 
-const convertFlatToTreeData = (extras: Extra[]): TreeNodeInfo<Extra>[] => {
-	// On the first pass we add a lot of data and duplicate the originals
-	// to ensure this function has no side effects.
-	const basicTreeNodeInfo: TreeNodeInfo<Extra>[] = extras.map(extra => {
-		const node: TreeNodeInfo<Extra> = {
-			id: extra.id,
-			label: <Item extra={extra} />,
-			icon: 'count' in extra && extra.count === 0 ? 'cube' : undefined,
-			//children: ...
-			nodeData: { ...extra },
+const convertFlatToTreeData = (oldExtras: Extra[]): TreeNodeInfo<Extra>[] => {
+	// On the first pass we create extras for locations and update the location data to point to them
+	const updateLocationDataOnExtras = (extras: Extra[]) => {
+		const locations: ExtraContainer[] = [];
+
+		const createLocation = (name: string): ExtraContainer => {
+			console.log('Creating location: ', name);
+			const id = uuidv4();
+			const extra: ExtraContainer = {
+				id,
+				name,
+				location: '',
+				isExpanded: true,
+				count: null,
+				value: null,
+				capacity: 0,
+			};
+			locations.push(extra);
+			return extra;
 		};
 
-		return node;
-	});
+		const onMe: ExtraContainer = createLocation('About my person');
 
-	const createLocation = (name: string): TreeNodeInfo<Extra> => {
-		const id = uuidv4();
-		const extra: ExtraContainer = {
-			id,
-			name,
-			location: '',
-			isExpanded: true,
-			count: null,
-			value: null,
-		};
-		const node: TreeNodeInfo<Extra> = {
-			id,
-			label: name,
-			icon: 'folder-close',
-			isExpanded: true,
-			nodeData: extra,
-		};
-		basicTreeNodeInfo.push(node);
-		hierarchicalTreeNodeInfo.push(node);
-		return node;
+		const updatedExtras = extras.map(extra => {
+			const updated = { ...extra };
+			updated.location = extra.location.trim();
+			if (extra.location === '') {
+				updated.location = onMe.id;
+			} else {
+				const location = locations.find(l => l.name === extra.location) ?? createLocation(extra.location);
+				updated.location = location.id;
+			}
+			return updated;
+		});
+
+		const allExtras: Extra[] = updatedExtras.concat(locations);
+		return allExtras;
 	};
 
-	// On the second pass we assign child nodes based on the location data
-	const hierarchicalTreeNodeInfo: TreeNodeInfo<Extra>[] = [];
-	basicTreeNodeInfo.forEach(node => {
-		const location = node.nodeData.location.trim();
-		if (!location) {
-			hierarchicalTreeNodeInfo.push(node);
-			return;
+	const extras = updateLocationDataOnExtras(oldExtras);
+
+	// On the second pass we create TreeNodeInfo objects from the extras - these include rendered data so we can0t keep them in the data store
+	const flat: TreeNodeInfo<Extra>[] = extras.map(extra => {
+		if ('isExpanded' in extra) {
+			return {
+				id: extra.id,
+				label: <Item extra={extra} />,
+				nodeData: extra,
+				icon: extra.isExpanded ? 'folder-open' : 'folder-close',
+				childNodes: [],
+				isExpanded: extra.isExpanded,
+				hasCaret: true,
+			};
 		}
-		const parent =
-			basicTreeNodeInfo.find(potential => potential.nodeData.name === location) || createLocation(location);
-		parent.childNodes ??= [];
-		parent.childNodes.push(node);
-		node.nodeData.location = parent.nodeData.id;
+		return {
+			id: extra.id,
+			label: <Item extra={extra} />,
+			nodeData: extra,
+			icon: extra.count === 0 ? 'cube' : null,
+		};
 	});
 
-	return hierarchicalTreeNodeInfo;
+	console.log(JSON.stringify(extras, null, 2));
 
-	// const nodes: TreeNodeInfoExtended[] = extras.map(item => {
-	// 	const { isContainer, ...rest } = item;
-	// 	const node: TreeNodeInfoExtended = { ...rest };
-	// 	if (isContainer) {
-	// 		node.hasCaret = true;
-	// 		if (node.isExpanded) {
-	// 			node.icon = 'folder-open';
-	// 		} else {
-	// 			node.icon = 'folder-close';
-	// 		}
-	// 	} else {
-	// 		node.hasCaret = false;
-	// 		node.icon = 'cube';
-	// 	}
-	// 	return node;
-	// });
-	// On the second pass we modify the newly created nodes
-	// nodes.forEach(node => {
-	// 	if (node.inside) {
-	// 		const container = nodes.find(possibleContainer => possibleContainer.id === node.inside);
-	// 		if (!container) {
-	// 			// TODO: Create one
-	// 			throw new Error('Could not find parent');
-	// 		}
-	// 		// TODO: Guard against recursion
-	// 		container.childNodes ??= [];
-	// 		container.childNodes.push(node);
-	// 	} else {
-	// 		treeData.push(node);
-	// 	}
-	// });
-	// // On the third pass, we sort the child nodes of each collection
-	// treeData.sort(sortInventory);
-	// nodes.forEach(node => {
-	// 	node.childNodes?.sort(sortInventory);
-	// });
-	// // Finally return the data
-	// return treeData;
+	// In the third pass we arrange the TreeNodeInfo objects into a hierarchy
+	const tree: TreeNodeInfo<Extra>[] = [];
+	flat.forEach(node => {
+		const { location } = node.nodeData;
+		const container = location ? flat.find(n => n.id === location).childNodes : tree;
+		container.push(node);
+	});
+
+	console.log(tree);
+
+	return tree;
 };
 
 const ExtrasTreePlay = () => {

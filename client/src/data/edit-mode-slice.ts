@@ -21,11 +21,12 @@ type EditModeState = null | (Character & SelectedExtra);
 
 const initialEditModeState: EditModeState = null;
 
-const createExtra = () => ({
+const createExtra = (): Extra => ({
 	id: uuidv4(),
 	name: '__New extra',
 	value: 0,
 	location: '',
+	count: '∞',
 });
 
 const EditModeSlice = createSlice({
