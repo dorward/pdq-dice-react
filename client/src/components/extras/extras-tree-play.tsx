@@ -4,11 +4,11 @@ import { Extra, ExtraContainer } from '../../types';
 import { v4 as uuidv4 } from 'uuid';
 import Expend from './expend';
 
-// const sortInventory = (a: TreeNodeInfo<Extra>, b: TreeNodeInfo<Extra>) => {
-// 	if (a.childNodes && !b.childNodes) return -1;
-// 	if (!a.childNodes && b.childNodes) return 1;
-// 	return a.nodeData.name.localeCompare(b.nodeData.name);
-// };
+const sortInventory = (a: TreeNodeInfo<Extra>, b: TreeNodeInfo<Extra>) => {
+	if (a.childNodes && !b.childNodes) return -1;
+	if (!a.childNodes && b.childNodes) return 1;
+	return a.nodeData.name.localeCompare(b.nodeData.name);
+};
 
 type ItemProps = {
 	extra: Extra;
@@ -132,6 +132,10 @@ const convertFlatToTreeData = (oldExtras: Extra[]): TreeNodeInfo<Extra>[] => {
 		const container = location ? flat.find(n => n.id === location).childNodes : tree;
 		container.push(node);
 	});
+
+	// In the fourth pass, we sort the child nodes of each section alphabetically but with containers first
+	tree.sort(sortInventory);
+	flat.forEach(extra => extra.childNodes?.sort(sortInventory));
 
 	console.log(tree);
 
