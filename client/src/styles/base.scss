@@ -180,9 +180,11 @@ table.extras {
 	}
 }
 
-.extra-tree-row {
+span.extra-tree-row {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+	min-height: 20px;
 }
 
 table.extras {

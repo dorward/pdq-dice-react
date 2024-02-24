@@ -32,32 +32,34 @@ const Count = ({ extra }: { extra: Extra }) => {
 const Item = ({ extra }: ItemProps) => {
 	const { name, count } = extra;
 
+	console.log(name, extra);
+
 	const bonus = new Intl.NumberFormat('en-GB', {
 		signDisplay: 'exceptZero',
 	}).format(extra.value);
 
 	if (count === null) {
 		return (
-			<div className="extra-tree-row">
+			<span className="extra-tree-row">
 				<span>{name} </span>
-			</div>
+			</span>
 		);
 	}
 
 	if (count === 0) {
 		return (
-			<div className="extra-tree-row">
+			<span className="extra-tree-row">
 				<span>{name} ×0</span> <span className="bonus">{bonus}</span>
-			</div>
+			</span>
 		);
 	}
 	return (
-		<div className="extra-tree-row">
+		<span className="extra-tree-row">
 			<span>
 				<Checkbox style={{ display: 'inline' }}>{name}</Checkbox> <Count extra={extra} />
 			</span>{' '}
 			<span className="bonus">{bonus}</span>
-		</div>
+		</span>
 	);
 };
 

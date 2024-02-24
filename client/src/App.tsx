@@ -2,10 +2,10 @@ import Dashboard from './components/dashboard';
 import Home from './components/home';
 import Login from './components/login';
 import store from './data/redux-store';
-import './index.scss';
+import 'normalize.css';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
-import 'normalize.css';
+import './index.scss';
 import { Provider } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
