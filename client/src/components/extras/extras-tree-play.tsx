@@ -2,6 +2,8 @@ import { Checkbox, Tree, TreeNodeInfo } from '@blueprintjs/core';
 import useCharacter from '../../data/useCharacter';
 import { Extra } from '../../types';
 import Expend from './expend';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectSelected, toggleSelected } from '../../data/roll-slice';
 
 const sortInventory = (a: TreeNodeInfo<Extra>, b: TreeNodeInfo<Extra>) => {
 	if (a.childNodes && !b.childNodes) return -1;
@@ -29,6 +31,11 @@ const Count = ({ extra }: { extra: Extra }) => {
 };
 
 const Item = ({ extra }: ItemProps) => {
+	const dispatch = useDispatch();
+	const selectedExtras = useSelector(selectSelected);
+	const checked = !!selectedExtras[extra.id];
+	const onChange = () => dispatch(toggleSelected(extra.id));
+
 	const { name, count } = extra;
 
 	const bonus = new Intl.NumberFormat('en-GB', {
@@ -53,7 +60,10 @@ const Item = ({ extra }: ItemProps) => {
 	return (
 		<span className="extra-tree-row">
 			<span>
-				<Checkbox style={{ display: 'inline' }}>{name}</Checkbox> <Count extra={extra} />
+				<Checkbox checked={checked} onChange={onChange} style={{ display: 'inline' }}>
+					{name}
+				</Checkbox>{' '}
+				<Count extra={extra} />
 			</span>{' '}
 			<span className="bonus">{bonus}</span>
 		</span>
