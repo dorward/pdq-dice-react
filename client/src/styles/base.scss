@@ -180,6 +180,11 @@ table.extras {
 	}
 }
 
+.extra-tree-row {
+	display: flex;
+	justify-content: space-between;
+}
+
 table.extras {
 	td + td,
 	th + th {
