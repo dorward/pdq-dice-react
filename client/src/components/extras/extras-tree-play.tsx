@@ -1,73 +1,12 @@
-import { Checkbox, Tree, TreeNodeInfo } from '@blueprintjs/core';
+import { Tree, TreeEventHandler, TreeNodeInfo } from '@blueprintjs/core';
 import useCharacter from '../../data/useCharacter';
 import { Extra } from '../../types';
-import Expend from './expend';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectSelected, toggleSelected } from '../../data/roll-slice';
+import Item from './extras-tree-play-item';
 
 const sortInventory = (a: TreeNodeInfo<Extra>, b: TreeNodeInfo<Extra>) => {
 	if (a.childNodes && !b.childNodes) return -1;
 	if (!a.childNodes && b.childNodes) return 1;
 	return a.nodeData.name.localeCompare(b.nodeData.name);
-};
-
-type ItemProps = {
-	extra: Extra;
-};
-
-const Count = ({ extra }: { extra: Extra }) => {
-	const { count } = extra;
-	if (!count || count === '∞') {
-		return null;
-	}
-	if (count === 0) {
-		return '×0';
-	}
-	return (
-		<>
-			×{count} <Expend {...extra} />
-		</>
-	);
-};
-
-const Item = ({ extra }: ItemProps) => {
-	const dispatch = useDispatch();
-	const selectedExtras = useSelector(selectSelected);
-	const checked = !!selectedExtras[extra.id];
-	const onChange = () => dispatch(toggleSelected(extra.id));
-
-	const { name, count } = extra;
-
-	const bonus = new Intl.NumberFormat('en-GB', {
-		signDisplay: 'exceptZero',
-	}).format(extra.value);
-
-	if (count === null) {
-		return (
-			<span className="extra-tree-row">
-				<span>{name} </span>
-			</span>
-		);
-	}
-
-	if (count === 0) {
-		return (
-			<span className="extra-tree-row">
-				<span>{name} ×0</span> <span className="bonus">{bonus}</span>
-			</span>
-		);
-	}
-	return (
-		<span className="extra-tree-row">
-			<span>
-				<Checkbox checked={checked} onChange={onChange} style={{ display: 'inline' }}>
-					{name}
-				</Checkbox>{' '}
-				<Count extra={extra} />
-			</span>{' '}
-			<span className="bonus">{bonus}</span>
-		</span>
-	);
 };
 
 const convertFlatToTreeData = (extras: Extra[]): TreeNodeInfo<Extra>[] => {
@@ -113,8 +52,13 @@ const ExtrasTreePlay = () => {
 	const { character } = useCharacter();
 	const { inventory } = character;
 	const treeData = convertFlatToTreeData(inventory);
-	console.log({ treeData });
-	return <Tree contents={treeData} />;
+	const onNodeCollapse: TreeEventHandler<Extra> = foo => {
+		console.log(foo.id);
+	};
+	const onNodeExpand: TreeEventHandler<Extra> = foo => {
+		console.log(foo.id);
+	};
+	return <Tree contents={treeData} onNodeExpand={onNodeExpand} onNodeCollapse={onNodeCollapse} />;
 };
 
 export default ExtrasTreePlay;
