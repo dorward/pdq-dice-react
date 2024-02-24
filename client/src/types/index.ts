@@ -35,6 +35,7 @@ export type Extra = {
 	value: number;
 	location: string;
 	count?: '∞' | number;
+	isExpanded?: boolean;
 };
 
 export type ExtraSortOrder = 'name' | 'location';
@@ -143,7 +144,7 @@ export type ExtraUpdateName = {
 
 export type ExtraUpdateValue = {
 	id: string;
-	value: typeof extraValues[number];
+	value: (typeof extraValues)[number];
 };
 
 export type ExtraUpdateLocation = {
@@ -153,7 +154,7 @@ export type ExtraUpdateLocation = {
 
 export type ExtraUpdateCount = {
 	id: string;
-	count: typeof extraCountValues[number];
+	count: (typeof extraCountValues)[number];
 };
 
 export type SelectExtra = {

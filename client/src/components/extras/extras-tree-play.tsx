@@ -145,6 +145,7 @@ const convertFlatToTreeData = (extras: Extra[]): TreeNodeInfo<Extra>[] => {
 				name,
 				location: '',
 				value: 0,
+				isExpanded: true,
 			},
 		};
 		basicTreeNodeInfo.push(node);
@@ -164,6 +165,7 @@ const convertFlatToTreeData = (extras: Extra[]): TreeNodeInfo<Extra>[] => {
 			basicTreeNodeInfo.find(potential => potential.nodeData.name === location) || createLocation(location);
 		parent.childNodes ??= [];
 		parent.childNodes.push(node);
+		node.nodeData.location = parent.nodeData.id;
 	});
 
 	return hierarchicalTreeNodeInfo;
