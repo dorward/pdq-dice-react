@@ -132,6 +132,8 @@ table.extras {
 	}
 
 	tr {
+		vertical-align: middle;
+
 		&.wounded {
 			background: $red5;
 		}
@@ -141,6 +143,11 @@ table.extras {
 			&.wounded {
 				background: $red4;
 			}
+		}
+
+		label {
+			margin-top: 5px;
+			margin-bottom: 5px;
 		}
 	}
 
