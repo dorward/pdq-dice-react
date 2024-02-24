@@ -103,6 +103,23 @@ const userSlice = createSlice({
 			}
 			return state;
 		},
+		openOrCloseInventoryContainer: (
+			state,
+			action: PayloadAction<{ characterId: string; containerId: string; expand: boolean }>
+		) => {
+			const { characterId, containerId, expand } = action.payload;
+			const character = state.user.characters.find(c => c.id === characterId);
+			const container = character.inventory.find(inv => inv.id === containerId);
+			if (!container) {
+				throw new Error(`Tried to open/close item with ID ${containerId} but it could not be found`);
+			}
+			if ('isExpanded' in container) {
+				container.isExpanded = expand;
+				return state;
+			}
+			throw new Error(`Tried to open/close item with ID ${containerId} but it was not a container`);
+		},
+
 		unset: () => null,
 	},
 });
@@ -119,6 +136,7 @@ export const {
 	spendExtra,
 	toggleCharacterVisibility,
 	unset,
+	openOrCloseInventoryContainer,
 	updateCharacter,
 } = userSlice.actions;
 

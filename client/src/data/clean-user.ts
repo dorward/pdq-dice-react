@@ -59,7 +59,7 @@ export const cleanCharacter = (character: Character) => {
 	});
 	character.bennies ??= { current: 3, max: '3' };
 	if (!character.inventory) {
-		console.log('Updating invenstory for ', character.name || character.codeName);
+		console.log('Updating inventory for ', character.name || character.codeName);
 		character.inventory = updateLocationDataOnExtras(character.extras);
 	}
 };
