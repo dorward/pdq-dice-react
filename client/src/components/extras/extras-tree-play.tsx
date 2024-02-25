@@ -1,4 +1,4 @@
-import { Tree, TreeEventHandler, TreeNodeInfo } from '@blueprintjs/core';
+import { Button, Icon, Tree, TreeEventHandler, TreeNodeInfo } from '@blueprintjs/core';
 import useCharacter from '../../data/useCharacter';
 import { Extra, ExtraContainer, isExtraContainer } from '../../types';
 import Item from './extras-tree-play-item';
@@ -88,7 +88,24 @@ const ExtrasTreePlay = () => {
 
 	return (
 		<>
-			{editMode ? 'Edit mode!' : null}
+			{editMode ? (
+				<div>
+					<Button
+						className="add"
+						onClick={() => {
+							console.log('TODO');
+						}}>
+						<Icon icon="add" title="Add Item" htmlTitle="Add Item" />
+					</Button>
+					<Button
+						className="add"
+						onClick={() => {
+							console.log('TODO');
+						}}>
+						<Icon icon="folder-new" title="Add Container" htmlTitle="Add Container" />
+					</Button>
+				</div>
+			) : null}
 			<Tree contents={treeData} onNodeExpand={onNodeExpand} onNodeCollapse={onNodeCollapse} />
 		</>
 	);
