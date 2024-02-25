@@ -1,6 +1,6 @@
 import { Button, Icon } from '@blueprintjs/core';
 import { useDispatch } from 'react-redux';
-import { spendExtra } from '../../data/user-slice';
+import { spendInventoryItem } from '../../data/user-slice';
 import { selectCharacterId } from '../../data/whoami-slice';
 import { useSelector } from 'react-redux';
 import { expend } from '../../api/expend';
@@ -31,7 +31,7 @@ const Expend = (props: Props) => {
 				e.stopPropagation();
 				expend(extraName);
 				dispatch(
-					spendExtra({
+					spendInventoryItem({
 						characterId,
 						extraId,
 					})

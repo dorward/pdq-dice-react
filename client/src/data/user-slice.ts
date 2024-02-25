@@ -92,13 +92,13 @@ const userSlice = createSlice({
 			saveToServer(JSON.parse(JSON.stringify(user)));
 			return state;
 		},
-		spendExtra: (state, action: PayloadAction<ExtraPath>) => {
+		spendInventoryItem: (state, action: PayloadAction<ExtraPath>) => {
 			const { user } = state;
 			const { characterId, extraId } = action.payload;
 			const character = user.characters.find(c => c.id === characterId);
-			const extra = character.extras.find(extra => extra.id === extraId);
-			if (extra && extra.count !== '∞' && extra.count > 0) {
-				extra.count = extra.count - 1;
+			const item = character.inventory.find(searchItem => searchItem.id === extraId);
+			if (item && item.count !== '∞' && item.count > 0) {
+				item.count = item.count - 1;
 				saveToServer(JSON.parse(JSON.stringify(user)));
 			}
 			return state;
@@ -133,7 +133,7 @@ export const {
 	set,
 	setUserError,
 	spendBenny,
-	spendExtra,
+	spendInventoryItem,
 	toggleCharacterVisibility,
 	unset,
 	openOrCloseInventoryContainer,

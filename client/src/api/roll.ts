@@ -2,7 +2,7 @@ import { attributeValues, countsThatDoNotReduce } from '../consts';
 import { updateLastRoll } from '../data/last-roll-slice';
 import store from '../data/redux-store';
 import { markLoading, setResult, markClear } from '../data/results-slice';
-import { selectCharacter, spendExtra, setUserError } from '../data/user-slice';
+import { selectCharacter, spendInventoryItem, setUserError } from '../data/user-slice';
 import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
 import { SkillCheckRequestBody } from '../types';
 import axios from 'axios';
@@ -96,7 +96,7 @@ export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
 		character.extras
 			.filter(extra => selected[extra.id] && !countsThatDoNotReduce.includes(extra.count))
 			.forEach(extra => {
-				store.dispatch(spendExtra({ characterId: character.id, extraId: extra.id }));
+				store.dispatch(spendInventoryItem({ characterId: character.id, extraId: extra.id }));
 			});
 		const circumstanceBonus = circumstance.value ? [{ name: circumstance.name, value: circumstance.value }] : [];
 
