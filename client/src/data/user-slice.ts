@@ -1,5 +1,5 @@
 import saveToServer from '../api/save-to-server';
-import { Character, Sheet, User } from '../types';
+import { Character, Sheet, User, isExtraContainer } from '../types';
 import blankCharacter from './blankCharacter';
 import cleanUser, { cleanCharacter } from './clean-user';
 import { RootState } from './redux-store';
@@ -113,7 +113,7 @@ const userSlice = createSlice({
 			if (!container) {
 				throw new Error(`Tried to open/close item with ID ${containerId} but it could not be found`);
 			}
-			if ('isExpanded' in container) {
+			if (isExtraContainer(container)) {
 				container.isExpanded = expand;
 				return state;
 			}

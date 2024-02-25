@@ -50,6 +50,8 @@ export type ExtraContainer = ExtraBase & {
 
 export type Extra = ExtraItem | ExtraContainer;
 
+export const isExtraContainer = (extra: Extra): extra is ExtraContainer => 'isExpanded' in extra;
+
 export type ExtraSortOrder = 'name' | 'location';
 
 export type Attribute = {

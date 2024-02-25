@@ -1,4 +1,12 @@
-import { AttributeUpdate, Character, ExtraUpdate, SelectExtra, ExtraPartialMove, Extra } from '../types';
+import {
+	AttributeUpdate,
+	Character,
+	ExtraUpdate,
+	SelectExtra,
+	ExtraPartialMove,
+	Extra,
+	isExtraContainer,
+} from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 import {
@@ -65,20 +73,20 @@ const EditModeSlice = createSlice({
 			];
 			return state;
 		},
-		updateExtra: (state: EditModeState, action: PayloadAction<ExtraUpdate>) => {
+		updateInventoryItem: (state: EditModeState, action: PayloadAction<ExtraUpdate>) => {
 			if (isExtraUpdateValue(action.payload)) {
 				const { value } = action.payload;
 				if (value === 'DEL') {
-					state.extras = state.extras.filter(q => q.id !== action.payload.id);
+					state.inventory = state.inventory.filter(q => q.id !== action.payload.id);
 				} else {
-					state.extras = mutateValue(state.extras, action.payload.id, action.payload.value);
+					state.inventory = mutateValue(state.inventory, action.payload.id, action.payload.value);
 				}
 			} else if (isExtraUpdateLocation(action.payload)) {
-				state.extras = mutateLocation(state.extras, action.payload.id, action.payload.location);
+				state.inventory = mutateLocation(state.inventory, action.payload.id, action.payload.location);
 			} else if (isExtraUpdateCount(action.payload)) {
-				state.extras = mutateCount(state.extras, action.payload.id, action.payload.count);
+				state.inventory = mutateCount(state.inventory, action.payload.id, action.payload.count);
 			} else {
-				state.extras = mutateName(state.extras, action.payload.id, action.payload.name);
+				state.inventory = mutateName(state.inventory, action.payload.id, action.payload.name);
 			}
 			return state;
 		},
@@ -176,7 +184,7 @@ const EditModeSlice = createSlice({
 			if (!container) {
 				throw new Error(`Tried to open/close item with ID ${containerId} but it could not be found`);
 			}
-			if ('isExpanded' in container) {
+			if (isExtraContainer(container)) {
 				container.isExpanded = expand;
 				return editState;
 			}
@@ -199,7 +207,7 @@ export const {
 	openOrCloseEditModeInventoryContainer,
 	updateCodeName,
 	updateCurrentBennies,
-	updateExtra,
+	updateInventoryItem,
 	updateMaximumBennies,
 	updateMotivation,
 	updateName,

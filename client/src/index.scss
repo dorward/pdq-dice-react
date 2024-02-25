@@ -2,3 +2,8 @@
 @import 'styles/base';
 @import 'styles/mobile';
 @import 'styles/print';
+
+.bp5-tree-node-content {
+	height: auto !important;
+	margin-bottom: 20px;
+}

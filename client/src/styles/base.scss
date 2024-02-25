@@ -194,6 +194,26 @@ span.extra-tree-row {
 	min-height: 20px;
 }
 
+.extra-tree-edit-name {
+	width: 30%;
+	box-sizing: border-box;
+}
+
+.extra-tree-edit-location {
+	width: 30%;
+	box-sizing: border-box;
+}
+
+.extra-tree-edit-count {
+	width: 10%;
+	box-sizing: border-box;
+}
+
+.extra-tree-edit-bonus {
+	width: 10%;
+	box-sizing: border-box;
+}
+
 table.extras {
 	td + td,
 	th + th {
