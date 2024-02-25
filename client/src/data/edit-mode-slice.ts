@@ -166,6 +166,22 @@ const EditModeSlice = createSlice({
 			state.background = action.payload;
 			return state;
 		},
+		openOrCloseEditModeInventoryContainer: (
+			editState,
+			action: PayloadAction<{ characterId: string; containerId: string; expand: boolean }>
+		) => {
+			const { containerId, expand } = action.payload;
+			const container = editState.inventory.find(inv => inv.id === containerId);
+			console.log('openOrCloseEditModeInventoryContainer ', { containerId, expand, container });
+			if (!container) {
+				throw new Error(`Tried to open/close item with ID ${containerId} but it could not be found`);
+			}
+			if ('isExpanded' in container) {
+				container.isExpanded = expand;
+				return editState;
+			}
+			throw new Error(`Tried to open/close item with ID ${containerId} but it was not a container`);
+		},
 		exitEditMode: () => null,
 	},
 });
@@ -180,6 +196,7 @@ export const {
 	updateAttribute,
 	updateAvatar,
 	updateBackground,
+	openOrCloseEditModeInventoryContainer,
 	updateCodeName,
 	updateCurrentBennies,
 	updateExtra,
@@ -189,6 +206,7 @@ export const {
 	updateOrigin,
 	updatePlayer,
 } = EditModeSlice.actions;
+
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export const selectLocations = (state: RootState) =>
 	state.editMode.extras

@@ -4,7 +4,8 @@ import { Extra } from '../../types';
 import Item from './extras-tree-play-item';
 import { openOrCloseInventoryContainer } from '../../data/user-slice';
 import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
+import { useMemo } from 'react';
+import { openOrCloseEditModeInventoryContainer } from '../../data/edit-mode-slice';
 
 const sortInventory = (a: TreeNodeInfo<Extra>, b: TreeNodeInfo<Extra>) => {
 	if (a.childNodes && !b.childNodes) return -1;
@@ -53,28 +54,44 @@ const convertFlatToTreeData = (extras: Extra[]): TreeNodeInfo<Extra>[] => {
 
 const ExtrasTreePlay = () => {
 	const dispatch = useDispatch();
-	const { character } = useCharacter();
-	const { inventory } = character;
+	const { character, characterToEdit } = useCharacter();
+	const { editMode, onNodeCollapse, onNodeExpand, char } = useMemo(() => {
+		const char = characterToEdit ?? character;
+		const editMode = Boolean(characterToEdit);
+		const folderToggle = editMode ? openOrCloseEditModeInventoryContainer : openOrCloseInventoryContainer;
+
+		const onNodeCollapse: TreeEventHandler<Extra> = inventory => {
+			dispatch(
+				folderToggle({
+					characterId: char.id,
+					containerId: inventory.nodeData.id,
+					expand: false,
+				})
+			);
+		};
+
+		const onNodeExpand: TreeEventHandler<Extra> = inventory => {
+			dispatch(
+				folderToggle({
+					characterId: char.id,
+					containerId: inventory.nodeData.id,
+					expand: true,
+				})
+			);
+		};
+
+		return { editMode, onNodeCollapse, onNodeExpand, char };
+	}, [character, characterToEdit, dispatch]);
+
+	const { inventory } = char;
 	const treeData = convertFlatToTreeData(inventory);
-	const onNodeCollapse: TreeEventHandler<Extra> = useCallback(inventory => {
-		dispatch(
-			openOrCloseInventoryContainer({
-				characterId: character.id,
-				containerId: inventory.nodeData.id,
-				expand: false,
-			})
-		);
-	}, []);
-	const onNodeExpand: TreeEventHandler<Extra> = useCallback(inventory => {
-		dispatch(
-			openOrCloseInventoryContainer({
-				characterId: character.id,
-				containerId: inventory.nodeData.id,
-				expand: true,
-			})
-		);
-	}, []);
-	return <Tree contents={treeData} onNodeExpand={onNodeExpand} onNodeCollapse={onNodeCollapse} />;
+
+	return (
+		<>
+			{editMode ? 'Edit mode!' : null}
+			<Tree contents={treeData} onNodeExpand={onNodeExpand} onNodeCollapse={onNodeCollapse} />
+		</>
+	);
 };
 
 export default ExtrasTreePlay;
