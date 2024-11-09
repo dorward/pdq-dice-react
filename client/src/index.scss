@@ -1,7 +1,6 @@
-@import '@blueprintjs/core/lib/scss/variables';
-@import 'styles/base';
-@import 'styles/mobile';
-@import 'styles/print';
+@use 'styles/base';
+@use 'styles/mobile';
+@use 'styles/print';
 
 .bp5-tree-node-content {
 	height: auto !important;
