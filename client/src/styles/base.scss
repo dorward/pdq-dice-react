@@ -418,8 +418,10 @@ svg.goo {
 	flex-wrap: wrap;
 }
 
-.bp5-tree-node-content {
-	.bp5-tree-node-icon {
-		width: 20px;
-	}
+.extra-tree-edit-name,
+.extra-tree-edit-location {
+	width: 275px;
+}
+span.padding {
+	flex: 1 1 auto;
 }

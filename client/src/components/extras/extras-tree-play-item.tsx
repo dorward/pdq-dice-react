@@ -43,18 +43,43 @@ const Item = ({ extra, editMode, containers }: ItemProps) => {
 	if (editMode) {
 		if (isContainer) {
 			return (
-				<span className="extra-tree-row edit-mode container">
-					<ul>
+				<div className="extra-tree-row edit-mode container">
+					<ControlGroup>
+						<InputGroup
+							className="extra-tree-edit-name"
+							id={`inventory-name-${id}`}
+							value={name}
+							onChange={e => {
+								const data = { id: extra.id, name: e.target.value };
+								dispatch(updateInventoryItem(data));
+							}}
+						/>
+						<HTMLSelect
+							className="extra-tree-edit-location"
+							value={location}
+							onChange={e => {
+								const data = { id: extra.id, location: e.target.value };
+								dispatch(updateInventoryItem(data));
+							}}>
+							<option key="top-level" label="🔝" value="" />;
+							{containers.map(container => {
+								// TODO guard against recursion!
+								return <option key={container.id} label={container.name} value={container.id} />;
+							})}
+						</HTMLSelect>
+						<span className="padding"></span>
+						{/* <ul>
 						<li>{name}</li>
 						<li>{location}</li>
 						<li>Container: {isContainer}</li>
-					</ul>
-				</span>
+					</ul> */}
+					</ControlGroup>
+				</div>
 			);
 		}
 		return (
-			<span className="extra-tree-row edit-mode">
-				<ControlGroup fill>
+			<div className="extra-tree-row edit-mode">
+				<ControlGroup>
 					<InputGroup
 						className="extra-tree-edit-name"
 						id={`inventory-name-${id}`}
@@ -72,6 +97,7 @@ const Item = ({ extra, editMode, containers }: ItemProps) => {
 							const data = { id: extra.id, location: e.target.value };
 							dispatch(updateInventoryItem(data));
 						}}>
+						<option key="top-level" label="🔝" value="" />;
 						{containers.map(container => {
 							// TODO guard against recursion!
 							return <option key={container.id} label={container.name} value={container.id} />;
@@ -105,7 +131,7 @@ const Item = ({ extra, editMode, containers }: ItemProps) => {
 						}}
 					/>
 				</ControlGroup>
-			</span>
+			</div>
 		);
 	}
 
