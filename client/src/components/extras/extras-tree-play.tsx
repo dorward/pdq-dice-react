@@ -18,13 +18,22 @@ const convertFlatToTreeData = (
 	editMode: boolean,
 	containers: ExtraContainer[]
 ): TreeNodeInfo<Extra>[] => {
-	// On the first pass we create TreeNodeInfo objects from the extras - these include rendered data so we can0t keep them in the data store
+	// On the first pass, we count how many items are in each container
+	const quantity = extras.reduce<Record<ExtraContainer['id'], number>>((a, c) => {
+		if (c.location) {
+			a[c.location] ??= 0;
+			a[c.location]++;
+		}
+		return a;
+	}, {});
+
+	// On the second pass we create TreeNodeInfo objects from the extras - these include rendered data so we can't keep them in the data store
 	const flat: TreeNodeInfo<Extra>[] = extras.map(extra => {
 		if (isExtraContainer(extra)) {
 			return {
 				id: extra.id,
 				key: extra.id,
-				label: <Item extra={extra} editMode={editMode} containers={containers} />,
+				label: <Item extra={extra} editMode={editMode} containers={containers} contents={quantity[extra.id] ?? 0} />,
 				nodeData: extra,
 				icon: extra.isExpanded ? 'folder-open' : 'folder-close',
 				childNodes: [],
@@ -41,7 +50,7 @@ const convertFlatToTreeData = (
 		};
 	});
 
-	// In the second pass we arrange the TreeNodeInfo objects into a hierarchy
+	// In the third pass we arrange the TreeNodeInfo objects into a hierarchy
 	const tree: TreeNodeInfo<Extra>[] = [];
 	flat.forEach(node => {
 		const { location } = node.nodeData;
@@ -49,7 +58,7 @@ const convertFlatToTreeData = (
 		container.push(node);
 	});
 
-	// In the third pass, we sort the child nodes of each section alphabetically but with containers first
+	// In the fourth pass, we sort the child nodes of each section alphabetically but with containers first
 	tree.sort(sortInventory);
 	flat.forEach(extra => extra.childNodes?.sort(sortInventory));
 

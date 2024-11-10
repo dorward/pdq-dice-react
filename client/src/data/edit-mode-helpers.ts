@@ -57,3 +57,12 @@ export const mutateCount = <T extends Counted>(array: T[], id: string, rawCount:
 	array[index] = { ...array[index], count };
 	return array;
 };
+
+export const mutateCapacity = <T extends Counted>(array: T[], id: string, rawCapacity: any): T[] => {
+	const index = array.findIndex(item => item.id === id);
+	if (index === -1) return array;
+	const numericCapacity = parseInt(rawCapacity, 10);
+	const capacity = '∞' === rawCapacity || isNaN(numericCapacity) ? '∞' : numericCapacity;
+	array[index] = { ...array[index], capacity };
+	return array;
+};
