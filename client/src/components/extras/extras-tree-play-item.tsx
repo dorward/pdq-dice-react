@@ -13,6 +13,12 @@ type ItemProps = {
 	containers: ExtraContainer[];
 };
 
+const findDescendants = (extra: ExtraContainer, containers: ExtraContainer[]): ExtraContainer[] => {
+	const children = containers.filter(possible => possible.location === extra.id);
+	const deeper = children.flatMap(child => findDescendants(child, containers));
+	return children.concat(deeper);
+};
+
 const Item = ({ extra, editMode, containers }: ItemProps) => {
 	const dispatch = useDispatch();
 	const selectedExtras = useSelector(selectSelected);
@@ -42,6 +48,7 @@ const Item = ({ extra, editMode, containers }: ItemProps) => {
 
 	if (editMode) {
 		if (isContainer) {
+			const descendants = [extra.id, ...findDescendants(extra, containers).map(extra => extra.id)];
 			return (
 				<div className="extra-tree-row edit-mode container">
 					<ControlGroup>
@@ -62,17 +69,13 @@ const Item = ({ extra, editMode, containers }: ItemProps) => {
 								dispatch(updateInventoryItem(data));
 							}}>
 							<option key="top-level" label="🔝" value="" />;
-							{containers.map(container => {
-								// TODO guard against recursion!
-								return <option key={container.id} label={container.name} value={container.id} />;
-							})}
+							{containers
+								.filter(container => !descendants.includes(container.id))
+								.map(container => {
+									// TODO guard against recursion!
+									return <option key={container.id} label={container.name} value={container.id} />;
+								})}
 						</HTMLSelect>
-						<span className="padding"></span>
-						{/* <ul>
-						<li>{name}</li>
-						<li>{location}</li>
-						<li>Container: {isContainer}</li>
-					</ul> */}
 					</ControlGroup>
 				</div>
 			);
