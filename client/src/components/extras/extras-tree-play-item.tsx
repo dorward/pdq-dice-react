@@ -6,11 +6,13 @@ import Count from './extras-tree-play-count';
 import { extraValues, extraCountValues as defaultExtraCountValues } from '../../types';
 import { useMemo } from 'react';
 import { updateInventoryItem } from '../../data/edit-mode-slice';
+import CapacityFlag from './capacity-flag';
 
 type ItemProps = {
 	extra: Extra;
 	editMode: boolean;
 	containers: ExtraContainer[];
+	contents?: number;
 };
 
 const findDescendants = (extra: ExtraContainer, containers: ExtraContainer[]): ExtraContainer[] => {
@@ -19,7 +21,7 @@ const findDescendants = (extra: ExtraContainer, containers: ExtraContainer[]): E
 	return children.concat(deeper);
 };
 
-const Item = ({ extra, editMode, containers }: ItemProps) => {
+const Item = ({ extra, editMode, containers, contents }: ItemProps) => {
 	const dispatch = useDispatch();
 	const selectedExtras = useSelector(selectSelected);
 	const checked = !!selectedExtras[extra.id];
@@ -75,6 +77,24 @@ const Item = ({ extra, editMode, containers }: ItemProps) => {
 									// TODO guard against recursion!
 									return <option key={container.id} label={container.name} value={container.id} />;
 								})}
+						</HTMLSelect>{' '}
+						<HTMLSelect
+							title="Maximum capacity"
+							className="extra-tree-edit-capacity"
+							value={extra.capacity}
+							onChange={e => {
+								const { value } = e.target;
+								const capacity: '∞' | number = value === '∞' ? value : parseInt(value, 10);
+								const data = { id: extra.id, capacity };
+								dispatch(updateInventoryItem(data));
+							}}>
+							<option key="top-level" label="∞" value="∞" />;
+							{new Array(21)
+								.fill(true)
+								.map((_value, index) => {
+									return <option key={index} label={`${index}`} value={index} />;
+								})
+								.slice(1)}
 						</HTMLSelect>
 					</ControlGroup>
 				</div>
@@ -138,10 +158,12 @@ const Item = ({ extra, editMode, containers }: ItemProps) => {
 		);
 	}
 
+	const capacityNode = `Contains ${contents} out of ${'capacity' in extra ? extra.capacity : 'xxx'}`;
+
 	if (count === null) {
 		return (
-			<span className="extra-tree-row">
-				<span>{name} </span>
+			<span className="extra-tree-row" title={capacityNode}>
+				<span>{name} </span> <CapacityFlag contents={contents} extra={extra} />
 			</span>
 		);
 	}
@@ -149,7 +171,9 @@ const Item = ({ extra, editMode, containers }: ItemProps) => {
 	if (count === 0) {
 		return (
 			<span className="extra-tree-row">
-				<span>{name} ×0</span> <span className="bonus">{bonus}</span>
+				<span>{name} ×0</span>
+				<CapacityFlag contents={contents} extra={extra} />
+				<span className="bonus">{bonus}</span>
 			</span>
 		);
 	}
@@ -161,6 +185,7 @@ const Item = ({ extra, editMode, containers }: ItemProps) => {
 				</Checkbox>{' '}
 				<Count extra={extra} />
 			</span>{' '}
+			<CapacityFlag contents={contents} extra={extra} />
 			<span className="bonus">{bonus}</span>
 		</span>
 	);

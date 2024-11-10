@@ -45,7 +45,7 @@ export type ExtraContainer = ExtraBase & {
 	isExpanded: boolean;
 	count: null;
 	value: null;
-	capacity: 0;
+	capacity: '∞' | number;
 };
 
 export type Extra = ExtraItem | ExtraContainer;
@@ -171,6 +171,11 @@ export type ExtraUpdateCount = {
 	count: (typeof extraCountValues)[number];
 };
 
+export type ExtraUpdateCapacity = {
+	id: string;
+	capacity: ExtraContainer['capacity'];
+};
+
 export type SelectExtra = {
 	id: string;
 };
@@ -181,7 +186,12 @@ export type ExtraPartialMove = {
 	count: number | '∞';
 };
 
-export type ExtraUpdate = ExtraUpdateName | ExtraUpdateValue | ExtraUpdateLocation | ExtraUpdateCount;
+export type ExtraUpdate =
+	| ExtraUpdateName
+	| ExtraUpdateValue
+	| ExtraUpdateLocation
+	| ExtraUpdateCount
+	| ExtraUpdateCapacity;
 
 export const isAttributeUpdateValue = (data: AttributeUpdate): data is AttributeUpdateValue => 'value' in data;
 

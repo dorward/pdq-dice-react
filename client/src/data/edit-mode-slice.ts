@@ -18,7 +18,7 @@ import {
 	isExtraUpdateValue,
 	isExtraUpdateCount,
 } from '../types/guard';
-import { mutateLocation, mutateName, mutateValue, mutateCount, mutateNotes } from './edit-mode-helpers';
+import { mutateLocation, mutateName, mutateValue, mutateCount, mutateNotes, mutateCapacity } from './edit-mode-helpers';
 import { v4 as uuidv4 } from 'uuid';
 
 export type SelectedExtra = {
@@ -102,6 +102,8 @@ const EditModeSlice = createSlice({
 				state.inventory = mutateLocation(state.inventory, action.payload.id, action.payload.location);
 			} else if (isExtraUpdateCount(action.payload)) {
 				state.inventory = mutateCount(state.inventory, action.payload.id, action.payload.count);
+			} else if ('capacity' in action.payload) {
+				state.inventory = mutateCapacity(state.inventory, action.payload.id, action.payload.capacity);
 			} else {
 				state.inventory = mutateName(state.inventory, action.payload.id, action.payload.name);
 			}
