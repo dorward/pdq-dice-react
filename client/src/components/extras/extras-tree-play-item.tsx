@@ -53,7 +53,7 @@ const Item = ({ extra, editMode, containers, contents }: ItemProps) => {
 			const descendants = [extra.id, ...findDescendants(extra, containers).map(extra => extra.id)];
 			return (
 				<div className="extra-tree-row edit-mode container">
-					<ControlGroup>
+					<ControlGroup fill>
 						<InputGroup
 							className="extra-tree-edit-name"
 							id={`inventory-name-${id}`}
@@ -96,6 +96,19 @@ const Item = ({ extra, editMode, containers, contents }: ItemProps) => {
 								})
 								.slice(1)}
 						</HTMLSelect>
+						<HTMLSelect
+							title={contents > 0 ? 'Containers with contents cannot be deleted' : 'Delete this container'}
+							className="extra-tree-edit-bonus delete-feature-for-container"
+							value="Keep"
+							options={['Keep', contents > 0 ? 'Has Contents' : 'DEL']}
+							onChange={e => {
+								const value = e.target.value;
+								if (value === 'DEL') {
+									const data = { id: extra.id, value } as ExtraUpdateValue;
+									dispatch(updateInventoryItem(data));
+								}
+							}}
+						/>
 					</ControlGroup>
 				</div>
 			);
