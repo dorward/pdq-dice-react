@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
+import { Character } from '../types';
 
 type WhoamiState = {
 	userId?: string;
@@ -32,5 +33,10 @@ export const { setUserCreds, setCharacterId } = WhoamiSlice.actions;
 export const selectWhoami = (state: RootState) => state.whoami;
 export const selectCharacterId = (state: RootState) =>
 	state.whoami.characterId || state.user?.user?.characters?.filter(char => !char.hidden)?.[0]?.id;
+export const selectCharacter = (state: RootState): Character => {
+	const id = state.whoami.characterId;
+	if (id) return state.user?.user?.characters?.filter(char => char.id === id)[0];
+	return state.user?.user?.characters?.filter(char => !char.hidden)?.[0];
+};
 
 export default WhoamiSlice.reducer;

@@ -2,7 +2,7 @@ import { Button, Card, ControlGroup, HTMLSelect, InputGroup, MenuItem, Overlay, 
 import { ItemRenderer, Suggest2 } from '@blueprintjs/select';
 import type { ExtraUpdateValue } from '../../types';
 import type { RowProps } from './types';
-import { updateExtra, selectLocations, promptExtraCount, moveSomeExtra } from '../../data/edit-mode-slice';
+import { updateInventoryItem, selectLocations, promptExtraCount, moveSomeExtra } from '../../data/edit-mode-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useMemo, useState } from 'react';
 import { extraValues, extraCountValues as defaultExtraCountValues } from '../../types';
@@ -66,7 +66,7 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 						value={extra.name}
 						onChange={e => {
 							const data = { id: extra.id, name: e.target.value };
-							dispatch(updateExtra(data));
+							dispatch(updateInventoryItem(data));
 						}}
 					/>
 					<Suggest2
@@ -124,7 +124,7 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 							}
 
 							const data = { id: extra.id, count };
-							dispatch(updateExtra(data));
+							dispatch(updateInventoryItem(data));
 						}}
 					/>
 				</ControlGroup>
@@ -136,7 +136,7 @@ const ExtraEditRow = ({ extra }: RowProps) => {
 					onChange={e => {
 						const value = e.target.value;
 						const data = { id: extra.id, value: value === 'DEL' ? value : +value } as ExtraUpdateValue;
-						dispatch(updateExtra(data));
+						dispatch(updateInventoryItem(data));
 					}}
 				/>
 			</td>

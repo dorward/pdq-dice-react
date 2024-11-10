@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Card, Overlay, Intent, InputGroup } from '@blueprintjs/core';
 import { useDispatch } from 'react-redux';
-import { updateExtra, promptExtraCount } from '../data/edit-mode-slice';
+import { updateInventoryItem, promptExtraCount } from '../data/edit-mode-slice';
 
 type Props = { id: string };
 
@@ -11,7 +11,7 @@ const InventorySizeModal = ({ id }: Props) => {
 
 	const save = async () => {
 		const data = { id, count: +count };
-		dispatch(updateExtra(data));
+		dispatch(updateInventoryItem(data));
 		dispatch(promptExtraCount({ id: undefined }));
 	};
 

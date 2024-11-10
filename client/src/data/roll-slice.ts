@@ -13,7 +13,7 @@ type RollSlice = {
 const initialRollState: RollSlice = {
 	description: '',
 	selected: {},
-	circumstance: { id: 'circumstance', name: '', value: 0, location: '' },
+	circumstance: { id: 'circumstance', name: '', value: 0, location: '', count: '∞' },
 	usedBenny: false,
 };
 

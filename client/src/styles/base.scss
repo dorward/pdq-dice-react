@@ -1,6 +1,8 @@
+@use '@blueprintjs/core/lib/scss/variables' as bp;
+
 html,
 body {
-	background: $blue1;
+	background: bp.$blue1;
 }
 
 #root {
@@ -85,7 +87,7 @@ main > .bp3-tabs > .bp3-tab-list {
 }
 
 main.tiny {
-	border: solid $pt-divider-black 1px;
+	border: solid bp.$pt-divider-black 1px;
 	margin: 0 auto;
 	padding: 1ex;
 	box-shadow: 12px 12px 6px 6px rgba(0, 0, 0, 0.5);
@@ -132,15 +134,22 @@ table.extras {
 	}
 
 	tr {
+		vertical-align: middle;
+
 		&.wounded {
-			background: $red5;
+			background: bp.$red5;
 		}
 
 		&:nth-child(even) {
-			background: $light-gray3;
+			background: bp.$light-gray3;
 			&.wounded {
-				background: $red4;
+				background: bp.$red4;
 			}
+		}
+
+		label {
+			margin-top: 5px;
+			margin-bottom: 5px;
 		}
 	}
 
@@ -178,6 +187,33 @@ table.extras {
 			}
 		}
 	}
+}
+
+span.extra-tree-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 20px;
+}
+
+.extra-tree-edit-name {
+	width: 30%;
+	box-sizing: border-box;
+}
+
+.extra-tree-edit-location {
+	width: 30%;
+	box-sizing: border-box;
+}
+
+.extra-tree-edit-count {
+	width: 10%;
+	box-sizing: border-box;
+}
+
+.extra-tree-edit-bonus {
+	width: 10%;
+	box-sizing: border-box;
 }
 
 table.extras {
@@ -288,7 +324,7 @@ button.add {
 		margin-top: 4rem;
 	}
 	label {
-		color: $dark-gray1;
+		color: bp.$dark-gray1;
 		font-weight: 600;
 	}
 }
@@ -380,4 +416,12 @@ svg.goo {
 
 .character-sheet-sections > [role='tablist'] {
 	flex-wrap: wrap;
+}
+
+.extra-tree-edit-name,
+.extra-tree-edit-location {
+	width: 275px;
+}
+span.padding {
+	flex: 1 1 auto;
 }

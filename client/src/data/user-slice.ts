@@ -1,5 +1,5 @@
 import saveToServer from '../api/save-to-server';
-import { Character, Sheet, User } from '../types';
+import { Character, Sheet, User, isExtraContainer } from '../types';
 import blankCharacter from './blankCharacter';
 import cleanUser, { cleanCharacter } from './clean-user';
 import { RootState } from './redux-store';
@@ -92,17 +92,34 @@ const userSlice = createSlice({
 			saveToServer(JSON.parse(JSON.stringify(user)));
 			return state;
 		},
-		spendExtra: (state, action: PayloadAction<ExtraPath>) => {
+		spendInventoryItem: (state, action: PayloadAction<ExtraPath>) => {
 			const { user } = state;
 			const { characterId, extraId } = action.payload;
 			const character = user.characters.find(c => c.id === characterId);
-			const extra = character.extras.find(extra => extra.id === extraId);
-			if (extra && extra.count !== '∞' && extra.count > 0) {
-				extra.count = extra.count - 1;
+			const item = character.inventory.find(searchItem => searchItem.id === extraId);
+			if (item && item.count !== '∞' && item.count > 0) {
+				item.count = item.count - 1;
 				saveToServer(JSON.parse(JSON.stringify(user)));
 			}
 			return state;
 		},
+		openOrCloseInventoryContainer: (
+			state,
+			action: PayloadAction<{ characterId: string; containerId: string; expand: boolean }>
+		) => {
+			const { characterId, containerId, expand } = action.payload;
+			const character = state.user.characters.find(c => c.id === characterId);
+			const container = character.inventory.find(inv => inv.id === containerId);
+			if (!container) {
+				throw new Error(`Tried to open/close item with ID ${containerId} but it could not be found`);
+			}
+			if (isExtraContainer(container)) {
+				container.isExpanded = expand;
+				return state;
+			}
+			throw new Error(`Tried to open/close item with ID ${containerId} but it was not a container`);
+		},
+
 		unset: () => null,
 	},
 });
@@ -116,9 +133,10 @@ export const {
 	set,
 	setUserError,
 	spendBenny,
-	spendExtra,
+	spendInventoryItem,
 	toggleCharacterVisibility,
 	unset,
+	openOrCloseInventoryContainer,
 	updateCharacter,
 } = userSlice.actions;
 

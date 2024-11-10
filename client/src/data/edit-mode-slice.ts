@@ -1,4 +1,14 @@
-import { AttributeUpdate, Character, ExtraUpdate, SelectExtra, ExtraPartialMove, Extra } from '../types';
+import {
+	AttributeUpdate,
+	Character,
+	ExtraUpdate,
+	SelectExtra,
+	ExtraPartialMove,
+	Extra,
+	isExtraContainer,
+	ExtraContainer,
+	ExtraItem,
+} from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
 import {
@@ -21,12 +31,28 @@ type EditModeState = null | (Character & SelectedExtra);
 
 const initialEditModeState: EditModeState = null;
 
-const createExtra = () => ({
-	id: uuidv4(),
-	name: '__New extra',
-	value: 0,
-	location: '',
-});
+const createInventoryItem = (isContainer: boolean): Extra => {
+	if (isContainer) {
+		const container: ExtraContainer = {
+			id: uuidv4(),
+			name: '__New container',
+			location: '',
+			isExpanded: true,
+			count: null,
+			value: null,
+			capacity: 0,
+		};
+		return container;
+	}
+	const extra: ExtraItem = {
+		id: uuidv4(),
+		name: '__New extra',
+		value: 0,
+		location: '',
+		count: INF,
+	};
+	return extra;
+};
 
 const EditModeSlice = createSlice({
 	name: 'EditMode',
@@ -64,20 +90,20 @@ const EditModeSlice = createSlice({
 			];
 			return state;
 		},
-		updateExtra: (state: EditModeState, action: PayloadAction<ExtraUpdate>) => {
+		updateInventoryItem: (state: EditModeState, action: PayloadAction<ExtraUpdate>) => {
 			if (isExtraUpdateValue(action.payload)) {
 				const { value } = action.payload;
 				if (value === 'DEL') {
-					state.extras = state.extras.filter(q => q.id !== action.payload.id);
+					state.inventory = state.inventory.filter(q => q.id !== action.payload.id);
 				} else {
-					state.extras = mutateValue(state.extras, action.payload.id, action.payload.value);
+					state.inventory = mutateValue(state.inventory, action.payload.id, action.payload.value);
 				}
 			} else if (isExtraUpdateLocation(action.payload)) {
-				state.extras = mutateLocation(state.extras, action.payload.id, action.payload.location);
+				state.inventory = mutateLocation(state.inventory, action.payload.id, action.payload.location);
 			} else if (isExtraUpdateCount(action.payload)) {
-				state.extras = mutateCount(state.extras, action.payload.id, action.payload.count);
+				state.inventory = mutateCount(state.inventory, action.payload.id, action.payload.count);
 			} else {
-				state.extras = mutateName(state.extras, action.payload.id, action.payload.name);
+				state.inventory = mutateName(state.inventory, action.payload.id, action.payload.name);
 			}
 			return state;
 		},
@@ -125,8 +151,8 @@ const EditModeSlice = createSlice({
 			const { id } = action.payload;
 			return { ...state, selectedExtraId: id };
 		},
-		addExtra: (state: EditModeState) => {
-			state.extras = [...state.extras, createExtra()];
+		addInventoryItem: (state: EditModeState, action: PayloadAction<{ isContainer: boolean }>) => {
+			state.inventory = [...state.inventory, createInventoryItem(action.payload.isContainer)];
 			return state;
 		},
 		updateAvatar: (state: EditModeState, action: PayloadAction<string>) => {
@@ -165,13 +191,29 @@ const EditModeSlice = createSlice({
 			state.background = action.payload;
 			return state;
 		},
+		openOrCloseEditModeInventoryContainer: (
+			editState,
+			action: PayloadAction<{ characterId: string; containerId: string; expand: boolean }>
+		) => {
+			const { containerId, expand } = action.payload;
+			const container = editState.inventory.find(inv => inv.id === containerId);
+			console.log('openOrCloseEditModeInventoryContainer ', { containerId, expand, container });
+			if (!container) {
+				throw new Error(`Tried to open/close item with ID ${containerId} but it could not be found`);
+			}
+			if (isExtraContainer(container)) {
+				container.isExpanded = expand;
+				return editState;
+			}
+			throw new Error(`Tried to open/close item with ID ${containerId} but it was not a container`);
+		},
 		exitEditMode: () => null,
 	},
 });
 
 export const {
 	addAttribute,
-	addExtra,
+	addInventoryItem,
 	editCharacter,
 	exitEditMode,
 	moveSomeExtra,
@@ -179,15 +221,17 @@ export const {
 	updateAttribute,
 	updateAvatar,
 	updateBackground,
+	openOrCloseEditModeInventoryContainer,
 	updateCodeName,
 	updateCurrentBennies,
-	updateExtra,
+	updateInventoryItem,
 	updateMaximumBennies,
 	updateMotivation,
 	updateName,
 	updateOrigin,
 	updatePlayer,
 } = EditModeSlice.actions;
+
 export const selectEditingCharacter = (state: RootState) => state.editMode;
 export const selectLocations = (state: RootState) =>
 	state.editMode.extras

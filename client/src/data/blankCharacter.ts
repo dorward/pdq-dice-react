@@ -11,6 +11,7 @@ const blankCharacter = (id: string): Character => {
 		bennies: { current: 3, max: '3' },
 		qualities: [],
 		extras: [],
+		inventory: [],
 		powers: [],
 		codeName: '',
 	};

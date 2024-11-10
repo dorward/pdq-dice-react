@@ -10,7 +10,8 @@ export type Character = {
 	avatar?: Avatar;
 	bennies: Bennies;
 	codeName: string;
-	extras: Extra[];
+	extras: Extra[]; // deprecated
+	inventory: Extra[];
 	hidden?: boolean;
 	id: string;
 	motivation: string;
@@ -29,13 +30,27 @@ export type Bennies = {
 
 export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'PR' | 'GONE';
 
-export type Extra = {
+export type ExtraBase = {
 	name: string;
 	id: string;
-	value: number;
 	location: string;
-	count?: '∞' | number;
 };
+
+export type ExtraItem = ExtraBase & {
+	count: '∞' | number;
+	value: number;
+};
+
+export type ExtraContainer = ExtraBase & {
+	isExpanded: boolean;
+	count: null;
+	value: null;
+	capacity: 0;
+};
+
+export type Extra = ExtraItem | ExtraContainer;
+
+export const isExtraContainer = (extra: Extra): extra is ExtraContainer => 'isExpanded' in extra;
 
 export type ExtraSortOrder = 'name' | 'location';
 
@@ -143,7 +158,7 @@ export type ExtraUpdateName = {
 
 export type ExtraUpdateValue = {
 	id: string;
-	value: typeof extraValues[number];
+	value: (typeof extraValues)[number];
 };
 
 export type ExtraUpdateLocation = {
@@ -153,7 +168,7 @@ export type ExtraUpdateLocation = {
 
 export type ExtraUpdateCount = {
 	id: string;
-	count: typeof extraCountValues[number];
+	count: (typeof extraCountValues)[number];
 };
 
 export type SelectExtra = {
