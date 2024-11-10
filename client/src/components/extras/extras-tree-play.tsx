@@ -19,12 +19,12 @@ const convertFlatToTreeData = (
 	containers: ExtraContainer[]
 ): TreeNodeInfo<Extra>[] => {
 	// On the first pass, we count how many items are in each container
-	const quantity = extras.reduce<Record<ExtraContainer['id'], number>>((a, c) => {
-		if (c.location) {
-			a[c.location] ??= 0;
-			a[c.location]++;
+	const quantity = extras.reduce<Record<ExtraContainer['id'], number>>((counterRecord, extra) => {
+		if (extra.location) {
+			counterRecord[extra.location] ??= 0;
+			counterRecord[extra.location] += typeof extra.count === 'number' ? extra.count : 1;
 		}
-		return a;
+		return counterRecord;
 	}, {});
 
 	// On the second pass we create TreeNodeInfo objects from the extras - these include rendered data so we can't keep them in the data store
