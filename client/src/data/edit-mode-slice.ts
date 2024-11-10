@@ -6,6 +6,8 @@ import {
 	ExtraPartialMove,
 	Extra,
 	isExtraContainer,
+	ExtraContainer,
+	ExtraItem,
 } from '../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './redux-store';
@@ -29,13 +31,28 @@ type EditModeState = null | (Character & SelectedExtra);
 
 const initialEditModeState: EditModeState = null;
 
-const createExtra = (): Extra => ({
-	id: uuidv4(),
-	name: '__New extra',
-	value: 0,
-	location: '',
-	count: '∞',
-});
+const createInventoryItem = (isContainer: boolean): Extra => {
+	if (isContainer) {
+		const container: ExtraContainer = {
+			id: uuidv4(),
+			name: '__New container',
+			location: '',
+			isExpanded: true,
+			count: null,
+			value: null,
+			capacity: 0,
+		};
+		return container;
+	}
+	const extra: ExtraItem = {
+		id: uuidv4(),
+		name: '__New extra',
+		value: 0,
+		location: '',
+		count: INF,
+	};
+	return extra;
+};
 
 const EditModeSlice = createSlice({
 	name: 'EditMode',
@@ -134,8 +151,8 @@ const EditModeSlice = createSlice({
 			const { id } = action.payload;
 			return { ...state, selectedExtraId: id };
 		},
-		addExtra: (state: EditModeState) => {
-			state.extras = [...state.extras, createExtra()];
+		addInventoryItem: (state: EditModeState, action: PayloadAction<{ isContainer: boolean }>) => {
+			state.inventory = [...state.inventory, createInventoryItem(action.payload.isContainer)];
 			return state;
 		},
 		updateAvatar: (state: EditModeState, action: PayloadAction<string>) => {
@@ -196,7 +213,7 @@ const EditModeSlice = createSlice({
 
 export const {
 	addAttribute,
-	addExtra,
+	addInventoryItem,
 	editCharacter,
 	exitEditMode,
 	moveSomeExtra,

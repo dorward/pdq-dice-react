@@ -1,6 +1,8 @@
+// Deprecated
+
 import { Button, HTMLTable, Icon, Radio, RadioGroup } from '@blueprintjs/core';
 import { Props } from './types';
-import { addExtra } from '../../data/edit-mode-slice';
+import { addInventoryItem } from '../../data/edit-mode-slice';
 import { useDispatch } from 'react-redux';
 import ExtrasEditRow from './extra-edit-row';
 import sortExtras from './sort-extras';
@@ -19,7 +21,7 @@ const ExtrasEdit = ({ extras }: Props) => {
 						<th>
 							<div className="header">
 								<span className="label">Extras</span>
-								<Button className="add" onClick={() => dispatch(addExtra())}>
+								<Button className="add" onClick={() => dispatch(addInventoryItem())}>
 									<Icon icon="add" title="Add Extra" htmlTitle="Add Extra" />
 								</Button>
 								<RadioGroup

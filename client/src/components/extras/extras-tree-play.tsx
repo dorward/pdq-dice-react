@@ -5,6 +5,7 @@ import Item from './extras-tree-play-item';
 import { openOrCloseInventoryContainer } from '../../data/user-slice';
 import { useDispatch } from 'react-redux';
 import { openOrCloseEditModeInventoryContainer } from '../../data/edit-mode-slice';
+import { addInventoryItem } from '../../data/edit-mode-slice';
 
 const sortInventory = (a: TreeNodeInfo<Extra>, b: TreeNodeInfo<Extra>) => {
 	if (a.childNodes && !b.childNodes) return -1;
@@ -90,18 +91,10 @@ const ExtrasTreePlay = () => {
 		<>
 			{editMode ? (
 				<div>
-					<Button
-						className="add"
-						onClick={() => {
-							console.log('TODO');
-						}}>
+					<Button className="add" onClick={() => dispatch(addInventoryItem({ isContainer: false }))}>
 						<Icon icon="add" title="Add Item" htmlTitle="Add Item" />
 					</Button>
-					<Button
-						className="add"
-						onClick={() => {
-							console.log('TODO');
-						}}>
+					<Button className="add" onClick={() => dispatch(addInventoryItem({ isContainer: true }))}>
 						<Icon icon="folder-new" title="Add Container" htmlTitle="Add Container" />
 					</Button>
 				</div>
