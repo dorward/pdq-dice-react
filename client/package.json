@@ -37,7 +37,7 @@
 		"unique-names-generator": "^4.7.1",
 		"use-file-picker": "^2.1.1",
 		"use-local-storage": "^3.0.0",
-		"uuid": "^11.0.2"
+		"uuid": "^11.0.3"
 	},
 	"devDependencies": {
 		"@jest/globals": "^29.6.4",
