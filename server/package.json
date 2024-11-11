@@ -35,6 +35,6 @@
 		"express-rate-limit": "^7.1.5",
 		"indefinite": "^2.5.1",
 		"pg": "^8.11.3",
-		"uuid": "^11.0.2"
+		"uuid": "^11.0.3"
 	}
 }
