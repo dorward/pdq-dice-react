@@ -18,7 +18,7 @@ export const avatarPaths: Base = ['AVATAR_URL', 'AVATAR_PATH'].reduce(
     {} as Partial<Base>,
 ) as Base;
 
-const splitDataUrl = /^data:.+\/(.+);base64,(.*)$/;
+const splitDataUrl = /^data:[a-zA-Z]+\/([a-zA-Z]+);base64,(.*)$/;
 
 const saveDataUrl = async (image: string) => {
     const matches = image.match(splitDataUrl);
