@@ -2,426 +2,427 @@
 
 html,
 body {
-	background: bp.$blue1;
+    background: bp.$blue1;
 }
 
 #root {
-	background: white;
-	box-sizing: border-box;
-	max-width: 800px;
-	min-height: 100vh;
-	margin: 0 0 0 2em;
-	padding: 0 1em;
-	> header {
-		display: flex;
-		> h1 {
-			flex: 1 0 auto;
-		}
-		> .userMenu {
-			flex: 0 1 auto;
-			> button {
-				> span {
-					display: flex;
-					> span {
-						padding-right: 3px;
-					}
-				}
-			}
-		}
-	}
+    background: white;
+    box-sizing: border-box;
+    max-width: 800px;
+    min-height: 100vh;
+    margin: 0 0 0 2em;
+    padding: 0 1em;
+    > header {
+        display: flex;
+        > h1 {
+            flex: 1 0 auto;
+        }
+        > .userMenu {
+            flex: 0 1 auto;
+            > button {
+                > span {
+                    display: flex;
+                    > span {
+                        padding-right: 3px;
+                    }
+                }
+            }
+        }
+    }
 
-	.character-tabs > [role='tablist'] {
-		flex-wrap: wrap;
-	}
+    .character-tabs > [role='tablist'] {
+        flex-wrap: wrap;
+    }
 }
 
 @media only screen and (max-width: 840px) {
-	#root {
-		margin: 0 2px;
-		max-width: 100%;
-	}
+    #root {
+        margin: 0 2px;
+        max-width: 100%;
+    }
 }
 
 main > .bp3-tabs > .bp3-tab-list {
-	flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
 .results {
-	width: 400px;
-	min-height: 22em;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	table {
-		margin: auto;
-	}
-	.bp3-button-group {
-		margin-top: 2em;
-		justify-content: center;
-	}
+    width: 400px;
+    min-height: 22em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    table {
+        margin: auto;
+    }
+    .bp3-button-group {
+        margin-top: 2em;
+        justify-content: center;
+    }
 }
 
 .tiny {
-	margin: 3px auto;
-	max-width: 30em;
+    margin: 3px auto;
+    max-width: 30em;
 }
 
 .center {
-	display: block;
-	margin: auto;
+    display: block;
+    margin: auto;
 }
 
 .h-center {
-	margin: auto;
+    margin: auto;
 }
 
 .v-center {
-	height: 100vh;
-	padding: 0;
-	margin: auto;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	width: 100%;
+    height: 100vh;
+    padding: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
 }
 
 main.tiny {
-	border: solid bp.$pt-divider-black 1px;
-	margin: 0 auto;
-	padding: 1ex;
-	box-shadow: 12px 12px 6px 6px rgba(0, 0, 0, 0.5);
+    border: solid bp.$pt-divider-black 1px;
+    margin: 0 auto;
+    padding: 1ex;
+    box-shadow: 12px 12px 6px 6px rgba(0, 0, 0, 0.5);
 
-	h1 {
-		text-align: center;
-	}
+    h1 {
+        text-align: center;
+    }
 }
 
 .character-menu {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 2em;
 }
 
 .character-sheet {
-	padding-bottom: 1ex;
+    padding-bottom: 1ex;
 }
 
 .power-description {
-	margin: 6px 0;
-	page-break-inside: avoid;
+    margin: 6px 0;
+    page-break-inside: avoid;
 }
 
 table.attributes,
 table.extras {
-	table-layout: fixed;
-	width: 100%;
-	margin: 1em 0;
+    table-layout: fixed;
+    width: 100%;
+    margin: 1em 0;
 
-	.health-column {
-		display: none;
-	}
+    .health-column {
+        display: none;
+    }
 
-	.bp3-form-group {
-		margin: 0;
-		input {
-			background: inherit;
-		}
-	}
+    .bp3-form-group {
+        margin: 0;
+        input {
+            background: inherit;
+        }
+    }
 
-	.bp4-control {
-		margin-bottom: 0;
-	}
+    .bp4-control {
+        margin-bottom: 0;
+    }
 
-	tr {
-		vertical-align: middle;
+    tr {
+        vertical-align: middle;
 
-		&.wounded {
-			background: bp.$red5;
-		}
+        &.wounded {
+            background: bp.$red5;
+        }
 
-		&:nth-child(even) {
-			background: bp.$light-gray3;
-			&.wounded {
-				background: bp.$red4;
-			}
-		}
+        &:nth-child(even) {
+            background: bp.$light-gray3;
+            &.wounded {
+                background: bp.$red4;
+            }
+        }
 
-		label {
-			margin-top: 5px;
-			margin-bottom: 5px;
-		}
-	}
+        label {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    }
 
-	th,
-	td {
-		padding: 4px;
-		vertical-align: middle;
-	}
-	td + td,
-	th + th {
-		width: 50px;
-		text-align: center;
-	}
+    th,
+    td {
+        padding: 4px;
+        vertical-align: middle;
+    }
+    td + td,
+    th + th {
+        width: 50px;
+        text-align: center;
+    }
 
-	&.edit {
-		td + td,
-		th + th {
-			width: 100px;
-			text-align: center;
-		}
+    &.edit {
+        td + td,
+        th + th {
+            width: 100px;
+            text-align: center;
+        }
 
-		.header {
-			display: flex;
-			align-items: center;
-			vertical-align: middle;
-			min-height: 33px;
-			.add {
-				margin-left: 1em;
-			}
-			.sort-by-menu {
-				margin-left: 1em;
-			}
-			.bonus {
-				margin-left: auto;
-			}
-		}
-	}
+        .header {
+            display: flex;
+            align-items: center;
+            vertical-align: middle;
+            min-height: 33px;
+            .add {
+                margin-left: 1em;
+            }
+            .sort-by-menu {
+                margin-left: 1em;
+            }
+            .bonus {
+                margin-left: auto;
+            }
+        }
+    }
 }
 
 span.extra-tree-row {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	min-height: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 20px;
 }
 
 .extra-tree-edit-name {
-	width: 30%;
-	box-sizing: border-box;
+    width: 30%;
+    box-sizing: border-box;
 }
 
 .extra-tree-edit-location {
-	width: 30%;
-	box-sizing: border-box;
+    width: 30%;
+    box-sizing: border-box;
 }
 
 .extra-tree-edit-count {
-	width: 10%;
-	box-sizing: border-box;
+    width: 10%;
+    box-sizing: border-box;
 }
 
 .extra-tree-edit-bonus {
-	width: 10%;
-	box-sizing: border-box;
+    width: 10%;
+    box-sizing: border-box;
 }
 
 table.extras {
-	td + td,
-	th + th {
-		width: 90px;
-		text-align: center;
-	}
+    td + td,
+    th + th {
+        width: 90px;
+        text-align: center;
+    }
 }
 
 button.add {
-	margin-left: 1em;
+    margin-left: 1em;
 }
 
 .character-header {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
-	.header-group {
-		display: none;
-	}
-	#group-code-name,
-	#group-bennies {
-		display: block;
-		> span {
-			display: inline-block;
-		}
-		.field {
-			margin-left: 3px;
-		}
-	}
-	#group-code-name {
-		.label {
-			display: none;
-		}
-	}
-	#group-bennies {
-		margin-left: auto;
-	}
-	img {
-		border: solid black 1px;
-		width: 60px;
-		height: 60px;
-	}
-	.description {
-		display: none;
-	}
+    .header-group {
+        display: none;
+    }
+    #group-code-name,
+    #group-bennies {
+        display: block;
+        > span {
+            display: inline-block;
+        }
+        .field {
+            margin-left: 3px;
+        }
+    }
+    #group-code-name {
+        .label {
+            display: none;
+        }
+    }
+    #group-bennies {
+        margin-left: auto;
+    }
+    img {
+        border: solid black 1px;
+        width: 60px;
+        height: 60px;
+    }
+    .description {
+        display: none;
+    }
 }
 
 .character-id-editor {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin-bottom: 15px;
-	img {
-		width: 60px;
-		height: 60px;
-	}
-	button {
-		position: relative;
-		padding: 0;
-		.icon-container {
-			position: absolute;
-			z-index: 1;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background: rgba(0, 0, 0, 0.25);
-		}
-		&.loading {
-			svg {
-				width: 60px;
-				height: 60px;
-			}
-			.bp3-button-text > svg {
-				position: absolute;
-				left: -500px;
-			}
-		}
-	}
-	.bp3-form-group {
-		margin: 0 0 0 12px;
-		flex-grow: 1;
-	}
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 15px;
+    img {
+        width: 60px;
+        height: 60px;
+    }
+    button {
+        position: relative;
+        padding: 0;
+        .icon-container {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.25);
+        }
+        &.loading {
+            svg {
+                width: 60px;
+                height: 60px;
+            }
+            .bp3-button-text > svg {
+                position: absolute;
+                left: -500px;
+            }
+        }
+    }
+    .bp3-form-group {
+        margin: 0 0 0 12px;
+        flex-grow: 1;
+    }
 }
 
 .bonus-name {
-	.health {
-		display: none;
-	}
-	.bp3-control {
-		margin-bottom: 0;
-	}
+    .health {
+        display: none;
+    }
+    .bp3-control {
+        margin-bottom: 0;
+    }
 }
 .bennies-edit {
-	display: flex;
-	justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .controls {
-	padding: 4px;
-	&.footer {
-		margin-top: 4rem;
-	}
-	label {
-		color: bp.$dark-gray1;
-		font-weight: 600;
-	}
+    padding: 4px;
+    &.footer {
+        margin-top: 4rem;
+    }
+    label {
+        color: bp.$dark-gray1;
+        font-weight: 600;
+    }
 }
 
 tr.location-heading th {
-	text-align: center;
+    text-align: center;
 }
 
 .bp3-button-group:not(.bp3-minimal) > .bp3-button:not(:last-child).skill-check {
-	margin-right: 1em;
+    margin-right: 1em;
 }
 
 .avatar-editor-scale {
-	margin-top: 15px;
+    margin-top: 15px;
 }
 
 svg.goo {
-	margin: auto;
-	display: block;
+    margin: auto;
+    display: block;
 
-	* {
-		transform-origin: 50%;
-	}
+    * {
+        transform-origin: 50%;
+    }
 
-	g {
-		animation: left 8s linear infinite;
-	}
+    g {
+        animation: left 8s linear infinite;
+    }
 
-	circle:first-child {
-		animation: right 2s linear infinite;
-	}
+    circle:first-child {
+        animation: right 2s linear infinite;
+    }
 
-	@keyframes left {
-		100% {
-			transform: rotate(-360deg);
-		}
-	}
+    @keyframes left {
+        100% {
+            transform: rotate(-360deg);
+        }
+    }
 
-	@keyframes right {
-		100% {
-			transform: rotate(360deg);
-		}
-	}
+    @keyframes right {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 }
 
 .remoteInventory {
-	display: none;
-	&.isOpen {
-		display: table-row;
-	}
+    display: none;
+    &.isOpen {
+        display: table-row;
+    }
 }
 
 .character-background {
-	margin-bottom: 1em;
-	.background-editor-content {
-		display: flex;
-		.help {
-			width: 25em;
-			flex: 0 0 25em;
-			margin-right: 1em;
-			ul {
-				margin: 0;
-				padding-left: 1em;
-			}
-		}
-		.text {
-			flex: 1 1 auto;
-			textarea {
-				height: 30em;
-				width: 100%;
-			}
-		}
-	}
+    margin-bottom: 1em;
+    .background-editor-content {
+        display: flex;
+        .help {
+            width: 25em;
+            flex: 0 0 25em;
+            margin-right: 1em;
+            ul {
+                margin: 0;
+                padding-left: 1em;
+            }
+        }
+        .text {
+            flex: 1 1 auto;
+            textarea {
+                height: 30em;
+                width: 100%;
+            }
+        }
+    }
 }
 
 .bennyButton {
-	margin-left: auto;
+    margin-left: auto;
 }
 
 .custom-skill-check {
-	padding-top: 1em;
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	> :not(:first-child) {
-		margin-left: 2rem;
-	}
+    padding-top: 1em;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    > :not(:first-child) {
+        margin-left: 2rem;
+    }
 }
 
 .character-sheet-sections > [role='tablist'] {
-	flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
 .extra-tree-edit-name,
 .extra-tree-edit-location {
-	width: 275px;
+    width: 275px;
 }
 span.padding {
-	flex: 1 1 auto;
+    flex: 1 1 auto;
 }
