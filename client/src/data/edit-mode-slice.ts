@@ -160,20 +160,10 @@ const EditModeSlice = createSlice({
         moveSomeExtra: (state: EditModeState, action: PayloadAction<ExtraPartialMove>) => {
             const { payload } = action;
 
-            console.log('payload', JSON.stringify(payload, null, 2));
-
-            console.log('state', JSON.stringify(state.inventory, null, 2));
-
             // Find the elements we are dealing with
             const from = state.inventory.find((extra) => extra.id === payload.id);
             const change = payload.count;
             const movingAll = [from.count, INF].includes(change);
-
-            console.log('from, change, movingAll', {
-                from: JSON.stringify(from, null, 2),
-                change,
-                movingAll,
-            });
 
             // Look for an identical item to merge it with
             let to = state.inventory.find(
@@ -188,11 +178,8 @@ const EditModeSlice = createSlice({
                 return state;
             }
 
-            console.log('to', JSON.stringify(to, null, 2));
-
             // Is this a straight move?
             if (movingAll && !to) {
-                console.log('1. Straight move');
                 from.location = payload.location;
                 return state;
             }
@@ -211,18 +198,16 @@ const EditModeSlice = createSlice({
             // Calculate how those two elements are going to change
             if (movingAll) {
                 // This is a merge
-                console.log('2. Merge');
                 if (change === INF) {
                     to.count = INF;
                 } else if (to.count !== INF) {
                     // Increase the to
                     to.count = to.count + change;
-                    // Delete the from
-                    state.inventory = state.inventory.filter((e) => e !== from);
                 }
+                // Delete the from
+                state.inventory = state.inventory.filter((e) => e !== from);
             } else {
                 // We are moving **some** of the items in the from box
-                console.log('3. Partial');
                 if (typeof to.count === 'number' && typeof change === 'number') {
                     to.count = to.count + change;
                 }
@@ -233,7 +218,6 @@ const EditModeSlice = createSlice({
             // Clean up
             [to, from].forEach((extra) => {
                 if (extra.count === 0) {
-                    console.log('Cleaning up ', JSON.stringify(extra));
                     state.inventory = state.inventory.filter((e) => e !== extra);
                 }
             });
@@ -300,11 +284,6 @@ const EditModeSlice = createSlice({
         ) => {
             const { containerId, expand } = action.payload;
             const container = editState.inventory.find((inv) => inv.id === containerId);
-            console.log('openOrCloseEditModeInventoryContainer ', {
-                containerId,
-                expand,
-                container,
-            });
             if (!container) {
                 throw new Error(
                     `Tried to open/close item with ID ${containerId} but it could not be found`,
