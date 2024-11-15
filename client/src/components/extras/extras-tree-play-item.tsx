@@ -50,13 +50,13 @@ const Item = ({ extra, editMode, containers, contents }: ItemProps) => {
         if (isContainer) {
             return (
                 <ExtraContainerEditor
-                    {...{ extra, containers, id, name, dispatch, location, contents }}
+                    {...{ extra, id, name, containers, dispatch, location, contents }}
                 />
             );
         }
         return (
             <ExtraItemEditor
-                {...{ extra, containers, id, name, dispatch, location, extraCountValues }}
+                {...{ extra, id, name, containers, dispatch, location, extraCountValues }}
             />
         );
     }

@@ -14,9 +14,7 @@ export type RowProps = {
 export type ExtraEditorProps = {
     containers: ExtraContainer[];
     dispatch: Dispatch;
-    id: string;
     location: string;
-    name: string;
 };
 
 export type ExtraContainerProps = ExtraEditorProps & {
