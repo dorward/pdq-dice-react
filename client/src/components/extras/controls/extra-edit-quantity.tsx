@@ -1,5 +1,5 @@
 import { HTMLSelect, Label } from '@blueprintjs/core';
-import { updateInventoryItem } from '../../../data/edit-mode-slice';
+import { promptExtraCount, updateInventoryItem } from '../../../data/edit-mode-slice';
 import {
     EditExtraItemProps,
     extraCountValues as defaultExtraCountValues,
@@ -31,7 +31,7 @@ const ExtraEditQuantity = ({ extra }: EditExtraItemProps) => {
         (e) => {
             const count = e.target.value;
             if (count === extraCountValues[extraCountValues.length - 1]) {
-                // dispatch(promptExtraCount({ id: extra.id }));
+                dispatch(promptExtraCount({ id: extra.id }));
                 return;
             }
 
