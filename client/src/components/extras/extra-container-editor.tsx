@@ -1,28 +1,18 @@
 import { InputGroup, HTMLSelect, Collapse, Label, Icon } from '@blueprintjs/core';
-import { ExtraContainer, ExtraUpdateValue } from '../../types';
+import { ExtraUpdateValue } from '../../types';
 import { useCallback, useState } from 'react';
 import { updateInventoryItem } from '../../data/edit-mode-slice';
-import type { Dispatch } from '@reduxjs/toolkit';
 import findDescendants from './find-descendants';
-
-type ExtraContainerProps = {
-    extra: ExtraContainer;
-    containers: ExtraContainer[];
-    id: string;
-    name: string;
-    dispatch: Dispatch;
-    location: string;
-    contents: number;
-};
+import { ExtraContainerProps } from './types';
 
 const ExtraContainerEditor = ({
-    extra,
     containers,
-    id,
-    name,
-    dispatch,
-    location,
     contents,
+    dispatch,
+    extra,
+    id,
+    location,
+    name,
 }: ExtraContainerProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = useCallback(() => setIsOpen((open) => !open), []);

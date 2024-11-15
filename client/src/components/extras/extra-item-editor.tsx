@@ -1,19 +1,9 @@
 import { InputGroup, HTMLSelect, Icon, Collapse, Label } from '@blueprintjs/core';
-import { ExtraContainer, ExtraItem, ExtraUpdateValue } from '../../types';
+import { ExtraUpdateValue } from '../../types';
 import { updateInventoryItem } from '../../data/edit-mode-slice';
-import type { Dispatch } from '@reduxjs/toolkit';
 import { extraValues } from '../../types';
 import { useCallback, useState } from 'react';
-
-type ExtraItemProps = {
-    containers: ExtraContainer[];
-    dispatch: Dispatch;
-    extra: ExtraItem;
-    extraCountValues: (string | number)[];
-    id: string;
-    location: string;
-    name: string;
-};
+import { ExtraItemProps } from './types';
 
 const ExtraItemEditor = ({
     containers,
