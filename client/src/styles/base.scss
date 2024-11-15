@@ -217,6 +217,80 @@ span.extra-tree-row {
     box-sizing: border-box;
 }
 
+.bp5-tree-node-content:has(.extra-tree-row.edit-mode) {
+    align-items: flex-start;
+
+    > .bp5-icon-chevron-right {
+        margin-top: 0px;
+    }
+
+    > .bp5-tree-node-icon {
+        margin-top: 5px;
+    }
+}
+.extra-tree-row.edit-mode {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .extra-tree-edit-name {
+        flex: 1 1 90%;
+    }
+
+    .extra-tree-edit-menu-toggle {
+        flex: 0 1 16px;
+    }
+
+    .extended-menu {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        > .bp5-collapse-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bp5-label {
+            display: flex;
+            margin: 0;
+            > :first-child {
+                flex: 0 0 30%;
+            }
+            > :not(:first-child) {
+                flex: 1 1 auto;
+            }
+        }
+    }
+    @media only screen and (min-width: 560px) {
+        flex-wrap: nowrap;
+        align-items: flex-end;
+
+        .extra-tree-edit-name {
+            flex: 1 1 auto;
+        }
+
+        .extra-tree-edit-menu-toggle {
+            display: none;
+        }
+
+        .extended-menu {
+            display: contents;
+
+            > .bp5-collapse-body {
+                display: contents;
+            }
+
+            .bp5-label {
+                display: contents;
+                > :first-child {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
 table.extras {
     td + td,
     th + th {
@@ -425,4 +499,9 @@ svg.goo {
 }
 span.padding {
     flex: 1 1 auto;
+}
+
+.bp5-tree-node-content {
+    height: auto;
+    min-height: 30px;
 }
