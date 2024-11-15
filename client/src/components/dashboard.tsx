@@ -1,4 +1,4 @@
-import { Callout, H1, Intent } from '@blueprintjs/core';
+import { Callout, H1, Intent, OverlaysProvider } from '@blueprintjs/core';
 import { Navigate } from 'react-router-dom';
 import { User } from '../types';
 import { selectUser } from '../data/user-slice';
@@ -9,41 +9,41 @@ import Results from './results';
 import UserMenu from './user-menu';
 
 const Dashboard = () => {
-	const { userTag, nickname, avatar } = useSelector(selectUser) as User;
+    const { userTag, nickname, avatar } = useSelector(selectUser) as User;
 
-	return (
-		<>
-			<header>
-				<H1>PDQ Dice</H1>
-				<UserMenu {...{ userTag, nickname, avatar }} />
-			</header>
-			<main>
-				<Characters />
-			</main>
-			<Results />
-		</>
-	);
+    return (
+        <OverlaysProvider>
+            <header>
+                <H1>PDQ Dice</H1>
+                <UserMenu {...{ userTag, nickname, avatar }} />
+            </header>
+            <main>
+                <Characters />
+            </main>
+            <Results />
+        </OverlaysProvider>
+    );
 };
 
 const ErrorCheckingDashboard = () => {
-	const user = useSelector(selectUser);
+    const user = useSelector(selectUser);
 
-	if (user instanceof Error) {
-		return (
-			<main className="tiny">
-				<H1>PDQ Dice</H1>
-				<Callout intent={Intent.WARNING} title="Something went wrong">
-					<p>{user.message}</p>
-				</Callout>
-			</main>
-		);
-	}
+    if (user instanceof Error) {
+        return (
+            <main className="tiny">
+                <H1>PDQ Dice</H1>
+                <Callout intent={Intent.WARNING} title="Something went wrong">
+                    <p>{user.message}</p>
+                </Callout>
+            </main>
+        );
+    }
 
-	if (user) {
-		return <Dashboard />;
-	}
+    if (user) {
+        return <Dashboard />;
+    }
 
-	return <Navigate to="/" />;
+    return <Navigate to="/" />;
 };
 
 export default ErrorCheckingDashboard;
