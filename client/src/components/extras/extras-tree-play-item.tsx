@@ -38,11 +38,9 @@ const Item = ({ extra, editMode, containers, contents }: ItemProps) => {
         return <ExtraItemEditor {...{ extra, id, name, containers, dispatch, location }} />;
     }
 
-    const capacityNode = `Contains ${contents} out of ${'capacity' in extra ? extra.capacity : 'xxx'}`;
-
     if (count === null) {
         return (
-            <span className="extra-tree-row" title={capacityNode}>
+            <span className="extra-tree-row">
                 <span>{name} </span> <CapacityFlag contents={contents} extra={extra} />
             </span>
         );
