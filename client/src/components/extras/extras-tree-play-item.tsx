@@ -1,13 +1,13 @@
-import { Checkbox, ControlGroup, InputGroup, HTMLSelect } from '@blueprintjs/core';
-import { Extra, ExtraContainer, ExtraUpdateValue, isExtraContainer } from '../../types';
+import { Checkbox } from '@blueprintjs/core';
+import { Extra, ExtraContainer, isExtraContainer } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSelected, toggleSelected } from '../../data/roll-slice';
 import Count from './extras-tree-play-count';
-import { extraValues, extraCountValues as defaultExtraCountValues } from '../../types';
+import { extraCountValues as defaultExtraCountValues } from '../../types';
 import { useMemo } from 'react';
-import { updateInventoryItem } from '../../data/edit-mode-slice';
 import CapacityFlag from './capacity-flag';
 import ExtraContainerEditor from './extra-container-editor';
+import ExtraItemEditor from './extra-item-editor';
 
 type ItemProps = {
     extra: Extra;
@@ -55,69 +55,9 @@ const Item = ({ extra, editMode, containers, contents }: ItemProps) => {
             );
         }
         return (
-            <div className="extra-tree-row edit-mode">
-                <ControlGroup vertical>
-                    <InputGroup
-                        className="extra-tree-edit-name"
-                        id={`inventory-name-${id}`}
-                        value={name}
-                        onChange={(e) => {
-                            const data = { id: extra.id, name: e.target.value };
-                            dispatch(updateInventoryItem(data));
-                        }}
-                    />
-                    <HTMLSelect
-                        className="extra-tree-edit-location"
-                        value={location}
-                        onChange={(e) => {
-                            const data = { id: extra.id, location: e.target.value };
-                            dispatch(updateInventoryItem(data));
-                        }}
-                    >
-                        <option key="top-level" label="🔝" value="" />;
-                        {containers.map((container) => {
-                            // TODO guard against recursion!
-                            return (
-                                <option
-                                    key={container.id}
-                                    label={container.name}
-                                    value={container.id}
-                                />
-                            );
-                        })}
-                    </HTMLSelect>
-
-                    <HTMLSelect
-                        className="extra-tree-edit-count"
-                        value={extra.count ?? '∞'}
-                        options={extraCountValues}
-                        onChange={(e) => {
-                            const count = e.target.value;
-                            if (count === extraCountValues[extraCountValues.length - 1]) {
-                                // dispatch(promptExtraCount({ id: extra.id }));
-                                return;
-                            }
-
-                            const data = { id: extra.id, count };
-                            dispatch(updateInventoryItem(data));
-                        }}
-                    />
-
-                    <HTMLSelect
-                        className="extra-tree-edit-bonus"
-                        value={extra.value}
-                        options={extraValues}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            const data = {
-                                id: extra.id,
-                                value: value === 'DEL' ? value : +value,
-                            } as ExtraUpdateValue;
-                            dispatch(updateInventoryItem(data));
-                        }}
-                    />
-                </ControlGroup>
-            </div>
+            <ExtraItemEditor
+                {...{ extra, containers, id, name, dispatch, location, extraCountValues }}
+            />
         );
     }
 
