@@ -1,13 +1,9 @@
 import { InputGroup } from '@blueprintjs/core';
 import { updateInventoryItem } from '../../../data/edit-mode-slice';
-import { Extra } from '../../../types';
+import type { EditExtraProps } from '../../../types';
 import { useDispatch } from 'react-redux';
 
-type ExtraEditNameProps = {
-    extra: Extra;
-};
-
-const ExtraEditName = ({ extra }: ExtraEditNameProps) => {
+const ExtraEditName = ({ extra }: EditExtraProps) => {
     const dispatch = useDispatch();
 
     return (

@@ -1,4 +1,3 @@
-import type { Dispatch } from '@reduxjs/toolkit';
 import { Extra, ExtraContainer, ExtraItem } from '../../types';
 
 export type Props = {
@@ -13,7 +12,6 @@ export type RowProps = {
 
 export type ExtraEditorProps = {
     containers: ExtraContainer[];
-    dispatch: Dispatch;
     location: string;
 };
 
@@ -24,5 +22,4 @@ export type ExtraContainerProps = ExtraEditorProps & {
 
 export type ExtraItemProps = ExtraEditorProps & {
     extra: ExtraItem;
-    extraCountValues: (string | number)[];
 };

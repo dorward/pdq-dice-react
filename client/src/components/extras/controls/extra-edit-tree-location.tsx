@@ -34,13 +34,9 @@ const ExtraEditLocation = ({ extra, containers }: ExtraEditLocationProps) => {
             >
                 <option key="top-level" label="🔝" value="" />;
                 {containers
-                    .filter((container) => !descendants.includes(container.id))
-                    .map((container) => (
-                        <option
-                            key={container.id}
-                            label={container.name}
-                            value={container.id}
-                        />
+                    .filter(({ id }) => !descendants.includes(id))
+                    .map(({ id, name }) => (
+                        <option key={id} label={name} value={id} />
                     ))}
             </HTMLSelect>
         </Label>

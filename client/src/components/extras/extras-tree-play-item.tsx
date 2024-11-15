@@ -3,8 +3,6 @@ import { Extra, ExtraContainer, isExtraContainer } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSelected, toggleSelected } from '../../data/roll-slice';
 import Count from './extras-tree-play-count';
-import { extraCountValues as defaultExtraCountValues } from '../../types';
-import { useMemo } from 'react';
 import CapacityFlag from './capacity-flag';
 import ExtraContainerEditor from './extra-container-editor';
 import ExtraItemEditor from './extra-item-editor';
@@ -25,23 +23,6 @@ const Item = ({ extra, editMode, containers, contents }: ItemProps) => {
     const { id, name, count, location } = extra;
     const isContainer = isExtraContainer(extra);
 
-    const extraCountValues = useMemo(() => {
-        if (!extra.count) {
-            return defaultExtraCountValues;
-        }
-        const included =
-            defaultExtraCountValues.findIndex(
-                (count) => count.toString() === extra.count.toString(),
-            ) >= 0;
-        if (included) {
-            return defaultExtraCountValues;
-        }
-        const customExtraCountValues = [...defaultExtraCountValues];
-        customExtraCountValues.pop();
-        customExtraCountValues.push(extra.count, 'Other');
-        return customExtraCountValues;
-    }, [extra.count]);
-
     const bonus = new Intl.NumberFormat('en-GB', {
         signDisplay: 'exceptZero',
     }).format(extra.value);
@@ -54,11 +35,7 @@ const Item = ({ extra, editMode, containers, contents }: ItemProps) => {
                 />
             );
         }
-        return (
-            <ExtraItemEditor
-                {...{ extra, id, name, containers, dispatch, location, extraCountValues }}
-            />
-        );
+        return <ExtraItemEditor {...{ extra, id, name, containers, dispatch, location }} />;
     }
 
     const capacityNode = `Contains ${contents} out of ${'capacity' in extra ? extra.capacity : 'xxx'}`;

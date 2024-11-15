@@ -48,6 +48,18 @@ export type ExtraContainer = ExtraBase & {
     capacity: '∞' | number;
 };
 
+export type EditExtraProps = {
+    extra: Extra;
+};
+
+export type EditExtraItemProps = {
+    extra: ExtraItem;
+};
+
+export type EditExtraContainerProps = {
+    extra: ExtraContainer;
+};
+
 export type Extra = ExtraItem | ExtraContainer;
 
 export const isExtraContainer = (extra: Extra): extra is ExtraContainer =>
