@@ -8,7 +8,7 @@ import saveDataUrl from '../util/saveDataUrl';
 
 const router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
     res.send('This is the entry point for api/user');
 });
 
