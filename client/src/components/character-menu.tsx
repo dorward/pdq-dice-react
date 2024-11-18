@@ -45,7 +45,6 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
                                     />
                                 </Menu>
                             }
-                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         >
                             <Button icon="download" title="Download" aria-label="Download" />
                         </Popover>
