@@ -17,7 +17,6 @@ const recordSkillRoll = async ({
             VALUES ($1, $2, $3, $4, $5, $6)
         `;
         const values = [characterName, description, bonus, roll, total, { bonuses }];
-        console.dir({ values });
         const result = await client.query(sql, values);
         return result.rows[0];
     } finally {
