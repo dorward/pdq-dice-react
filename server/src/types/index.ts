@@ -181,3 +181,22 @@ export const isExtraUpdateValue = (data: ExtraUpdate): data is ExtraUpdateValue 
 
 export const isExtraUpdateLocation = (data: ExtraUpdate): data is ExtraUpdateLocation =>
     'location' in data;
+
+export type StatisticsSkillCheck = {
+    id?: number;
+    eventTime?: Date;
+    characterName: string;
+    description: string;
+    bonus: number;
+    roll: number;
+    total: number;
+};
+
+export type StatisticsHighLow = {
+    id?: number;
+    eventTime?: Date;
+    characterName: string;
+    seekingHigh: boolean;
+    success: boolean;
+    roll: number;
+};

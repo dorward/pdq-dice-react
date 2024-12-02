@@ -7,6 +7,8 @@ import { SkillCheckRequestBody, SkillCheckResponseBody } from '../types';
 import authHelper from '../util/authHelper';
 import measureSuccess from '../util/measureSuccess';
 import roll from '../util/roll';
+import recordHighLowRoll from '../model/recordHighLowRoll';
+import recordSkillRoll from '../model/recordSkillRoll';
 
 const router = Router();
 
@@ -38,6 +40,27 @@ router.post('/:id/:code', async (req, res) => {
     const total = results.reduce((acc, cur) => {
         return acc + +cur.value;
     }, 0);
+
+    if (rollType === 'Luck roll') {
+        recordHighLowRoll({
+            characterName: rollFor.name,
+            seekingHigh: Boolean(high),
+            success: Boolean(success),
+            roll: diceResult.value,
+        });
+    } else if (rollType === 'Skill Check') {
+        recordSkillRoll({
+            characterName: rollFor.name,
+            description: `${description}`,
+            bonus: bonuses.reduce((acc, cur) => {
+                return acc + +cur.value;
+            }, 0),
+            roll: diceResult.value,
+            total,
+        });
+    } else {
+        console.log(`${rollType} is not recorded`);
+    }
 
     // Compile the result
     const response: SkillCheckResponseBody = {
