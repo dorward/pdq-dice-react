@@ -190,6 +190,7 @@ export type StatisticsSkillCheck = {
     bonus: number;
     roll: number;
     total: number;
+    bonuses: SkillCheckBonus[];
 };
 
 export type StatisticsHighLow = {

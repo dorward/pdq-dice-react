@@ -19,3 +19,6 @@ CREATE TABLE IF NOT EXISTS statistics_high_low (
         roll SMALLINT NOT NULL,
         CONSTRAINT statistics_high_low_pkey PRIMARY KEY (id)
 );
+
+ALTER TABLE statistics_skill_checks
+    ADD COLUMN IF NOT EXISTS bonuses jsonb;`

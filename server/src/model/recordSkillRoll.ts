@@ -5,6 +5,7 @@ const recordSkillRoll = async ({
     characterName,
     description,
     bonus,
+    bonuses,
     roll,
     total,
 }: StatisticsSkillCheck) => {
@@ -12,10 +13,11 @@ const recordSkillRoll = async ({
     try {
         const sql = `
             INSERT INTO statistics_skill_checks 
-            (characterName, description, bonus, roll, total) 
-            VALUES ($1, $2, $3, $4, $5)
+            (characterName, description, bonus, roll, total, bonuses) 
+            VALUES ($1, $2, $3, $4, $5, $6)
         `;
-        const values = [characterName, description, bonus, roll, total];
+        const values = [characterName, description, bonus, roll, total, { bonuses }];
+        console.dir({ values });
         const result = await client.query(sql, values);
         return result.rows[0];
     } finally {

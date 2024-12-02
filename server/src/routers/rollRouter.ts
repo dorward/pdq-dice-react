@@ -55,6 +55,7 @@ router.post('/:id/:code', async (req, res) => {
             bonus: bonuses.reduce((acc, cur) => {
                 return acc + +cur.value;
             }, 0),
+            bonuses,
             roll: diceResult.value,
             total,
         });
