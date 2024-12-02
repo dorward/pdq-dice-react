@@ -21,4 +21,14 @@ CREATE TABLE IF NOT EXISTS statistics_high_low (
 );
 
 ALTER TABLE statistics_skill_checks
-    ADD COLUMN IF NOT EXISTS bonuses jsonb;`
+    ADD COLUMN IF NOT EXISTS bonuses jsonb;
+
+ALTER TABLE statistics_skill_checks
+    ADD COLUMN IF NOT EXISTS userId VARCHAR(40) NOT NULL
+    CONSTRAINT statistics_skill_checks_userId REFERENCES user_data (userId)  
+    ON UPDATE CASCADE ON DELETE CASCADE;  
+
+    ALTER TABLE statistics_high_low
+    ADD COLUMN IF NOT EXISTS userId VARCHAR(40) NOT NULL
+    CONSTRAINT statistics_high_low_userId REFERENCES user_data (userId)  
+    ON UPDATE CASCADE ON DELETE CASCADE;  

@@ -184,6 +184,7 @@ export const isExtraUpdateLocation = (data: ExtraUpdate): data is ExtraUpdateLoc
 
 export type StatisticsSkillCheck = {
     id?: number;
+    userId: string;
     eventTime?: Date;
     characterName: string;
     description: string;
@@ -195,6 +196,7 @@ export type StatisticsSkillCheck = {
 
 export type StatisticsHighLow = {
     id?: number;
+    userId: string;
     eventTime?: Date;
     characterName: string;
     seekingHigh: boolean;

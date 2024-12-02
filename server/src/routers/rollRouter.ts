@@ -43,6 +43,7 @@ router.post('/:id/:code', async (req, res) => {
 
     if (rollType === 'Luck roll') {
         recordHighLowRoll({
+            userId: user.userId,
             characterName: rollFor.name,
             seekingHigh: Boolean(high),
             success: Boolean(success),
@@ -50,6 +51,7 @@ router.post('/:id/:code', async (req, res) => {
         });
     } else if (rollType === 'Skill Check') {
         recordSkillRoll({
+            userId: user.userId,
             characterName: rollFor.name,
             description: `${description}`,
             bonus: bonuses.reduce((acc, cur) => {
@@ -59,6 +61,13 @@ router.post('/:id/:code', async (req, res) => {
             roll: diceResult.value,
             total,
         });
+        // } else if (rollType === 'd6') {
+        //     recordSkillRoll({
+        //         userId: user.userId,
+        //         characterName: rollFor.name,
+        //         roll: diceResult.value,
+        //         total,
+        //     });
     } else {
         console.log(`${rollType} is not recorded`);
     }

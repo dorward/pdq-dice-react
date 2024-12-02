@@ -2,6 +2,7 @@ import pool from '../dbConfig/dbConnector';
 import { StatisticsHighLow } from '../types';
 
 const recordHighLowRoll = async ({
+    userId,
     characterName,
     seekingHigh,
     success,
@@ -11,10 +12,10 @@ const recordHighLowRoll = async ({
     try {
         const sql = `
             INSERT INTO statistics_high_low 
-            (characterName, seekingHigh, success, roll) 
-            VALUES ($1, $2, $3, $4) 
+            (userId, characterName, seekingHigh, success, roll) 
+            VALUES ($1, $2, $3, $4, $5) 
         `;
-        const values = [characterName, seekingHigh, success, roll];
+        const values = [userId, characterName, seekingHigh, success, roll];
         const result = await client.query(sql, values);
         return result.rows[0];
     } finally {
