@@ -18,7 +18,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"@blueprintjs/core": "^5.15.0",
+		"@blueprintjs/core": "^5.16.0",
 		"@blueprintjs/select": "^5.3.4",
 		"@reduxjs/toolkit": "^2.2.1",
 		"axios": "^1.6.7",
