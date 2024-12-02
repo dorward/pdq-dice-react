@@ -203,3 +203,11 @@ export type StatisticsHighLow = {
     success: boolean;
     roll: number;
 };
+
+export type StatisticsD6 = {
+    id?: number;
+    userId: string;
+    eventTime?: Date;
+    characterName: string;
+    roll: number;
+};

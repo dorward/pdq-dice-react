@@ -9,6 +9,7 @@ import measureSuccess from '../util/measureSuccess';
 import roll from '../util/roll';
 import recordHighLowRoll from '../model/recordHighLowRoll';
 import recordSkillRoll from '../model/recordSkillRoll';
+import recordD6Roll from '../model/recordD6Roll';
 
 const router = Router();
 
@@ -61,13 +62,12 @@ router.post('/:id/:code', async (req, res) => {
             roll: diceResult.value,
             total,
         });
-        // } else if (rollType === 'd6') {
-        //     recordSkillRoll({
-        //         userId: user.userId,
-        //         characterName: rollFor.name,
-        //         roll: diceResult.value,
-        //         total,
-        //     });
+    } else if (rollType === 'd6') {
+        recordD6Roll({
+            userId: user.userId,
+            characterName: rollFor.name,
+            roll: diceResult.value,
+        });
     } else {
         console.log(`${rollType} is not recorded`);
     }

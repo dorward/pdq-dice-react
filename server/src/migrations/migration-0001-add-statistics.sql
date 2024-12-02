@@ -32,3 +32,15 @@ ALTER TABLE statistics_skill_checks
     ADD COLUMN IF NOT EXISTS userId VARCHAR(40) NOT NULL
     CONSTRAINT statistics_high_low_userId REFERENCES user_data (userId)  
     ON UPDATE CASCADE ON DELETE CASCADE;  
+
+CREATE TABLE IF NOT EXISTS statistics_d6(
+        id SERIAL,
+        userId VARCHAR(40) NOT NULL,
+        eventTime TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+		characterName VARCHAR(80) NOT NULL,
+        roll SMALLINT NOT NULL,
+        CONSTRAINT statistics_d6_pkey PRIMARY KEY (id),
+        CONSTRAINT statistics_d6_userId FOREIGN KEY(userId) 
+            REFERENCES user_data (userId)  
+                ON UPDATE CASCADE ON DELETE CASCADE
+);
