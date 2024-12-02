@@ -7,6 +7,9 @@ import { SkillCheckRequestBody, SkillCheckResponseBody } from '../types';
 import authHelper from '../util/authHelper';
 import measureSuccess from '../util/measureSuccess';
 import roll from '../util/roll';
+import recordHighLowRoll from '../model/recordHighLowRoll';
+import recordSkillRoll from '../model/recordSkillRoll';
+import recordD6Roll from '../model/recordD6Roll';
 
 const router = Router();
 
@@ -29,6 +32,7 @@ router.post('/:id/:code', async (req, res) => {
         bonuses = [],
         description,
         rollType,
+        isUsingBenny,
     } = req.body as SkillCheckRequestBody;
     const diceResult = roll(dice);
     if (diceResult === E_UNSUPPORTED_DICE_FORMAT) return res.sendStatus(400);
@@ -38,6 +42,37 @@ router.post('/:id/:code', async (req, res) => {
     const total = results.reduce((acc, cur) => {
         return acc + +cur.value;
     }, 0);
+
+    if (rollType === 'Luck roll') {
+        recordHighLowRoll({
+            userId: user.userId,
+            characterName: rollFor.name,
+            seekingHigh: Boolean(high),
+            success: Boolean(success),
+            roll: diceResult.value,
+        });
+    } else if (rollType === 'Skill Check') {
+        recordSkillRoll({
+            userId: user.userId,
+            characterName: rollFor.name,
+            description: `${description}`,
+            bonus: bonuses.reduce((acc, cur) => {
+                return acc + +cur.value;
+            }, 0),
+            bonuses,
+            roll: diceResult.value,
+            benny: Boolean(isUsingBenny),
+            total,
+        });
+    } else if (rollType === 'd6') {
+        recordD6Roll({
+            userId: user.userId,
+            characterName: rollFor.name,
+            roll: diceResult.value,
+        });
+    } else {
+        console.log(`${rollType} is not recorded`);
+    }
 
     // Compile the result
     const response: SkillCheckResponseBody = {

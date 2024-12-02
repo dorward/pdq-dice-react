@@ -117,7 +117,7 @@ export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
     }
 
     const { auth, url } = getBase();
-    const data = { ...auth, ...body };
+    const data = { ...auth, ...body, isUsingBenny: Boolean(isUsingBenny) };
 
     try {
         const response = await axios.post(url, data);

@@ -1,13 +1,13 @@
 services:
   pdq-frontend:
     container_name: pdq-frontend
-    profiles: ['production']
+    profiles: ["production"]
     build:
       context: ./client/
-      dockerfile: '.Dockerfile.${ENVIRONMENT}'
+      dockerfile: ".Dockerfile.${ENVIRONMENT}"
     volumes:
-      - './client/:/app'
-      - '/app/node_modules'
+      - "./client/:/app"
+      - "/app/node_modules"
     ports:
       - 5100:5100
     environment:
@@ -20,24 +20,25 @@ services:
     restart: unless-stopped
   pdq-api:
     container_name: pdq-api
-    profiles: ['production', 'development']
+    profiles: ["production", "development"]
     build:
       context: ./server/
       dockerfile: .Dockerfile
     depends_on:
       - postgres16
+      - migrator
     environment:
-      API_URL: '${API_URL}'
-      FRONTEND_URL: '${FRONTEND_URL}'
-      DATABASE_URL: postgres://postgres:newPassword@postgres:5432/pdq
-      NODE_ENV: '${ENVIRONMENT}'
-      AVATAR_PATH: '${AVATAR_PATH}'
-      AVATAR_URL: '${AVATAR_URL}'
-      TOKEN: '${TOKEN}'
+      API_URL: "${API_URL}"
+      FRONTEND_URL: "${FRONTEND_URL}"
+      DATABASE_URL: postgres://postgres:newPassword@postgres16:5432/pdq
+      NODE_ENV: "${ENVIRONMENT}"
+      AVATAR_PATH: "${AVATAR_PATH}"
+      AVATAR_URL: "${AVATAR_URL}"
+      TOKEN: "${TOKEN}"
       PORT: 5101
       WAIT_HOSTS: postgres16:5432
     ports:
-      - '5101:5101'
+      - "5101:5101"
     volumes:
       - ./static:/var/pdq/static
       - ./server/src:/usr/app/src
@@ -46,7 +47,7 @@ services:
     restart: unless-stopped
   postgres16:
     container_name: postgres16
-    profiles: ['production', 'development']
+    profiles: ["production", "development"]
     image: postgres:16-alpine
     ports:
       - target: 5432
@@ -59,22 +60,17 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: newPassword
       POSTGRES_DB: pdq
-  # Legacy postgres for migration purposes only
-  postgres:
-    container_name: postgres
-    profiles: ['upgrade']
-    image: postgres:14.2-alpine
-    ports:
-      - target: 5432
-        published: 5102
-    volumes:
-      - ./postgresdata:/var/lib/postgresql/data
-      - ./server/src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
-    restart: never
+  migrator:
+    container_name: migrator
+    profiles: ["production", "development"]
+    image: postgres:16-alpine
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: newPassword
-      POSTGRES_DB: pdq
+      DATABASE_URL: postgres://postgres:newPassword@postgres16:5432/pdq
+    volumes:
+      - ./server/src/migrations/:/migrations/
+    command: bash /migrations/update.sh
+    depends_on:
+      - postgres16
 volumes:
   db-data:
   pgadmin-data:

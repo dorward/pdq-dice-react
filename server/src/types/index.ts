@@ -111,6 +111,7 @@ export type SkillCheckRequestBody = {
     bonuses?: SkillCheckBonus[];
     rollType: string;
     description?: string;
+    isUsingBenny?: boolean;
 };
 
 export type ExpendResponseBody = {
@@ -181,3 +182,34 @@ export const isExtraUpdateValue = (data: ExtraUpdate): data is ExtraUpdateValue 
 
 export const isExtraUpdateLocation = (data: ExtraUpdate): data is ExtraUpdateLocation =>
     'location' in data;
+
+export type StatisticsSkillCheck = {
+    id?: number;
+    userId: string;
+    eventTime?: Date;
+    characterName: string;
+    benny: boolean;
+    bonus: number;
+    bonuses: SkillCheckBonus[];
+    description: string;
+    roll: number;
+    total: number;
+};
+
+export type StatisticsHighLow = {
+    id?: number;
+    userId: string;
+    eventTime?: Date;
+    characterName: string;
+    roll: number;
+    seekingHigh: boolean;
+    success: boolean;
+};
+
+export type StatisticsD6 = {
+    id?: number;
+    userId: string;
+    eventTime?: Date;
+    characterName: string;
+    roll: number;
+};
