@@ -32,6 +32,7 @@ router.post('/:id/:code', async (req, res) => {
         bonuses = [],
         description,
         rollType,
+        isUsingBenny,
     } = req.body as SkillCheckRequestBody;
     const diceResult = roll(dice);
     if (diceResult === E_UNSUPPORTED_DICE_FORMAT) return res.sendStatus(400);
@@ -60,6 +61,7 @@ router.post('/:id/:code', async (req, res) => {
             }, 0),
             bonuses,
             roll: diceResult.value,
+            benny: Boolean(isUsingBenny),
             total,
         });
     } else if (rollType === 'd6') {

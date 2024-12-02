@@ -111,6 +111,7 @@ export type SkillCheckRequestBody = {
     bonuses?: SkillCheckBonus[];
     rollType: string;
     description?: string;
+    isUsingBenny?: boolean;
 };
 
 export type ExpendResponseBody = {
@@ -187,11 +188,12 @@ export type StatisticsSkillCheck = {
     userId: string;
     eventTime?: Date;
     characterName: string;
-    description: string;
+    benny: boolean;
     bonus: number;
+    bonuses: SkillCheckBonus[];
+    description: string;
     roll: number;
     total: number;
-    bonuses: SkillCheckBonus[];
 };
 
 export type StatisticsHighLow = {
@@ -199,9 +201,9 @@ export type StatisticsHighLow = {
     userId: string;
     eventTime?: Date;
     characterName: string;
+    roll: number;
     seekingHigh: boolean;
     success: boolean;
-    roll: number;
 };
 
 export type StatisticsD6 = {
