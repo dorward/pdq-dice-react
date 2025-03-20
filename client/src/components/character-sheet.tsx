@@ -94,9 +94,9 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                     />
                 </Tabs>
                 <div className="controls footer">
-                    <SkillCheck />
+                    {!characterToEdit && <SkillCheck />}
+                    {characterToEdit && <CharacterMenu character={character} />}
                 </div>
-                {characterToEdit && <CharacterMenu character={character} />}
             </div>
         </>
     );
