@@ -19,8 +19,6 @@ export const PrepareRoll = ({ character }: Props) => {
     const extra = useSelector(selectCircumstance);
     const circumstanceId = `input-${extra.id}`;
 
-    console.log({ extra });
-
     return (
         <div className="prepare-roll-panel">
             <FormGroup label="Description of roll" labelFor={descriptionId}>
