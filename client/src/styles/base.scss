@@ -311,6 +311,8 @@ button.add {
     .header-group {
         display: none;
     }
+
+    #group-character-name.noCodeName,
     #group-code-name,
     #group-bennies {
         display: block;
@@ -321,6 +323,8 @@ button.add {
             margin-left: 3px;
         }
     }
+
+    #group-character-name.noCodeName,
     #group-code-name {
         .label {
             display: none;

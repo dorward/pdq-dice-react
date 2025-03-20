@@ -9,7 +9,6 @@ import Extras from './extras';
 import PowerNotes from './power-notes';
 import SkillCheck from './skill-check';
 import { useSelector } from 'react-redux';
-import CharacterBackground from './character-background';
 import { PrepareRoll } from './prepare-roll/prepare-roll';
 
 type Props = {
@@ -35,33 +34,23 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
         <>
             <div className="character-sheet">
                 <CharacterMenu character={character} />
-                {!characterToEdit && (
-                    <CharacterHeader
-                        avatar={character.avatar}
-                        codeName={character.codeName}
-                        motivation={character.motivation}
-                        name={character.name}
-                        origin={character.origin}
-                        player={character.player}
+                <Tabs className="character-sheet-sections" size="large">
+                    <Tab
+                        id="character-core"
+                        title="Character"
+                        panel={
+                            <CharacterHeader
+                                avatar={character.avatar}
+                                codeName={character.codeName}
+                                motivation={character.motivation}
+                                name={character.name}
+                                origin={character.origin}
+                                player={character.player}
+                                background={character.background}
+                            />
+                        }
                     />
-                )}
-                <Tabs className="character-sheet-sections" large>
-                    {characterToEdit && (
-                        <Tab
-                            id="character-core"
-                            title="Character"
-                            panel={
-                                <CharacterHeader
-                                    avatar={character.avatar}
-                                    codeName={character.codeName}
-                                    motivation={character.motivation}
-                                    name={character.name}
-                                    origin={character.origin}
-                                    player={character.player}
-                                />
-                            }
-                        />
-                    )}
+
                     {!characterToEdit && (
                         <Tab
                             id="prepare-roll"
@@ -87,11 +76,6 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                             panel={!characterToEdit && <PowerNotes powers={character.powers} />}
                         />
                     )}
-                    <Tab
-                        id="character-background"
-                        title="Background"
-                        panel={<CharacterBackground background={character.background} />}
-                    />
                 </Tabs>
                 <div className="controls footer">
                     {!characterToEdit && <SkillCheck />}
