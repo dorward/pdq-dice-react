@@ -23,14 +23,14 @@ export type Character = {
     background?: string;
 };
 
-export type Bennies = {
+type Bennies = {
     max: string;
     current: number;
 };
 
 export type QualityValue = 'MSTR' | 'EXP' | 'GD' | 'AVG' | 'PR' | 'GONE';
 
-export type ExtraBase = {
+type ExtraBase = {
     name: string;
     id: string;
     location: string;
@@ -65,8 +65,6 @@ export type Extra = ExtraItem | ExtraContainer;
 export const isExtraContainer = (extra: Extra): extra is ExtraContainer =>
     'isExpanded' in extra;
 
-export type ExtraSortOrder = 'name' | 'location';
-
 export type Attribute = {
     name: string;
     id: string;
@@ -77,7 +75,7 @@ export type Attribute = {
 
 type Avatar = string | null;
 
-export type Channel = {
+type Channel = {
     id: string;
     name: string;
     guild: string;
@@ -94,10 +92,6 @@ export type User = {
     userTag: string;
 };
 
-export type Store = {
-    [discordId: string]: User;
-};
-
 export type PossibleUser = null | Error | User;
 
 export type UserData = {
@@ -107,23 +101,10 @@ export type UserData = {
     };
 };
 
-export type SelectedAttributes = Record<string, boolean>;
-
-type AttributeState = [SelectedAttributes, (x: SelectedAttributes) => void];
-
-export type RollData = {
-    attributeState: AttributeState;
-    description: string;
-};
-
-export type SkillCheckBonus = {
+type SkillCheckBonus = {
     name: string;
     value: number;
     rolls?: [number, number?];
-};
-
-export type DiceRollBonus = SkillCheckBonus & {
-    rolls: [number, number?];
 };
 
 export type SkillCheckRequestBody = {
@@ -134,20 +115,7 @@ export type SkillCheckRequestBody = {
     description?: string;
 };
 
-export type SkillCheckResponseBody = {
-    results: SkillCheckBonus[];
-    diceResult: SkillCheckBonus;
-    total: number;
-    success?: boolean;
-    description?: string;
-    rollType: string;
-    rollFor: {
-        name: string;
-        avatar: string;
-    };
-};
-
-export type AttributeUpdateName = {
+type AttributeUpdateName = {
     id: string;
     name: string;
 };
@@ -184,7 +152,7 @@ export type ExtraUpdateCount = {
     count: (typeof extraCountValues)[number];
 };
 
-export type ExtraUpdateCapacity = {
+type ExtraUpdateCapacity = {
     id: string;
     capacity: ExtraContainer['capacity'];
 };
@@ -206,11 +174,5 @@ export type ExtraUpdate =
     | ExtraUpdateCount
     | ExtraUpdateCapacity;
 
-export const isAttributeUpdateValue = (data: AttributeUpdate): data is AttributeUpdateValue =>
-    'value' in data;
-
 export const isExtraUpdateValue = (data: ExtraUpdate): data is ExtraUpdateValue =>
     'value' in data;
-
-export const isExtraUpdateLocation = (data: ExtraUpdate): data is ExtraUpdateLocation =>
-    'location' in data;
