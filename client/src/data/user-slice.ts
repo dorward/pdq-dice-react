@@ -36,7 +36,7 @@ const userSlice = createSlice({
                     'The YAML file could not be parsed. Something is probably wrong with the format of it.',
                 );
             const character = 'sheet' in parsed ? parsed.sheet : parsed;
-            cleanCharacter(character);
+            cleanCharacter(character, true);
             const user = state.user;
             const newUser: User = { ...user, characters: [...user.characters, character] };
             saveToServer(JSON.parse(JSON.stringify(newUser)));
