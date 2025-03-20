@@ -3,7 +3,7 @@ import { Character } from '../types';
 import { Tab, TabId, Tabs } from '@blueprintjs/core';
 import { selectEditingCharacter } from '../data/edit-mode-slice';
 import Attributes from './attributes';
-import CharacterHeader from './character-header';
+import CharacterInfo from './character-info';
 import CharacterMenu from './character-menu';
 import Extras from './extras';
 import PowerNotes from './power-notes';
@@ -61,7 +61,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                         id="character-core"
                         title="Character"
                         panel={
-                            <CharacterHeader
+                            <CharacterInfo
                                 avatar={character.avatar}
                                 codeName={character.codeName}
                                 motivation={character.motivation}

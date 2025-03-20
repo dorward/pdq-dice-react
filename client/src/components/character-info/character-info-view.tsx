@@ -3,15 +3,15 @@ import { selectBennies } from '../../data/user-slice';
 import { selectUser } from '../../data/user-slice';
 import { useSelector } from 'react-redux';
 import { User } from '../../types';
-import type { Props } from './character-header-types';
+import type { Props } from './character-info-types';
 
-const CharacterHeaderView = ({ avatar, player, name, origin, codeName, motivation }: Props) => {
+const CharacterInfoView = ({ avatar, player, name, origin, codeName, motivation }: Props) => {
     const { avatar: userAvatar } = useSelector(selectUser) as User;
     const bennies = useSelector(selectBennies) ?? { current: 0, max: 'unknown' };
     const avatarUrl = avatar ?? userAvatar;
 
     return (
-        <div className="character-header">
+        <div className="character-info">
             <img src={avatarUrl} alt="" className="avatar" />
             <div
                 className={`header-group ${codeName ? 'hasCodeName' : 'noCodeName'}`}
@@ -62,4 +62,4 @@ const CharacterHeaderView = ({ avatar, player, name, origin, codeName, motivatio
     );
 };
 
-export default CharacterHeaderView;
+export default CharacterInfoView;

@@ -1,17 +1,17 @@
 import { selectEditingCharacter } from '../../data/edit-mode-slice';
 import CharacterBackground from '../character-background';
-import CharacterHeaderEdit from './character-header-edit';
-import type { Props } from './character-header-types';
-import CharacterHeaderView from './character-header-view';
+import CharacterInfoEdit from './character-info-edit';
+import type { Props } from './character-info-types';
+import CharacterInfoView from './character-info-view';
 import { useSelector } from 'react-redux';
 
 type AllProps = Props & {
     background?: string;
 };
 
-const CharacterHeader = (props: AllProps) => {
+const CharacterInfo = (props: AllProps) => {
     const characterToEdit = useSelector(selectEditingCharacter);
-    const Top = characterToEdit ? CharacterHeaderEdit : CharacterHeaderView;
+    const Top = characterToEdit ? CharacterInfoEdit : CharacterInfoView;
     const { background, ...rest } = props;
     return (
         <>
@@ -21,4 +21,4 @@ const CharacterHeader = (props: AllProps) => {
     );
 };
 
-export default CharacterHeader;
+export default CharacterInfo;

@@ -14,14 +14,14 @@ import ImageModal from '../image-modal';
 import InventorySizeModal from '../inventory-size-modal';
 import Loading from '../loading';
 import UploadError from '../upload-error';
-import type { Props } from './character-header-types';
+import type { Props } from './character-info-types';
 import { FormGroup, Button, HTMLSelect, InputGroup, Icon, IconSize } from '@blueprintjs/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFilePicker } from 'use-file-picker';
 
 const bennyValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const CharacterHeaderEdit = ({ avatar }: Props) => {
+const CharacterInfoEdit = ({ avatar }: Props) => {
     const dispatch = useDispatch();
     const characterToEdit = useSelector(selectEditingCharacter);
     const { avatar: userAvatar } = useSelector(selectUser) as User;
@@ -48,7 +48,7 @@ const CharacterHeaderEdit = ({ avatar }: Props) => {
     const avatarUrl = uploadedImage ?? avatar ?? userAvatar;
 
     return (
-        <div className="character-header-editor">
+        <div className="character-info-editor">
             {uploadedImage && <ImageModal url={uploadedImage} clear={clear} />}
             {characterToEdit.selectedExtraId && (
                 <InventorySizeModal id={characterToEdit.selectedExtraId} />
@@ -141,4 +141,4 @@ const CharacterHeaderEdit = ({ avatar }: Props) => {
     );
 };
 
-export default CharacterHeaderEdit;
+export default CharacterInfoEdit;
