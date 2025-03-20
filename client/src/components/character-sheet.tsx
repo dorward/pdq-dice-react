@@ -1,6 +1,6 @@
 import { Props as AttributesProps } from './attributes/types';
 import { Character } from '../types';
-import { FormGroup, InputGroup, Tab, Tabs } from '@blueprintjs/core';
+import { Tab, TabId, Tabs } from '@blueprintjs/core';
 import { selectEditingCharacter } from '../data/edit-mode-slice';
 import Attributes from './attributes';
 import CharacterHeader from './character-header';
@@ -8,9 +8,9 @@ import CharacterMenu from './character-menu';
 import Extras from './extras';
 import PowerNotes from './power-notes';
 import SkillCheck from './skill-check';
-import { selectDescription, updateDescription } from '../data/roll-slice';
-import { useDispatch, useSelector } from 'react-redux';
-import CharacterBackground from './character-background';
+import { useSelector } from 'react-redux';
+import { PrepareRoll } from './prepare-roll/prepare-roll';
+import { useCallback, useEffect, useState } from 'react';
 
 type Props = {
     character: Character;
@@ -28,41 +28,56 @@ const powers = {
     isWoundable: false,
 };
 
+const viewOnlyTabs: TabId[] = ['prepare-roll', 'power-notes'];
+
 const CharacterSheet = ({ character: characterProp }: Props) => {
-    const dispatch = useDispatch();
     const characterToEdit = useSelector(selectEditingCharacter);
     const character = characterToEdit || characterProp;
-    const description = useSelector(selectDescription);
-    const descriptionId = `${character.id}-description`;
+    const [selectedTabId, setSelectedTabId] = useState<TabId>('character-core');
+
+    const onChange = useCallback((newTabId: TabId) => {
+        setSelectedTabId(newTabId);
+    }, []);
+
+    useEffect(() => {
+        setSelectedTabId((prev) => {
+            if (viewOnlyTabs.includes(prev) && characterToEdit) {
+                return 'character-core';
+            }
+        });
+    }, [!!characterToEdit]);
+
     return (
         <>
             <div className="character-sheet">
                 <CharacterMenu character={character} />
-                {!characterToEdit && (
-                    <CharacterHeader
-                        avatar={character.avatar}
-                        codeName={character.codeName}
-                        motivation={character.motivation}
-                        name={character.name}
-                        origin={character.origin}
-                        player={character.player}
+                <Tabs
+                    className="character-sheet-sections"
+                    size="large"
+                    selectedTabId={selectedTabId}
+                    onChange={onChange}
+                >
+                    <Tab
+                        id="character-core"
+                        title="Character"
+                        panel={
+                            <CharacterHeader
+                                avatar={character.avatar}
+                                codeName={character.codeName}
+                                motivation={character.motivation}
+                                name={character.name}
+                                origin={character.origin}
+                                player={character.player}
+                                background={character.background}
+                            />
+                        }
                     />
-                )}
-                <Tabs className="character-sheet-sections" large>
-                    {characterToEdit && (
+
+                    {!characterToEdit && (
                         <Tab
-                            id="character-core"
-                            title="Character"
-                            panel={
-                                <CharacterHeader
-                                    avatar={character.avatar}
-                                    codeName={character.codeName}
-                                    motivation={character.motivation}
-                                    name={character.name}
-                                    origin={character.origin}
-                                    player={character.player}
-                                />
-                            }
+                            id="prepare-roll"
+                            title="Prepare Roll"
+                            panel={<PrepareRoll character={character} />}
                         />
                     )}
                     <Tab
@@ -83,28 +98,11 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                             panel={!characterToEdit && <PowerNotes powers={character.powers} />}
                         />
                     )}
-                    <Tab
-                        id="character-background"
-                        title="Background"
-                        panel={<CharacterBackground background={character.background} />}
-                    />
                 </Tabs>
-                {!characterToEdit && (
-                    <div className="controls footer">
-                        <FormGroup label="Description of roll" labelFor={descriptionId}>
-                            <InputGroup
-                                placeholder="What action are you rolling?"
-                                id={descriptionId}
-                                value={description}
-                                onChange={(e) =>
-                                    dispatch(updateDescription(e.currentTarget.value))
-                                }
-                            />
-                        </FormGroup>
-                        <SkillCheck />
-                    </div>
-                )}
-                {characterToEdit && <CharacterMenu character={character} />}
+                <div className="controls footer">
+                    {!characterToEdit && <SkillCheck />}
+                    {characterToEdit && <CharacterMenu character={character} />}
+                </div>
             </div>
         </>
     );

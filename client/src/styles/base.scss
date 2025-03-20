@@ -12,8 +12,11 @@ body {
     min-height: 100vh;
     margin: 0 0 0 2em;
     padding: 0 1em;
+    display: flex;
+    flex-direction: column;
     > header {
         display: flex;
+        flex: 0 0 auto;
         > h1 {
             flex: 1 0 auto;
         }
@@ -30,8 +33,43 @@ body {
         }
     }
 
-    .character-tabs > [role='tablist'] {
-        flex-wrap: wrap;
+    main {
+        display: flex;
+        flex: 1 1 auto;
+    }
+
+    .character-tabs {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+
+        > [role='tablist'] {
+            flex-wrap: wrap;
+            flex: 0 0 auto;
+        }
+
+        > .bp5-tab-panel {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            .character-sheet {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+
+                > .character-menu {
+                    flex: 0 0 auto;
+                }
+
+                > .character-sheet-sections {
+                    flex: 1 1 auto;
+                }
+
+                > .controls {
+                    flex: 0 0 auto;
+                }
+            }
+        }
     }
 }
 
@@ -311,6 +349,8 @@ button.add {
     .header-group {
         display: none;
     }
+
+    #group-character-name.noCodeName,
     #group-code-name,
     #group-bennies {
         display: block;
@@ -321,6 +361,8 @@ button.add {
             margin-left: 3px;
         }
     }
+
+    #group-character-name.noCodeName,
     #group-code-name {
         .label {
             display: none;
