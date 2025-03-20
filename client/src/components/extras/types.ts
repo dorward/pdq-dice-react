@@ -1,16 +1,6 @@
-import { Extra, ExtraContainer, ExtraItem } from '../../types';
+import { ExtraContainer, ExtraItem } from '../../types';
 
-export type Props = {
-    extras: Extra[];
-};
-
-export type RowProps = {
-    extra: Extra;
-    isOpen?: boolean;
-    remoteInventory?: boolean;
-};
-
-export type ExtraEditorProps = {
+type ExtraEditorProps = {
     containers: ExtraContainer[];
     location: string;
 };
