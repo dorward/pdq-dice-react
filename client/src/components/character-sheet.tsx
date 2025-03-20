@@ -1,6 +1,6 @@
 import { Props as AttributesProps } from './attributes/types';
 import { Character } from '../types';
-import { Tab, Tabs } from '@blueprintjs/core';
+import { Tab, TabId, Tabs } from '@blueprintjs/core';
 import { selectEditingCharacter } from '../data/edit-mode-slice';
 import Attributes from './attributes';
 import CharacterHeader from './character-header';
@@ -10,6 +10,7 @@ import PowerNotes from './power-notes';
 import SkillCheck from './skill-check';
 import { useSelector } from 'react-redux';
 import { PrepareRoll } from './prepare-roll/prepare-roll';
+import { useCallback, useEffect, useState } from 'react';
 
 type Props = {
     character: Character;
@@ -27,14 +28,35 @@ const powers = {
     isWoundable: false,
 };
 
+const viewOnlyTabs: TabId[] = ['prepare-roll', 'power-notes'];
+
 const CharacterSheet = ({ character: characterProp }: Props) => {
     const characterToEdit = useSelector(selectEditingCharacter);
     const character = characterToEdit || characterProp;
+    const [selectedTabId, setSelectedTabId] = useState<TabId>('character-core');
+
+    const onChange = useCallback((newTabId: TabId) => {
+        setSelectedTabId(newTabId);
+    }, []);
+
+    useEffect(() => {
+        setSelectedTabId((prev) => {
+            if (viewOnlyTabs.includes(prev) && characterToEdit) {
+                return 'character-core';
+            }
+        });
+    }, [!!characterToEdit]);
+
     return (
         <>
             <div className="character-sheet">
                 <CharacterMenu character={character} />
-                <Tabs className="character-sheet-sections" size="large">
+                <Tabs
+                    className="character-sheet-sections"
+                    size="large"
+                    selectedTabId={selectedTabId}
+                    onChange={onChange}
+                >
                     <Tab
                         id="character-core"
                         title="Character"
