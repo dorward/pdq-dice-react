@@ -1,168 +1,172 @@
 @page {
-	size: portrait;
-	margin: 5mm;
+    size: portrait;
+    margin: 5mm;
 }
 
 @media only print {
-	html,
-	body {
-		background: white;
-	}
+    html,
+    body {
+        background: white;
+    }
 
-	#root {
-		width: auto;
-		max-width: 100%;
-		margin: 1ex;
-	}
+    #root {
+        width: auto;
+        max-width: 100%;
+        margin: 1ex;
+    }
 
-	#root > header,
-	.character-tabs > [role='tablist'],
-	.character-menu,
-	.circumstance-bonus,
-	.controls {
-		display: none;
-	}
+    #root > header,
+    .character-tabs > [role='tablist'],
+    .character-menu,
+    .circumstance-bonus,
+    .controls {
+        display: none;
+    }
 
-	.bonus-name > label.bp4-control {
-		padding: 0;
-		input,
-		span {
-			display: none;
-		}
-	}
+    .prepare-roll-panel {
+        display: none;
+    }
 
-	table {
-		page-break-inside: avoid;
-	}
+    .bonus-name > label.bp4-control {
+        padding: 0;
+        input,
+        span {
+            display: none;
+        }
+    }
 
-	.circumstance-bonus {
-		display: none;
-	}
+    table {
+        page-break-inside: avoid;
+    }
 
-	.remoteInventory {
-		display: table-row;
-	}
+    .circumstance-bonus {
+        display: none;
+    }
 
-	.location-heading {
-		.bp4-button-text {
-			font-style: italic;
-		}
-		.bp4-icon {
-			display: none;
-		}
-	}
+    .remoteInventory {
+        display: table-row;
+    }
 
-	.character-sheet-sections {
-		> [role='tablist'] {
-			display: none;
-		}
-		> .bp5-tab-panel[aria-hidden='true'] {
-			display: block;
-		}
-	}
+    .location-heading {
+        .bp4-button-text {
+            font-style: italic;
+        }
+        .bp4-icon {
+            display: none;
+        }
+    }
 
-	.character-header {
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-		grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-		gap: 0px 0px;
-		grid-template-areas:
-			'character-name-label character-name-value player-name-label player-name-value avatar'
-			'code-name-label code-name-value code-name-value code-name-value avatar'
-			'motivation-label motivation-value motivation-value motivation-value avatar'
-			'origin-label origin-value origin-value origin-value avatar'
-			'bennies-label bennies-current bennies-max . avatar';
-		align-items: end;
+    .character-sheet-sections {
+        > [role='tablist'] {
+            display: none;
+        }
+        > .bp5-tab-panel[aria-hidden='true'] {
+            display: block;
+        }
+    }
 
-		.header-group,
-		#group-bennies,
-		#group-code-name {
-			display: contents;
-			.bennies-value {
-				display: contents;
-				.sep {
-					display: none;
-				}
-			}
-			.label {
-				display: inline;
-			}
-			.field {
-				margin: 0;
-			}
-		}
-		.label {
-			font-weight: bold;
-		}
-		.field {
-			font: inherit;
-			margin: 0;
-		}
-		.character-name-label {
-			grid-area: character-name-label;
-		}
-		.character-name-value {
-			grid-area: character-name-value;
-		}
-		.player-name-label {
-			grid-area: player-name-label;
-		}
-		.player-name-value {
-			grid-area: player-name-value;
-		}
-		.code-name-label {
-			grid-area: code-name-label;
-		}
-		.code-name-value {
-			grid-area: code-name-value;
-		}
-		.motivation-label {
-			grid-area: motivation-label;
-		}
-		.origin-label {
-			grid-area: origin-label;
-		}
-		.motivation-value {
-			grid-area: motivation-value;
-		}
-		.origin-value {
-			grid-area: origin-value;
-		}
-		.bennies-label {
-			grid-area: bennies-label;
-		}
-		.bennies-value {
-			display: contents;
-		}
-		.bennies-current {
-			grid-area: bennies-current;
-		}
-		.bennies-max {
-			grid-area: bennies-max;
-		}
-		.avatar {
-			grid-area: avatar;
-		}
+    .character-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+        gap: 0px 0px;
+        grid-template-areas:
+            'character-name-label character-name-value player-name-label player-name-value avatar'
+            'code-name-label code-name-value code-name-value code-name-value avatar'
+            'motivation-label motivation-value motivation-value motivation-value avatar'
+            'origin-label origin-value origin-value origin-value avatar'
+            'bennies-label bennies-current bennies-max . avatar';
+        align-items: end;
 
-		img {
-			border: solid black 1px;
-			width: auto;
-			height: 115px;
-			margin-left: auto;
-		}
+        .header-group,
+        #group-bennies,
+        #group-code-name {
+            display: contents;
+            .bennies-value {
+                display: contents;
+                .sep {
+                    display: none;
+                }
+            }
+            .label {
+                display: inline;
+            }
+            .field {
+                margin: 0;
+            }
+        }
+        .label {
+            font-weight: bold;
+        }
+        .field {
+            font: inherit;
+            margin: 0;
+        }
+        .character-name-label {
+            grid-area: character-name-label;
+        }
+        .character-name-value {
+            grid-area: character-name-value;
+        }
+        .player-name-label {
+            grid-area: player-name-label;
+        }
+        .player-name-value {
+            grid-area: player-name-value;
+        }
+        .code-name-label {
+            grid-area: code-name-label;
+        }
+        .code-name-value {
+            grid-area: code-name-value;
+        }
+        .motivation-label {
+            grid-area: motivation-label;
+        }
+        .origin-label {
+            grid-area: origin-label;
+        }
+        .motivation-value {
+            grid-area: motivation-value;
+        }
+        .origin-value {
+            grid-area: origin-value;
+        }
+        .bennies-label {
+            grid-area: bennies-label;
+        }
+        .bennies-value {
+            display: contents;
+        }
+        .bennies-current {
+            grid-area: bennies-current;
+        }
+        .bennies-max {
+            grid-area: bennies-max;
+        }
+        .avatar {
+            grid-area: avatar;
+        }
 
-		.description {
-			display: inline;
-		}
+        img {
+            border: solid black 1px;
+            width: auto;
+            height: 115px;
+            margin-left: auto;
+        }
 
-		.character-name-value,
-		.player-name-value {
-			&:empty {
-				border: solid black 1px;
-				display: block;
-				min-height: 1.5em;
-				margin-right: 1em;
-			}
-		}
-	}
+        .description {
+            display: inline;
+        }
+
+        .character-name-value,
+        .player-name-value {
+            &:empty {
+                border: solid black 1px;
+                display: block;
+                min-height: 1.5em;
+                margin-right: 1em;
+            }
+        }
+    }
 }

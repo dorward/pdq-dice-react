@@ -22,7 +22,7 @@ export const PrepareRoll = ({ character }: Props) => {
     console.log({ extra });
 
     return (
-        <div>
+        <div className="prepare-roll-panel">
             <FormGroup label="Description of roll" labelFor={descriptionId}>
                 <InputGroup
                     placeholder="What action are you rolling?"
