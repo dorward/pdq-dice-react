@@ -1,6 +1,6 @@
 import { Props as AttributesProps } from './attributes/types';
 import { Character } from '../types';
-import { FormGroup, InputGroup, Tab, Tabs } from '@blueprintjs/core';
+import { Tab, Tabs } from '@blueprintjs/core';
 import { selectEditingCharacter } from '../data/edit-mode-slice';
 import Attributes from './attributes';
 import CharacterHeader from './character-header';
@@ -8,9 +8,9 @@ import CharacterMenu from './character-menu';
 import Extras from './extras';
 import PowerNotes from './power-notes';
 import SkillCheck from './skill-check';
-import { selectDescription, updateDescription } from '../data/roll-slice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import CharacterBackground from './character-background';
+import { PrepareRoll } from './prepare-roll/prepare-roll';
 
 type Props = {
     character: Character;
@@ -29,11 +29,8 @@ const powers = {
 };
 
 const CharacterSheet = ({ character: characterProp }: Props) => {
-    const dispatch = useDispatch();
     const characterToEdit = useSelector(selectEditingCharacter);
     const character = characterToEdit || characterProp;
-    const description = useSelector(selectDescription);
-    const descriptionId = `${character.id}-description`;
     return (
         <>
             <div className="character-sheet">
@@ -65,6 +62,13 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                             }
                         />
                     )}
+                    {!characterToEdit && (
+                        <Tab
+                            id="prepare-roll"
+                            title="Prepare Roll"
+                            panel={<PrepareRoll character={character} />}
+                        />
+                    )}
                     <Tab
                         id="attributes"
                         title="Attributes"
@@ -89,21 +93,9 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                         panel={<CharacterBackground background={character.background} />}
                     />
                 </Tabs>
-                {!characterToEdit && (
-                    <div className="controls footer">
-                        <FormGroup label="Description of roll" labelFor={descriptionId}>
-                            <InputGroup
-                                placeholder="What action are you rolling?"
-                                id={descriptionId}
-                                value={description}
-                                onChange={(e) =>
-                                    dispatch(updateDescription(e.currentTarget.value))
-                                }
-                            />
-                        </FormGroup>
-                        <SkillCheck />
-                    </div>
-                )}
+                <div className="controls footer">
+                    <SkillCheck />
+                </div>
                 {characterToEdit && <CharacterMenu character={character} />}
             </div>
         </>
