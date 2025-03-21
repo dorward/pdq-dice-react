@@ -522,3 +522,19 @@ span.padding {
 .bp5-slider {
     min-width: 400px;
 }
+
+.bennies-edit {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: min-content max-content;
+    gap: 3px;
+
+    .bp5-form-group {
+        display: contents;
+
+        label.bp5-label {
+            display: inline;
+            white-space: nowrap;
+        }
+    }
+}

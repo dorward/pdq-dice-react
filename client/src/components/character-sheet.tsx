@@ -11,7 +11,7 @@ import SkillCheck from './skill-check';
 import { useSelector } from 'react-redux';
 import { PrepareRoll } from './prepare-roll/prepare-roll';
 import { useCallback, useEffect, useState } from 'react';
-import { Bennies } from './bennies/bennies-view';
+import { Bennies } from './bennies/bennies';
 
 type Props = {
     character: Character;

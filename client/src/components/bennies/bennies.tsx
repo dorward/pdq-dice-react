@@ -8,8 +8,7 @@ import {
 import { FormGroup, H2, HTMLSelect, InputGroup } from '@blueprintjs/core';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Character } from '../../types';
-
-const bennyValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+import { useState } from 'react';
 
 export const Bennies = () => {
     const characterToEdit = useSelector(selectEditingCharacter);
@@ -39,16 +38,20 @@ type EditProps = {
     characterToEdit: Character & SelectedExtra;
 };
 
+const diceBonuses = ['+0d6', '+1d6'];
+
 const BenniesEdit = ({ characterToEdit }: EditProps) => {
     const dispatch = useDispatch();
+
+    const [diceBonus, setDiceBonus] = useState('+0d6');
 
     return (
         <div className="bennies-edit">
             <FormGroup inline label="Current Bennies" labelFor="current-bennies-edit">
-                <HTMLSelect
+                <InputGroup
                     id="current-bennies-edit"
-                    value={characterToEdit.bennies.current ?? '0'}
-                    options={bennyValues}
+                    value={`${characterToEdit.bennies.current ?? 0}`}
+                    type="number"
                     onChange={(e) => {
                         const count = +e.target.value;
                         dispatch(updateCurrentBennies(count));
@@ -56,11 +59,21 @@ const BenniesEdit = ({ characterToEdit }: EditProps) => {
                 />
             </FormGroup>
 
-            <FormGroup inline label="Maximum Bennies" labelFor="max-bennies-edit">
+            <FormGroup inline label="Default Bennies" labelFor="max-bennies-edit">
                 <InputGroup
                     id="max-bennies-edit"
                     value={characterToEdit.bennies.max ?? '3'}
+                    type="number"
                     onChange={(e) => dispatch(updateMaximumBennies(e.target.value))}
+                    rightElement={
+                        <HTMLSelect
+                            value={diceBonus}
+                            options={diceBonuses}
+                            onChange={(e) => {
+                                setDiceBonus(e.target.value);
+                            }}
+                        />
+                    }
                 />
             </FormGroup>
         </div>
