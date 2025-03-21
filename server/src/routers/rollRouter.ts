@@ -1,10 +1,11 @@
 import { Request, Response, Router } from 'express';
 
-import sendDiscordMessage from '../discord/sendDiscordMessage';
+import sendDiscordMessage, { sendBennyRollDiscordMessage } from '../discord/sendDiscordMessage';
 import { E_UNSUPPORTED_DICE_FORMAT } from '../errors';
 import filterCharacterIdentityFromUser from '../model/filterCharacterIdentityFromUser';
 import {
     BennyRollRequestBody,
+    BennyRollResponseBody,
     SkillCheckRequestBody,
     SkillCheckResponseBody,
     User,
@@ -29,26 +30,24 @@ const bennyRoll = async (
     req: Request,
     res: Response,
     user: User,
-    rollFor: { name: string },
+    rollFor: BennyRollResponseBody['rollFor'],
 ) => {
     const { defaultBennies, diceBonus } = req.body as BennyRollRequestBody;
     const diceCount = +(diceBonus.match(isDiceFormat)?.[1] ?? '0');
     if (diceCount > 4) {
         throw new Error('Dice count too high');
     }
-    const rolled = Array(diceCount).fill(d6());
-    const total = rolled.reduce((acc, cur) => acc + cur, defaultBennies);
-    const response = {
-        userId: user.userId,
-        characterName: rollFor.name,
+    const diceResult = Array(diceCount).fill(d6());
+    const total = diceResult.reduce((acc, cur) => acc + cur, defaultBennies);
+    const response: BennyRollResponseBody = {
+        rollFor,
         defaultBennies,
-        diceBonus,
         diceCount,
-        rolled,
+        diceResult,
         total,
+        rollType: 'Benny Reset',
     };
-
-    console.log('Benny Roll', response);
+    sendBennyRollDiscordMessage(user, response);
     res.json(response);
 };
 

@@ -138,6 +138,18 @@ export type SkillCheckResponseBody = {
     };
 };
 
+export type BennyRollResponseBody = {
+    defaultBennies: number;
+    diceCount: number;
+    total: number;
+    rollType: 'Benny Reset';
+    diceResult: number[];
+    rollFor: {
+        name: string;
+        avatar: Avatar;
+    };
+};
+
 export type AttributeUpdateName = {
     id: string;
     name: string;
