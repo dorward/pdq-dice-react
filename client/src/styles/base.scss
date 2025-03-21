@@ -351,8 +351,7 @@ button.add {
     }
 
     #group-character-name.noCodeName,
-    #group-code-name,
-    #group-bennies {
+    #group-code-name {
         display: block;
         > span {
             display: inline-block;
@@ -367,9 +366,6 @@ button.add {
         .label {
             display: none;
         }
-    }
-    #group-bennies {
-        margin-left: auto;
     }
     img {
         border: solid black 1px;
@@ -430,9 +426,19 @@ button.add {
         margin-bottom: 0;
     }
 }
-.bennies-edit {
-    display: flex;
-    justify-content: space-between;
+
+.bennies {
+    .bennies-current {
+        font-size: 250%;
+    }
+
+    .sep {
+        font-size: 150%;
+    }
+
+    .bennies-max {
+        font-size: 150%;
+    }
 }
 
 .controls {

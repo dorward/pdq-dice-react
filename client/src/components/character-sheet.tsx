@@ -11,6 +11,7 @@ import SkillCheck from './skill-check';
 import { useSelector } from 'react-redux';
 import { PrepareRoll } from './prepare-roll/prepare-roll';
 import { useCallback, useEffect, useState } from 'react';
+import { Bennies } from './bennies/bennies-view';
 
 type Props = {
     character: Character;
@@ -72,7 +73,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                             />
                         }
                     />
-
+                    <Tab id="bennies" title="Bennies" panel={<Bennies />} />
                     {!characterToEdit && (
                         <Tab
                             id="prepare-roll"
