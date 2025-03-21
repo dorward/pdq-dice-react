@@ -27,6 +27,7 @@ import {
     mutateCapacity,
 } from './edit-mode-helpers';
 import { v4 as uuidv4 } from 'uuid';
+import { isDiceFormat, parseMaxBennyValue } from '../util/parseMaxBennyValue';
 
 export type SelectedExtra = {
     selectedExtraId?: string;
@@ -267,7 +268,10 @@ const EditModeSlice = createSlice({
             return state;
         },
         updateMaximumBennies: (state: EditModeState, action: PayloadAction<string>) => {
-            state.bennies.max = action.payload;
+            const [max, diceBonus] = parseMaxBennyValue(state.bennies.max);
+            state.bennies.max = isDiceFormat.test(action.payload)
+                ? `${max}${action.payload}`
+                : `${action.payload}${diceBonus}`;
             return state;
         },
         updateBackground: (state: EditModeState, action: PayloadAction<string>) => {

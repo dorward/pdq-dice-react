@@ -1,3 +1,4 @@
+import type { ChangeEventHandler } from 'react';
 import { selectBennies } from '../../data/user-slice';
 import {
     type SelectedExtra,
@@ -8,7 +9,8 @@ import {
 import { FormGroup, H2, HTMLSelect, InputGroup } from '@blueprintjs/core';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Character } from '../../types';
-import { useState } from 'react';
+import { useCallback } from 'react';
+import { isDiceFormat, parseMaxBennyValue } from '../../util/parseMaxBennyValue';
 
 export const Bennies = () => {
     const characterToEdit = useSelector(selectEditingCharacter);
@@ -22,13 +24,16 @@ export const Bennies = () => {
 const BenniesView = () => {
     const bennies = useSelector(selectBennies) ?? { current: 0, max: 'unknown' };
 
+    const [max, dice] = parseMaxBennyValue(bennies.max);
+    const diceCount = +dice.match(isDiceFormat)[1];
+
     return (
         <div className="bennies">
             <H2 className="bennies-heading">Bennies</H2>
             <span className="field bennies-value" id="field-bennies">
                 <span className="bennies-current">{bennies.current}</span>
                 <span className="sep"> / </span>
-                <span className="bennies-max">{bennies.max}</span>
+                <span className="bennies-max">{max + (diceCount && `+${diceCount}d6`)}</span>
             </span>
         </div>
     );
@@ -43,14 +48,18 @@ const diceBonuses = ['+0d6', '+1d6'];
 const BenniesEdit = ({ characterToEdit }: EditProps) => {
     const dispatch = useDispatch();
 
-    const [diceBonus, setDiceBonus] = useState('+0d6');
+    const [max, diceBonus] = parseMaxBennyValue(characterToEdit.bennies.max);
+
+    const updateMaxBennies = useCallback<
+        ChangeEventHandler<HTMLInputElement | HTMLSelectElement>
+    >((e) => dispatch(updateMaximumBennies(e.target.value)), []);
 
     return (
         <div className="bennies-edit">
             <FormGroup inline label="Current Bennies" labelFor="current-bennies-edit">
                 <InputGroup
                     id="current-bennies-edit"
-                    value={`${characterToEdit.bennies.current ?? 0}`}
+                    value={`${characterToEdit.bennies.current}`}
                     type="number"
                     onChange={(e) => {
                         const count = +e.target.value;
@@ -62,16 +71,14 @@ const BenniesEdit = ({ characterToEdit }: EditProps) => {
             <FormGroup inline label="Default Bennies" labelFor="max-bennies-edit">
                 <InputGroup
                     id="max-bennies-edit"
-                    value={characterToEdit.bennies.max ?? '3'}
+                    value={`${max}`}
                     type="number"
-                    onChange={(e) => dispatch(updateMaximumBennies(e.target.value))}
+                    onChange={updateMaxBennies}
                     rightElement={
                         <HTMLSelect
                             value={diceBonus}
                             options={diceBonuses}
-                            onChange={(e) => {
-                                setDiceBonus(e.target.value);
-                            }}
+                            onChange={updateMaxBennies}
                         />
                     }
                 />
