@@ -29,17 +29,23 @@ const BenniesView = () => {
     const diceCount = +(dice.match(isDiceFormat)?.[1] || '0');
 
     return (
-        <div className="bennies">
-            <H2 className="bennies-heading">Bennies</H2>
-            <span className="field bennies-value" id="field-bennies">
-                <span className="bennies-current">{bennies.current}</span>
-                <span className="sep"> / </span>
-                <span className="bennies-max">{max + (diceCount && `+${diceCount}d6`)}</span>
-            </span>
-            <Button className="skill-check" icon="random" onClick={resetBennies}>
-                Reset Bennies
-            </Button>
-        </div>
+        <>
+            <div className="bennies">
+                <H2 className="bennies-heading">Bennies</H2>
+                <span className="field bennies-value" id="field-bennies">
+                    <span className="bennies-current">{bennies.current}</span>
+                    <span className="sep"> / </span>
+                    <span className="bennies-max">
+                        {max + (diceCount && `+${diceCount}d6`)}
+                    </span>
+                </span>
+            </div>
+            <div className="benny-reset">
+                <Button className="skill-check" icon="random" onClick={resetBennies}>
+                    Reset Bennies
+                </Button>
+            </div>
+        </>
     );
 };
 
