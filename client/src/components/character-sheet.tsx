@@ -61,6 +61,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                     <Tab
                         id="character-core"
                         title="Character"
+                        className="character-core"
                         panel={
                             <CharacterInfo
                                 avatar={character.avatar}
@@ -96,6 +97,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                         <Tab
                             id="power-notes"
                             title="Power Notes"
+                            className="power-notes"
                             panel={!characterToEdit && <PowerNotes powers={character.powers} />}
                         />
                     )}

@@ -5,7 +5,7 @@ import {
     updateCurrentBennies,
     updateMaximumBennies,
 } from '../../data/edit-mode-slice';
-import { FormGroup, HTMLSelect, InputGroup } from '@blueprintjs/core';
+import { FormGroup, H2, HTMLSelect, InputGroup } from '@blueprintjs/core';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Character } from '../../types';
 
@@ -25,6 +25,7 @@ const BenniesView = () => {
 
     return (
         <div className="bennies">
+            <H2 className="bennies-heading">Bennies</H2>
             <span className="field bennies-value" id="field-bennies">
                 <span className="bennies-current">{bennies.current}</span>
                 <span className="sep"> / </span>
