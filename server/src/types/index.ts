@@ -114,6 +114,12 @@ export type SkillCheckRequestBody = {
     isUsingBenny?: boolean;
 };
 
+export type BennyRollRequestBody = {
+    defaultBennies: number;
+    diceBonus: string;
+    rollType: 'Benny Roll';
+};
+
 export type ExpendResponseBody = {
     expendFor: CharacterIdentity;
     extraName: string;
@@ -126,6 +132,18 @@ export type SkillCheckResponseBody = {
     success?: boolean;
     description?: string;
     rollType: string;
+    rollFor: {
+        name: string;
+        avatar: Avatar;
+    };
+};
+
+export type BennyRollResponseBody = {
+    defaultBennies: number;
+    diceCount: number;
+    total: number;
+    rollType: 'Benny Reset';
+    diceResult: number[];
     rollFor: {
         name: string;
         avatar: Avatar;

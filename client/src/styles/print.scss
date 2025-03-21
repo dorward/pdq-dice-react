@@ -29,20 +29,20 @@
         display: none;
     }
 
-    [role='tablist'] {
-        page-break-inside: avoid;
-    }
-
-    .character-core[role='tabpanel'] {
-        display: contents;
-    }
-
     .character-sheet-sections {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-content: flex-start;
         align-items: stretch;
+
+        > [role='tabpanel'] {
+            page-break-inside: avoid;
+        }
+
+        .character-core {
+            display: contents;
+        }
     }
 
     .character-background {
@@ -63,6 +63,9 @@
         }
         > .bp5-tab-panel[aria-hidden='true'] {
             display: block;
+            &.character-core {
+                display: contents;
+            }
         }
     }
 
@@ -77,5 +80,9 @@
         .bennies-current {
             display: none;
         }
+    }
+
+    .benny-reset {
+        display: none;
     }
 }

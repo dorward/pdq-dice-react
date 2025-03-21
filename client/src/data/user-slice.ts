@@ -96,6 +96,17 @@ const userSlice = createSlice({
             saveToServer(JSON.parse(JSON.stringify(user)));
             return state;
         },
+        setBennies: (
+            state,
+            action: PayloadAction<{ characterId: string; bennies: number }>,
+        ) => {
+            const { user } = state;
+            const { characterId, bennies } = action.payload;
+            const character = user.characters.find((c) => c.id === characterId);
+            character.bennies.current = bennies;
+            saveToServer(JSON.parse(JSON.stringify(user)));
+            return state;
+        },
         spendInventoryItem: (state, action: PayloadAction<ExtraPath>) => {
             const { user } = state;
             const { characterId, extraId } = action.payload;
@@ -145,6 +156,7 @@ export const {
     set,
     setUserError,
     spendBenny,
+    setBennies,
     spendInventoryItem,
     toggleCharacterVisibility,
     openOrCloseInventoryContainer,

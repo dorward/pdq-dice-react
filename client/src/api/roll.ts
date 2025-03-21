@@ -2,10 +2,16 @@ import { attributeValues, countsThatDoNotReduce } from '../consts';
 import { updateLastRoll } from '../data/last-roll-slice';
 import store from '../data/redux-store';
 import { markLoading, setResult, markClear } from '../data/results-slice';
-import { selectCharacter, spendInventoryItem, setUserError } from '../data/user-slice';
+import {
+    selectCharacter,
+    spendInventoryItem,
+    setUserError,
+    setBennies,
+} from '../data/user-slice';
 import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
 import { SkillCheckRequestBody } from '../types';
 import axios from 'axios';
+import { parseMaxBennyValue } from '../util/parseMaxBennyValue';
 
 const getBase = () => {
     const API_URL = process.env.API_URL;
@@ -64,6 +70,23 @@ export const simpleSkillCheck = async ({ description, modifier }: SimpleSkillChe
     };
     const response = await axios.post(url, { ...auth, ...body });
     return response.data;
+};
+
+export const resetBennies = async () => {
+    const { auth, url } = getBase();
+    const state = store.getState();
+    const max = selectCharacter(state).bennies.max;
+    const [defaultBennies, diceBonus] = parseMaxBennyValue(max);
+    const body = {
+        defaultBennies,
+        diceBonus,
+        rollType: 'Benny Roll',
+    };
+    const response = await axios.post(url, { ...auth, ...body });
+    const { data } = response;
+    const { total } = data;
+    const payload = setBennies({ characterId: auth.characterId, bennies: total });
+    store.dispatch(payload);
 };
 
 export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {

@@ -1,7 +1,12 @@
 import { Channel, ChannelType, EmbedAuthorData, EmbedBuilder, TextChannel } from 'discord.js';
 import a from 'indefinite';
 import client from '.';
-import { ExpendResponseBody, SkillCheckResponseBody, User } from '../types';
+import {
+    BennyRollResponseBody,
+    ExpendResponseBody,
+    SkillCheckResponseBody,
+    User,
+} from '../types';
 import dice from './dice';
 
 const isTextChannel = (channel: Channel | null): channel is TextChannel =>
@@ -48,6 +53,32 @@ export const sendDiscordExpendNotification = async (
         .setAuthor(author)
         .setTimestamp();
 
+    const channel = await client.channels.fetch(user.channel.id);
+    if (isTextChannel(channel)) channel.send({ embeds: [embed] });
+};
+
+export const sendBennyRollDiscordMessage = async (
+    user: User,
+    response: BennyRollResponseBody,
+) => {
+    const index = response.diceResult.join('') as keyof typeof dice;
+    const thumbnail = dice[index];
+    const author: EmbedAuthorData = {
+        name: response.rollFor.name,
+        iconURL: response.rollFor.avatar ?? user.avatar ?? undefined,
+    };
+
+    const embed = new EmbedBuilder()
+        .setTitle('Reset Bennies')
+        .setDescription(`${response.total} bennies`)
+        .setAuthor(author);
+
+    if (thumbnail) {
+        embed.setThumbnail(thumbnail);
+    }
+
+    embed.setFooter(footer);
+    embed.setTimestamp();
     const channel = await client.channels.fetch(user.channel.id);
     if (isTextChannel(channel)) channel.send({ embeds: [embed] });
 };
