@@ -1,0 +1,34 @@
+.character-info {
+    .character-heading {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+
+        img {
+            border: solid black 1px;
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    .header-groups {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .header-group {
+        display: contents;
+    }
+
+    .field {
+        font-weight: bold;
+    }
+
+    .player-name-value {
+        grid-column-end: span 3;
+    }
+}
+
+.character-background {
+    margin-top: 6px;
+}

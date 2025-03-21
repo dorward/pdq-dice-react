@@ -1,7 +1,5 @@
 import {
     selectEditingCharacter,
-    updateCurrentBennies,
-    updateMaximumBennies,
     updateName,
     updateCodeName,
     updateMotivation,
@@ -14,14 +12,12 @@ import ImageModal from '../image-modal';
 import InventorySizeModal from '../inventory-size-modal';
 import Loading from '../loading';
 import UploadError from '../upload-error';
-import type { Props } from './character-header-types';
-import { FormGroup, Button, HTMLSelect, InputGroup, Icon, IconSize } from '@blueprintjs/core';
+import type { Props } from './character-info-types';
+import { FormGroup, Button, InputGroup, Icon, IconSize } from '@blueprintjs/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFilePicker } from 'use-file-picker';
 
-const bennyValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-const CharacterHeaderEdit = ({ avatar }: Props) => {
+const CharacterInfoEdit = ({ avatar }: Props) => {
     const dispatch = useDispatch();
     const characterToEdit = useSelector(selectEditingCharacter);
     const { avatar: userAvatar } = useSelector(selectUser) as User;
@@ -48,7 +44,7 @@ const CharacterHeaderEdit = ({ avatar }: Props) => {
     const avatarUrl = uploadedImage ?? avatar ?? userAvatar;
 
     return (
-        <div className="character-header-editor">
+        <div className="character-info-editor">
             {uploadedImage && <ImageModal url={uploadedImage} clear={clear} />}
             {characterToEdit.selectedExtraId && (
                 <InventorySizeModal id={characterToEdit.selectedExtraId} />
@@ -115,30 +111,8 @@ const CharacterHeaderEdit = ({ avatar }: Props) => {
                     />
                 </FormGroup>
             </div>
-
-            <div className="bennies-edit">
-                <FormGroup inline label="Current Bennies" labelFor="current-bennies-edit">
-                    <HTMLSelect
-                        id="current-bennies-edit"
-                        value={characterToEdit.bennies.current ?? '0'}
-                        options={bennyValues}
-                        onChange={(e) => {
-                            const count = +e.target.value;
-                            dispatch(updateCurrentBennies(count));
-                        }}
-                    />
-                </FormGroup>
-
-                <FormGroup inline label="Maximum Bennies" labelFor="max-bennies-edit">
-                    <InputGroup
-                        id="max-bennies-edit"
-                        value={characterToEdit.bennies.max ?? '3'}
-                        onChange={(e) => dispatch(updateMaximumBennies(e.target.value))}
-                    />
-                </FormGroup>
-            </div>
         </div>
     );
 };
 
-export default CharacterHeaderEdit;
+export default CharacterInfoEdit;

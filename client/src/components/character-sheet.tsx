@@ -3,7 +3,7 @@ import { Character } from '../types';
 import { Tab, TabId, Tabs } from '@blueprintjs/core';
 import { selectEditingCharacter } from '../data/edit-mode-slice';
 import Attributes from './attributes';
-import CharacterHeader from './character-header';
+import CharacterInfo from './character-info';
 import CharacterMenu from './character-menu';
 import Extras from './extras';
 import PowerNotes from './power-notes';
@@ -11,6 +11,7 @@ import SkillCheck from './skill-check';
 import { useSelector } from 'react-redux';
 import { PrepareRoll } from './prepare-roll/prepare-roll';
 import { useCallback, useEffect, useState } from 'react';
+import { Bennies } from './bennies/bennies-view';
 
 type Props = {
     character: Character;
@@ -60,8 +61,9 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                     <Tab
                         id="character-core"
                         title="Character"
+                        className="character-core"
                         panel={
-                            <CharacterHeader
+                            <CharacterInfo
                                 avatar={character.avatar}
                                 codeName={character.codeName}
                                 motivation={character.motivation}
@@ -72,7 +74,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                             />
                         }
                     />
-
+                    <Tab id="bennies" title="Bennies" panel={<Bennies />} />
                     {!characterToEdit && (
                         <Tab
                             id="prepare-roll"
@@ -95,6 +97,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                         <Tab
                             id="power-notes"
                             title="Power Notes"
+                            className="power-notes"
                             panel={!characterToEdit && <PowerNotes powers={character.powers} />}
                         />
                     )}
