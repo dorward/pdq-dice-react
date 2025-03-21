@@ -1,4 +1,5 @@
 @use '@blueprintjs/core/lib/scss/variables' as bp;
+@use 'fluff.scss';
 
 html,
 body {
@@ -339,42 +340,6 @@ table.extras {
 
 button.add {
     margin-left: 1em;
-}
-
-.character-info {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-
-    .header-group {
-        display: none;
-    }
-
-    #group-character-name.noCodeName,
-    #group-code-name {
-        display: block;
-        > span {
-            display: inline-block;
-        }
-        .field {
-            margin-left: 3px;
-        }
-    }
-
-    #group-character-name.noCodeName,
-    #group-code-name {
-        .label {
-            display: none;
-        }
-    }
-    img {
-        border: solid black 1px;
-        width: 60px;
-        height: 60px;
-    }
-    .description {
-        display: none;
-    }
 }
 
 .character-id-editor {
