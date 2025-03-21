@@ -6,11 +6,12 @@ import {
     updateCurrentBennies,
     updateMaximumBennies,
 } from '../../data/edit-mode-slice';
-import { FormGroup, H2, HTMLSelect, InputGroup } from '@blueprintjs/core';
+import { Button, FormGroup, H2, HTMLSelect, InputGroup } from '@blueprintjs/core';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Character } from '../../types';
 import { useCallback } from 'react';
 import { isDiceFormat, parseMaxBennyValue } from '../../util/parseMaxBennyValue';
+import { resetBennies } from '../../api/roll';
 
 export const Bennies = () => {
     const characterToEdit = useSelector(selectEditingCharacter);
@@ -25,7 +26,7 @@ const BenniesView = () => {
     const bennies = useSelector(selectBennies) ?? { current: 0, max: 'unknown' };
 
     const [max, dice] = parseMaxBennyValue(bennies.max);
-    const diceCount = +dice.match(isDiceFormat)[1];
+    const diceCount = +(dice.match(isDiceFormat)?.[1] || '0');
 
     return (
         <div className="bennies">
@@ -35,6 +36,9 @@ const BenniesView = () => {
                 <span className="sep"> / </span>
                 <span className="bennies-max">{max + (diceCount && `+${diceCount}d6`)}</span>
             </span>
+            <Button className="skill-check" icon="random" onClick={resetBennies}>
+                Reset Bennies
+            </Button>
         </div>
     );
 };

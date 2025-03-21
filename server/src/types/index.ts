@@ -114,6 +114,12 @@ export type SkillCheckRequestBody = {
     isUsingBenny?: boolean;
 };
 
+export type BennyRollRequestBody = {
+    defaultBennies: number;
+    diceBonus: string;
+    rollType: 'Benny Roll';
+};
+
 export type ExpendResponseBody = {
     expendFor: CharacterIdentity;
     extraName: string;
