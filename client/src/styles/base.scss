@@ -74,13 +74,6 @@ body {
     }
 }
 
-@media only screen and (max-width: 840px) {
-    #root {
-        margin: 0 2px;
-        max-width: 100%;
-    }
-}
-
 main > .bp3-tabs > .bp3-tab-list {
     flex-wrap: wrap;
 }
@@ -541,4 +534,19 @@ span.padding {
 
 .benny-reset {
     margin-top: 1em;
+}
+
+@media only screen and (max-width: 840px) {
+    #root {
+        margin: 0 2px;
+        max-width: 100%;
+    }
+
+    .character-menu > * {
+        flex-wrap: wrap;
+    }
+
+    .no-mobile {
+        display: none;
+    }
 }

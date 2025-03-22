@@ -32,3 +32,15 @@
 .character-background {
     margin-top: 6px;
 }
+
+@media only screen and (max-width: 840px) {
+    .character-info {
+        .header-groups {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .player-name-value {
+            grid-column-end: span 1;
+        }
+    }
+}
