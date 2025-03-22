@@ -41,7 +41,7 @@ const BenniesView = () => {
                 </span>
             </div>
             <div className="benny-reset">
-                <Button className="skill-check" icon="random" onClick={resetBennies}>
+                <Button className="skill-check" icon="reset" onClick={resetBennies}>
                     Reset Bennies
                 </Button>
             </div>
