@@ -541,4 +541,12 @@ span.padding {
         margin: 0 2px;
         max-width: 100%;
     }
+
+    .character-menu > * {
+        flex-wrap: wrap;
+    }
+
+    .no-mobile {
+        display: none;
+    }
 }
