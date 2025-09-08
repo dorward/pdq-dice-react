@@ -15,7 +15,7 @@
 	"author": "David Dorward <david@dorward.me.uk>",
 	"license": "ISC",
 	"devDependencies": {
-		"@eslint/js": "^9.23.0",
+		"@eslint/js": "^9.35.0",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^4.17.21",
 		"@types/indefinite": "^2.3.4",
