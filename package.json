@@ -4,7 +4,7 @@
 	"description": "This is a dice bot and character management app for the [PDQ system for TTRPGs](http://evilhat.wikidot.com/pdq).",
 	"devDependencies": {
 		"commander": "^13.1.0",
-		"semver": "^7.7.1"
+		"semver": "^7.7.3"
 	},
 	"scripts": {},
 	"keywords": [],
