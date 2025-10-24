@@ -4,10 +4,14 @@ import client from '.';
 import {
     BennyRollResponseBody,
     ExpendResponseBody,
+    HighLowStatisticsReport,
     SkillCheckResponseBody,
+    SkillCheckStatisticsReport,
     User,
 } from '../types';
 import dice from './dice';
+import sendHighLowMessage from './statistics/sendHighLowMessage';
+import sendSkillCheckMessage from './statistics/sendSkillsMessage';
 
 const isTextChannel = (channel: Channel | null): channel is TextChannel =>
     channel?.type === ChannelType.GuildText;
@@ -123,6 +127,24 @@ const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) 
     embed.setTimestamp();
     const channel = await client.channels.fetch(user.channel.id);
     if (isTextChannel(channel)) channel.send({ embeds: [embed] });
+};
+
+type Stats = {
+    allTimeHighLow: HighLowStatisticsReport[] | string;
+    recentHighLow: HighLowStatisticsReport[] | string;
+    recentSkillChecks: 'DB error' | SkillCheckStatisticsReport[];
+    allTimeSkillChecks: 'DB error' | SkillCheckStatisticsReport[];
+};
+
+export const sendStatisticsMessage = async (channel: TextChannel, stats: Stats) => {
+    sendHighLowMessage(stats.allTimeHighLow, 'All time High-Low statistics', channel);
+    sendSkillCheckMessage(stats.allTimeSkillChecks, 'All time Skill Check statistics', channel);
+    sendHighLowMessage(stats.recentHighLow, 'Last session High-Low statistics', channel);
+    sendSkillCheckMessage(
+        stats.recentSkillChecks,
+        'Last session Skill Check statistics',
+        channel,
+    );
 };
 
 export default sendDiscordMessage;

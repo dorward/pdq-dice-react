@@ -3,7 +3,7 @@ import server from './server';
 
 const port = parseInt(process.env.PORT || '5101');
 
-discord.on('ready', () => {
+discord.on('clientReady', () => {
     console.log(`Logged in as ${discord?.user?.tag}!`);
 });
 

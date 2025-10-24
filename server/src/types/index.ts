@@ -231,3 +231,35 @@ export type StatisticsD6 = {
     characterName: string;
     roll: number;
 };
+
+export type Session = {
+    session_start: string;
+    session_end: string;
+};
+
+export type HighLowStatisticsReport = {
+    userid: string;
+    total_rolls: string;
+    successful_rolls: string;
+    high_rolls: string;
+    most_common_charactername: string;
+};
+
+export interface SkillCheckStatisticsReport {
+    userid: string;
+    charactername: string;
+
+    highest_roll: number;
+    highest_roll_description: string | null;
+
+    highest_bonus_sum: number;
+    highest_bonus_sum_description: string | null;
+
+    highest_total: number;
+    highest_total_description: string | null;
+
+    most_bonus_types: number;
+    most_bonus_types_description: string | null;
+
+    rolls_with_benny: number;
+}
