@@ -1,7 +1,7 @@
 import { HighLowStatisticsReport } from '../types';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { colours } from './colors';
+import { colours } from './colours';
 const AileronUltraLight = readFileSync(join(__dirname, '../../fonts/Aileron-UltraLight.otf'));
 const base64Font = AileronUltraLight.toString('base64');
 const fontMime = 'font/otf';
@@ -90,9 +90,9 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
     }
 
     const legendItems = [
-        { label: 'Total Rolls', color: statColours.total },
-        { label: 'Successful Rolls', color: statColours.success },
-        { label: 'High Rolls', color: statColours.high },
+        { label: 'Total Rolls', colour: statColours.total },
+        { label: 'Successful Rolls', colour: statColours.success },
+        { label: 'High Rolls', colour: statColours.high },
     ];
 
     const legendY = height - 30;
@@ -111,7 +111,7 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
 
     legendItems.forEach((item, i) => {
         legend += `
-          <rect x="${currentX}" y="${legendY}" width="15" height="15" fill="${item.color}" rx="2"/>
+          <rect x="${currentX}" y="${legendY}" width="15" height="15" fill="${item.colour}" rx="2"/>
           <text x="${currentX + 20}" y="${legendY + 12}" fill="white" font-size="${labelFontSize}">${item.label}</text>
         `;
         currentX += labelWidths[i] + legendSpacing;

@@ -1,7 +1,7 @@
 import { SkillCheckStatisticsReport } from '../types';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { colours } from './colors';
+import { colours } from './colours';
 
 const AileronUltraLight = readFileSync(join(__dirname, '../../fonts/Aileron-UltraLight.otf'));
 const base64Font = AileronUltraLight.toString('base64');
@@ -55,25 +55,25 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
                 key: 'Roll',
                 val: d.highest_roll,
                 desc: d.highest_roll_description,
-                color: statColours.roll,
+                colour: statColours.roll,
             },
             {
                 key: 'Bonus',
                 val: d.highest_bonus_sum,
                 desc: d.highest_bonus_sum_description,
-                color: statColours.bonus,
+                colour: statColours.bonus,
             },
             {
                 key: 'Total',
                 val: d.highest_total,
                 desc: d.highest_total_description,
-                color: statColours.total,
+                colour: statColours.total,
             },
             {
                 key: 'Bonuses',
                 val: d.most_bonus_types,
                 desc: d.most_bonus_types_description,
-                color: statColours.bonuses,
+                colour: statColours.bonuses,
             },
         ];
 
@@ -81,7 +81,7 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
             const x = groupX + j * (barWidth + 5);
             const barHeight = v.val * scaleY;
             bars += `
-        <rect x="${x}" y="${baseY - barHeight}" width="${barWidth}" height="${barHeight}" fill="${v.color}" rx="3"/>
+        <rect x="${x}" y="${baseY - barHeight}" width="${barWidth}" height="${barHeight}" fill="${v.colour}" rx="3"/>
         <title>${d.charactername}: ${v.key} = ${v.val}${v.desc ? ` – ${v.desc}` : ''}</title>
       `;
         });
@@ -110,10 +110,10 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
 
     // Legend
     const legendItems = [
-        { label: 'Highest Roll', color: statColours.roll },
-        { label: 'Highest Bonus Sum', color: statColours.bonus },
-        { label: 'Highest Total', color: statColours.total },
-        { label: 'Most Bonus Types', color: statColours.bonuses },
+        { label: 'Highest Roll', colour: statColours.roll },
+        { label: 'Highest Bonus Sum', colour: statColours.bonus },
+        { label: 'Highest Total', colour: statColours.total },
+        { label: 'Most Bonus Types', colour: statColours.bonuses },
     ];
 
     const legendY = height - 30;
@@ -121,7 +121,7 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
     let currentX = (width - legendItems.length * 150) / 2;
     legendItems.forEach((item) => {
         legend += `
-      <rect x="${currentX}" y="${legendY}" width="15" height="15" fill="${item.color}" rx="2"/>
+      <rect x="${currentX}" y="${legendY}" width="15" height="15" fill="${item.colour}" rx="2"/>
       <text x="${currentX + 20}" y="${legendY + 12}" fill="white" font-size="12">${item.label}</text>
     `;
         currentX += 150;
