@@ -1,6 +1,9 @@
 import { ActivityType, Client, GatewayIntentBits, TextChannel } from 'discord.js';
 
 import login from './login';
+import getStatistics from '../model/getStatistics';
+import { E_NO_SESSIONS } from '../errors';
+import { sendStatisticsMessage } from './sendDiscordMessage';
 
 const config = {
     FRONTEND_URL: process.env.FRONTEND_URL,
@@ -22,7 +25,7 @@ if (!client) {
     throw new Error('Could not connect to Discord');
 }
 
-client.once('ready', () => {
+client.once('clientReady', () => {
     if (!client.user) {
         throw new Error('Could not establish a user');
     }
@@ -40,9 +43,11 @@ client.once('ready', () => {
     });
 });
 
-client.on('messageCreate', (msg) => {
+const commands = ['login', '!stats'];
+
+client.on('messageCreate', async (msg) => {
     const { content, channel, member } = msg;
-    if (!(channel instanceof TextChannel) || content !== 'login') {
+    if (!(channel instanceof TextChannel) || !commands.includes(content)) {
         return;
     }
     if (!member) {
@@ -50,13 +55,26 @@ client.on('messageCreate', (msg) => {
         return;
     }
 
-    const code = login({ channel, member });
-    if (code) {
-        void msg.author.send(`Login at ${config.FRONTEND_URL}login?code=${code}
+    if (content.toLowerCase() === 'login') {
+        const code = login({ channel, member });
+        if (code) {
+            void msg.author.send(`Login at ${config.FRONTEND_URL}login?code=${code}
 
 This token will remain valid until you refresh it by running the login command as well.
 
 It will also be saved in your browser, so you can simply bookmark \`${config.FRONTEND_URL}\` and go directly to the app in future.`);
+        }
+        return;
+    }
+
+    if (content.toLowerCase() === '!stats') {
+        const stats = await getStatistics();
+        if (stats === E_NO_SESSIONS) {
+            console.log('Handle this error');
+            return;
+        }
+        sendStatisticsMessage(channel, stats);
+        return;
     }
 });
 

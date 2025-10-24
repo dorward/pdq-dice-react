@@ -1,9 +1,16 @@
 FROM node:lts-alpine
 
+RUN apk add --no-cache \
+  fontconfig \
+  ttf-dejavu \
+  freetype \
+  && mkdir -p /etc/fonts/conf.d
+
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
 COPY package.json tsconfig.json ./
 COPY src ./src
+COPY fonts ./fonts
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
 RUN chmod +x /wait
 RUN npm install --verbose
