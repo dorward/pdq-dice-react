@@ -1,6 +1,7 @@
 import { HighLowStatisticsReport } from '../types';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { colours } from './colors';
 const AileronUltraLight = readFileSync(join(__dirname, '../../fonts/Aileron-UltraLight.otf'));
 const base64Font = AileronUltraLight.toString('base64');
 const fontMime = 'font/otf';
@@ -19,10 +20,10 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
     const chartHeight = height - margin.top - margin.bottom;
     const chartWidth = width - margin.left - margin.right;
 
-    const colors = {
-        total: '#88ccff',
-        success: '#66ff99',
-        high: '#ffbb33',
+    const statColours = {
+        total: colours[0],
+        success: colours[1],
+        high: colours[2],
     };
 
     const numGroups = parsedData.length;
@@ -31,14 +32,12 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
     const maxSpacing = maxGroupWidth * spacingRatio;
     const maxTotalWidth = numGroups * maxGroupWidth + (numGroups - 1) * maxSpacing;
 
-    let groupWidth, spacing;
+    let groupWidth;
     if (maxTotalWidth <= chartWidth) {
         groupWidth = maxGroupWidth;
-        spacing = maxSpacing;
     } else {
         const scaledGroupWidth = chartWidth / (numGroups + spacingRatio * (numGroups - 1));
         groupWidth = scaledGroupWidth;
-        spacing = groupWidth * spacingRatio;
     }
 
     const totalBarWidth = groupWidth * 0.6;
@@ -64,9 +63,9 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
         const highX = totalX + totalBarWidth - subBarWidth / 2;
 
         bars += `
-      <rect x="${totalX}" y="${baseY - totalHeight}" width="${totalBarWidth}" height="${totalHeight}" fill="${colors.total}" rx="4"/>
-      <rect x="${successX}" y="${baseY - successHeight}" width="${subBarWidth}" height="${successHeight}" fill="${colors.success}" rx="3"/>
-      <rect x="${highX}" y="${baseY - highHeight}" width="${subBarWidth}" height="${highHeight}" fill="${colors.high}" rx="3"/>
+      <rect x="${totalX}" y="${baseY - totalHeight}" width="${totalBarWidth}" height="${totalHeight}" fill="${statColours.total}" rx="4"/>
+      <rect x="${successX}" y="${baseY - successHeight}" width="${subBarWidth}" height="${successHeight}" fill="${statColours.success}" rx="3"/>
+      <rect x="${highX}" y="${baseY - highHeight}" width="${subBarWidth}" height="${highHeight}" fill="${statColours.high}" rx="3"/>
       <text x="${groupX + groupWidth / 2}" y="${baseY + 15}" fill="white" font-size="12" text-anchor="middle">${d.most_common_charactername}</text>
     `;
     });
@@ -91,9 +90,9 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
     }
 
     const legendItems = [
-        { label: 'Total Rolls', color: colors.total },
-        { label: 'Successful Rolls', color: colors.success },
-        { label: 'High Rolls', color: colors.high },
+        { label: 'Total Rolls', color: statColours.total },
+        { label: 'Successful Rolls', color: statColours.success },
+        { label: 'High Rolls', color: statColours.high },
     ];
 
     const legendY = height - 30;

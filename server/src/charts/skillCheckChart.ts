@@ -1,6 +1,7 @@
 import { SkillCheckStatisticsReport } from '../types';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { colours } from './colors';
 
 const AileronUltraLight = readFileSync(join(__dirname, '../../fonts/Aileron-UltraLight.otf'));
 const base64Font = AileronUltraLight.toString('base64');
@@ -22,11 +23,11 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
     const chartHeight = height - margin.top - margin.bottom;
     const chartWidth = width - margin.left - margin.right;
 
-    const colors = {
-        roll: '#33aaff',
-        bonus: '#88cc44',
-        total: '#ff9933',
-        bonuses: '#cc66ff',
+    const statColours = {
+        roll: colours[0],
+        bonus: colours[1],
+        total: colours[2],
+        bonuses: colours[3],
     };
 
     const numGroups = parsedData.length;
@@ -54,25 +55,25 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
                 key: 'Roll',
                 val: d.highest_roll,
                 desc: d.highest_roll_description,
-                color: colors.roll,
+                color: statColours.roll,
             },
             {
                 key: 'Bonus',
                 val: d.highest_bonus_sum,
                 desc: d.highest_bonus_sum_description,
-                color: colors.bonus,
+                color: statColours.bonus,
             },
             {
                 key: 'Total',
                 val: d.highest_total,
                 desc: d.highest_total_description,
-                color: colors.total,
+                color: statColours.total,
             },
             {
                 key: 'Bonuses',
                 val: d.most_bonus_types,
                 desc: d.most_bonus_types_description,
-                color: colors.bonuses,
+                color: statColours.bonuses,
             },
         ];
 
@@ -109,10 +110,10 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
 
     // Legend
     const legendItems = [
-        { label: 'Highest Roll', color: colors.roll },
-        { label: 'Highest Bonus Sum', color: colors.bonus },
-        { label: 'Highest Total', color: colors.total },
-        { label: 'Most Bonus Types', color: colors.bonuses },
+        { label: 'Highest Roll', color: statColours.roll },
+        { label: 'Highest Bonus Sum', color: statColours.bonus },
+        { label: 'Highest Total', color: statColours.total },
+        { label: 'Most Bonus Types', color: statColours.bonuses },
     ];
 
     const legendY = height - 30;

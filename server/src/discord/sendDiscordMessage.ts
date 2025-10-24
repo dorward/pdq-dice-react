@@ -130,15 +130,15 @@ const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) 
 };
 
 type Stats = {
-    allTimeHighLow: HighLowStatisticsReport[] | string;
-    recentHighLow: HighLowStatisticsReport[] | string;
+    // allTimeHighLow: HighLowStatisticsReport[] | string;
+    recentHighLow: 'DB error' | HighLowStatisticsReport[];
     recentSkillChecks: 'DB error' | SkillCheckStatisticsReport[];
-    allTimeSkillChecks: 'DB error' | SkillCheckStatisticsReport[];
+    // allTimeSkillChecks: 'DB error' | SkillCheckStatisticsReport[];
 };
 
 export const sendStatisticsMessage = async (channel: TextChannel, stats: Stats) => {
-    sendHighLowMessage(stats.allTimeHighLow, 'All time High-Low statistics', channel);
-    sendSkillCheckMessage(stats.allTimeSkillChecks, 'All time Skill Check statistics', channel);
+    // sendHighLowMessage(stats.allTimeHighLow, 'All time High-Low statistics', channel);
+    // sendSkillCheckMessage(stats.allTimeSkillChecks, 'All time Skill Check statistics', channel);
     sendHighLowMessage(stats.recentHighLow, 'Last session High-Low statistics', channel);
     sendSkillCheckMessage(
         stats.recentSkillChecks,
