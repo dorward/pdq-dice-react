@@ -108,7 +108,6 @@ export const getSkillChecks = async (
 ): Promise<SkillCheckStatisticsReport[] | typeof E_DB_ERROR> => {
     try {
         const client = await pool.connect();
-        console.log('Making query', [session.session_start, session.session_end]);
         const result = await client.query<SkillCheckStatisticsReport>(sql, [
             session.session_start,
             session.session_end,

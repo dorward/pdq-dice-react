@@ -47,7 +47,6 @@ const commands = ['login', '!stats'];
 
 client.on('messageCreate', async (msg) => {
     const { content, channel, member } = msg;
-    console.log({ content });
     if (!(channel instanceof TextChannel) || !commands.includes(content)) {
         return;
     }
@@ -70,7 +69,6 @@ It will also be saved in your browser, so you can simply bookmark \`${config.FRO
 
     if (content.toLowerCase() === '!stats') {
         const stats = await getStatistics();
-        console.dir({ stats }, { depth: 8 });
         if (stats === E_NO_SESSIONS) {
             console.log('Handle this error');
             return;
