@@ -56,7 +56,7 @@ client.on('messageCreate', async (msg) => {
         return;
     }
 
-    if (content === 'login') {
+    if (content.toLowerCase() === 'login') {
         const code = login({ channel, member });
         if (code) {
             void msg.author.send(`Login at ${config.FRONTEND_URL}login?code=${code}
@@ -68,7 +68,7 @@ It will also be saved in your browser, so you can simply bookmark \`${config.FRO
         return;
     }
 
-    if (content === '!stats') {
+    if (content.toLowerCase() === '!stats') {
         const stats = await getStatistics();
         console.dir({ stats }, { depth: 8 });
         if (stats === E_NO_SESSIONS) {
