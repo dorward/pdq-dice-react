@@ -43,7 +43,7 @@ client.once('clientReady', () => {
     });
 });
 
-const commands = ['login', '!stats'];
+const commands = ['login', 'stats'];
 
 client.on('messageCreate', async (msg) => {
     const { content, channel, member } = msg;
@@ -67,7 +67,7 @@ It will also be saved in your browser, so you can simply bookmark \`${config.FRO
         return;
     }
 
-    if (content.toLowerCase() === '!stats') {
+    if (content.toLowerCase() === 'stats') {
         const stats = await getStatistics();
         if (stats === E_NO_SESSIONS) {
             console.log('Handle this error');

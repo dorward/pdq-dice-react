@@ -45,6 +45,7 @@ const getSessions = async (): Promise<Session[] | typeof E_NO_SESSIONS> => {
         const client = await pool.connect();
         const result = await client.query<Session>(sql, []);
         client.release();
+        // console.log({ result: result.rows }, { depth: 6 });
         return result?.rows ?? E_NO_SESSIONS;
     } catch (e) {
         console.error('getStatistics errors', e);
