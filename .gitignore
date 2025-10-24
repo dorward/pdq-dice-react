@@ -8,4 +8,4 @@
 /.env.development
 /.env.production
 /client/stats.json
-/dump_2025-10-23_18_43_12.sql
+/dump_*.sql
