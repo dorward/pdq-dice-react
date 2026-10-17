@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import reducer, { moveSomeExtra } from './edit-mode-slice';
-import { Character, Extra } from '../types';
+import { Character, Extra, ExtraContainer } from '../types';
 import { SelectedExtra } from './edit-mode-slice';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -44,6 +44,55 @@ describe('Edit Mode Slice', () => {
         expect(true).toBeTruthy();
     });
     describe('moveSomeExtra', () => {
+        describe('moving containers', () => {
+            const createContainer = (id: string, location: string): ExtraContainer => ({
+                id,
+                name: 'Box',
+                location,
+                count: null,
+                value: null,
+                capacity: 10,
+                isExpanded: true,
+            });
+
+            it.each([false, true])(
+                'preserves a container and its descendants when the destination has a matching container: %s',
+                (hasMatchingContainer) => {
+                    const home = { ...createContainer('home', ''), name: 'Home' };
+                    const source = createContainer('source', '');
+                    const destination = createContainer('destination', home.id);
+                    const nested = createContainer('nested', source.id);
+                    const child = createExtra({ location: nested.id });
+                    const existingChild = createExtra({ location: destination.id });
+                    const inventory = [home, source, nested, child];
+                    if (hasMatchingContainer) inventory.push(destination, existingChild);
+                    const state = { ...defaultState, inventory };
+
+                    const updatedState = reducer(
+                        state,
+                        moveSomeExtra({ id: source.id, count: null, location: home.id }),
+                    );
+
+                    expect(updatedState.inventory).toEqual(
+                        inventory.map((item) =>
+                            item.id === source.id ? { ...source, location: home.id } : item,
+                        ),
+                    );
+                    expect(source.location).toBe('');
+                },
+            );
+
+            it('keeps a container unchanged when moved to its current location', () => {
+                const source = createContainer('source', '');
+                const child = createExtra({ location: source.id });
+                const state = { ...defaultState, inventory: [source, child] };
+
+                expect(
+                    reducer(state, moveSomeExtra({ id: source.id, count: null, location: '' })),
+                ).toEqual(state);
+            });
+        });
+
         describe('when there are no items in the target location', () => {
             describe('and you move all the items', () => {
                 describe('from location null to location B', () => {

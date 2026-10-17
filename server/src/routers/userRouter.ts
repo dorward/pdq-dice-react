@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { E_BAD_CODE, E_NOT_FOUND } from '../errors';
+import { E_BAD_CODE, E_NOT_FOUND, E_SAVE_CONFLICT } from '../errors';
 import addOrUpdateUser from '../model/addOrUpdateUser';
 import { getUserByCode } from '../model/getUserByCode';
 import authHelper from '../util/authHelper';
@@ -27,9 +27,14 @@ router.get('/:code', async (req, res) => {
 
 router.post('/:id/:code', async (req, res) => {
     try {
-        await addOrUpdateUser(req.params.id, req.params.code, req.body);
-        res.status(204).send();
+        const result = await addOrUpdateUser(req.params.id, req.params.code, req.body);
+        res.json({ revision: result.rows[0].data.revision });
     } catch (e) {
+        if (e instanceof Error && e.message === E_SAVE_CONFLICT) {
+            return res
+                .status(409)
+                .json({ error: 'User data has changed. Reload before saving again.' });
+        }
         if (e instanceof Error && e.message === E_BAD_CODE) {
             return res.sendStatus(401);
         }
@@ -42,9 +47,9 @@ router.post('/:id/:code/avatar', async (req, res) => {
     const { code, id: userId } = req.params;
     const user = await authHelper(code, userId, res);
     if (!user) return; // Status code already sent by helper
-    const { image: dataUrl } = req.body;
+    const dataUrl = req.body?.image;
     const image = await saveDataUrl(dataUrl);
-    if (!image) return res.sendStatus(400);
+    if (!image) return res.status(400).json({ error: 'Please upload a valid image.' });
     res.json(image);
 });
 

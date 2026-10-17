@@ -83,6 +83,7 @@ type Channel = {
 };
 
 export type User = {
+    revision?: number;
     avatar: Avatar;
     channel: Channel;
     characters: Character[];

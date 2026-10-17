@@ -45,6 +45,7 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
             if (viewOnlyTabs.includes(prev) && characterToEdit) {
                 return 'character-core';
             }
+            return prev;
         });
     }, [!!characterToEdit]);
 

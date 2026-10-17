@@ -1,58 +1,64 @@
-import { Checkbox } from '@blueprintjs/core';
-import { RowProps } from './types';
-import { attributeValues } from '../../consts';
-import { selectSelected, toggleSelected } from '../../data/roll-slice';
-import { useDispatch, useSelector } from 'react-redux';
-import AttributeState from './attribute-state';
-import SimpleHealth from './simple-health';
+import { Checkbox } from "@blueprintjs/core";
+import { RowProps } from "./types";
+import { attributeValues } from "../../consts";
+import { deselect, selectSelected, toggleSelected } from "../../data/roll-slice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AttributeState from "./attribute-state";
+import SimpleHealth from "./simple-health";
 
-import classnames from 'classnames';
+import classnames from "classnames";
 
 const AttributeRow = ({ attribute, character, isWoundable }: RowProps) => {
-    const dispatch = useDispatch();
-    const selectedAttributes = useSelector(selectSelected);
+  const dispatch = useDispatch();
+  const selectedAttributes = useSelector(selectSelected);
 
-    const firstBought = attributeValues.findIndex((value) => value[0] === attribute.value);
-    const firstUnwounded = firstBought + attribute.wounds;
-    const checked = !!selectedAttributes[attribute.id];
-    const onChange = () => dispatch(toggleSelected(attribute.id));
+  const firstBought = attributeValues.findIndex((value) => value[0] === attribute.value);
+  const firstUnwounded = firstBought + (attribute.wounds ?? 0);
+  const gone = firstUnwounded >= attributeValues.length - 1;
+  const checked = !!selectedAttributes[attribute.id];
 
-    return (
-        <tr
-            key={attribute.name}
-            className={classnames({ attributeRow: true, wounded: Boolean(attribute.wounds) })}
-        >
-            <td key="label" className="bonus-name">
-                <Checkbox checked={checked} onChange={onChange}>
-                    {attribute.name}
-                </Checkbox>
-            </td>
-            <SimpleHealth
-                key="health"
-                isWoundable={isWoundable}
-                characterId={character.id}
-                attributeId={attribute.id}
-                firstUnwounded={firstUnwounded}
-                firstBought={firstBought}
-            />
+  useEffect(() => {
+    if (gone && checked) dispatch(deselect(attribute.id));
+  }, [dispatch, attribute.id, gone, checked]);
+  const onChange = () => dispatch(toggleSelected(attribute.id));
 
-            {attributeValues.map(([name], index) => (
-                <td key={name}>
-                    <AttributeState
-                        {...{
-                            firstBought,
-                            firstUnwounded,
-                            index,
-                            name,
-                            character,
-                            attribute,
-                            isWoundable,
-                        }}
-                    />
-                </td>
-            ))}
-        </tr>
-    );
+  return (
+    <tr
+      key={attribute.name}
+      className={classnames({ attributeRow: true, wounded: Boolean(attribute.wounds) })}
+    >
+      <td key="label" className="bonus-name">
+        <Checkbox checked={checked && !gone} disabled={gone} onChange={onChange}>
+          {attribute.name}
+        </Checkbox>
+      </td>
+      <SimpleHealth
+        key="health"
+        isWoundable={isWoundable}
+        characterId={character.id}
+        attributeId={attribute.id}
+        firstUnwounded={firstUnwounded}
+        firstBought={firstBought}
+      />
+
+      {attributeValues.map(([name], index) => (
+        <td key={name}>
+          <AttributeState
+            {...{
+              firstBought,
+              firstUnwounded,
+              index,
+              name,
+              character,
+              attribute,
+              isWoundable,
+            }}
+          />
+        </td>
+      ))}
+    </tr>
+  );
 };
 
 export default AttributeRow;

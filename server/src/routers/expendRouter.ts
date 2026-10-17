@@ -23,7 +23,7 @@ router.post('/:id/:code', async (req, res) => {
         expendFor,
         extraName,
     };
-    sendDiscordExpendNotification(user, response);
+    await sendDiscordExpendNotification(user, response);
     res.json(response);
 });
 

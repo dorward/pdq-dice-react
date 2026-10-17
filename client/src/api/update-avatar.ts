@@ -18,15 +18,16 @@ const getBase = () => {
 
 type Props = {
     image: string;
+    signal?: AbortSignal;
 };
 
-const updateAvatar = async ({ image }: Props) => {
+const updateAvatar = async ({ image, signal }: Props) => {
     const { auth, url } = getBase();
     const data = {
         ...auth,
         image,
     };
-    const response = await axios.post(url, data);
+    const response = await axios.post(url, data, { signal });
     return response.data.url;
 };
 

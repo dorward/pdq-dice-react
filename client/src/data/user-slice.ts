@@ -1,11 +1,11 @@
 import saveToServer from '../api/save-to-server';
-import { Character, Sheet, User, isExtraContainer } from '../types';
+import { Character, User, isExtraContainer } from '../types';
 import blankCharacter from './blankCharacter';
-import cleanUser, { cleanCharacter } from './clean-user';
+import cleanUser from './clean-user';
 import { RootState } from './redux-store';
 import { selectCharacterId } from './whoami-slice';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { load } from 'js-yaml';
+import { importCharacter } from '../util/import-character';
 
 type UserState = {
     user: User;
@@ -16,6 +16,12 @@ type AttributePath = { characterId: string; attributeId: string };
 type ExtraPath = { characterId: string; extraId: string };
 
 const initialUserState: UserState = { user: null, error: null };
+const addImportedCharacter = (state: UserState, action: PayloadAction<Character>) => {
+    const user = state.user;
+    const newUser: User = { ...user, characters: [...user.characters, action.payload] };
+    saveToServer(JSON.parse(JSON.stringify(newUser)));
+    state.user = newUser;
+};
 const userSlice = createSlice({
     name: 'user',
     initialState: initialUserState,
@@ -29,18 +35,13 @@ const userSlice = createSlice({
             state.user = null;
             state.error = action.payload;
         },
-        addCharacterFromYAML: (state, action: PayloadAction<string>) => {
-            const parsed = load(action.payload) as Sheet | Character | null;
-            if (!parsed)
-                throw new Error(
-                    'The YAML file could not be parsed. Something is probably wrong with the format of it.',
-                );
-            const character = 'sheet' in parsed ? parsed.sheet : parsed;
-            cleanCharacter(character, true);
-            const user = state.user;
-            const newUser: User = { ...user, characters: [...user.characters, character] };
-            saveToServer(JSON.parse(JSON.stringify(newUser)));
-            state.user = newUser;
+        addCharacterFromYAML: {
+            prepare: (input: string) => ({ payload: importCharacter(input, 'yaml') }),
+            reducer: addImportedCharacter,
+        },
+        addCharacterFromJSON: {
+            prepare: (input: string) => ({ payload: importCharacter(input, 'json') }),
+            reducer: addImportedCharacter,
         },
         addCharacterFromScratch: (state, action: PayloadAction<string>) => {
             state.user.characters = [...state.user.characters, blankCharacter(action.payload)];
@@ -150,6 +151,7 @@ const userSlice = createSlice({
 export const {
     addCharacterFromScratch,
     addCharacterFromYAML,
+    addCharacterFromJSON,
     applyWound,
     deleteCharacter,
     healWound,

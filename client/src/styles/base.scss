@@ -85,6 +85,10 @@ main > .#{bp.$ns}-tabs > .#{bp.$ns}-tab-list {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    &.is-loading {
+        justify-content: center;
+        align-items: center;
+    }
     table {
         margin: auto;
     }
@@ -116,6 +120,10 @@ main > .#{bp.$ns}-tabs > .#{bp.$ns}-tab-list {
     flex-direction: column;
     justify-content: center;
     width: 100%;
+}
+
+main.logged-out-home {
+    flex-direction: column;
 }
 
 main.tiny {

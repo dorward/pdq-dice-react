@@ -22,13 +22,7 @@ const Login = () => {
 
     useEffect(() => {
         if (!code) {
-            dispatch(
-                setUser(
-                    new Error(
-                        "You don't seem to have provided a login code. Try logging in using Discord again.",
-                    ),
-                ),
-            );
+            navigate('/', { replace: true });
             return;
         } else if (!user) {
             (async () => {

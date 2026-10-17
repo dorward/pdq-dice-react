@@ -1,9 +1,6 @@
-import { ActivityType, Client, GatewayIntentBits, TextChannel } from 'discord.js';
+import { ActivityType, Client, GatewayIntentBits } from 'discord.js';
 
-import login from './login';
-import getStatistics from '../model/getStatistics';
-import { E_NO_SESSIONS } from '../errors';
-import { sendStatisticsMessage } from './sendDiscordMessage';
+import { handleMessage } from './commands';
 
 const config = {
     FRONTEND_URL: process.env.FRONTEND_URL,
@@ -43,41 +40,10 @@ client.once('clientReady', () => {
     });
 });
 
-const commands = ['login', 'stats'];
+client.on('messageCreate', handleMessage);
 
-client.on('messageCreate', async (msg) => {
-    const { content, channel, member } = msg;
-    if (!(channel instanceof TextChannel) || !commands.includes(content)) {
-        return;
-    }
-    if (!member) {
-        console.error('Missing member');
-        return;
-    }
-
-    if (content.toLowerCase() === 'login') {
-        const code = login({ channel, member });
-        if (code) {
-            void msg.author.send(`Login at ${config.FRONTEND_URL}login?code=${code}
-
-This token will remain valid until you refresh it by running the login command as well.
-
-It will also be saved in your browser, so you can simply bookmark \`${config.FRONTEND_URL}\` and go directly to the app in future.`);
-        }
-        return;
-    }
-
-    if (content.toLowerCase() === 'stats') {
-        const stats = await getStatistics();
-        if (stats === E_NO_SESSIONS) {
-            console.log('Handle this error');
-            return;
-        }
-        sendStatisticsMessage(channel, stats);
-        return;
-    }
+client.login(config.token).catch((error: unknown) => {
+    console.error('Discord connection failed', error);
 });
-
-void client.login(config.token);
 
 export default client;

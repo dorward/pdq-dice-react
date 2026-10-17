@@ -58,7 +58,7 @@ export const sendDiscordExpendNotification = async (
         .setTimestamp();
 
     const channel = await client.channels.fetch(user.channel.id);
-    if (isTextChannel(channel)) channel.send({ embeds: [embed] });
+    if (isTextChannel(channel)) await channel.send({ embeds: [embed] });
 };
 
 export const sendBennyRollDiscordMessage = async (
@@ -84,7 +84,7 @@ export const sendBennyRollDiscordMessage = async (
     embed.setFooter(footer);
     embed.setTimestamp();
     const channel = await client.channels.fetch(user.channel.id);
-    if (isTextChannel(channel)) channel.send({ embeds: [embed] });
+    if (isTextChannel(channel)) await channel.send({ embeds: [embed] });
 };
 
 const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) => {
@@ -126,7 +126,7 @@ const sendDiscordMessage = async (user: User, response: SkillCheckResponseBody) 
     embed.setFooter(footer);
     embed.setTimestamp();
     const channel = await client.channels.fetch(user.channel.id);
-    if (isTextChannel(channel)) channel.send({ embeds: [embed] });
+    if (isTextChannel(channel)) await channel.send({ embeds: [embed] });
 };
 
 type Stats = {
@@ -139,8 +139,8 @@ type Stats = {
 export const sendStatisticsMessage = async (channel: TextChannel, stats: Stats) => {
     // sendHighLowMessage(stats.allTimeHighLow, 'All time High-Low statistics', channel);
     // sendSkillCheckMessage(stats.allTimeSkillChecks, 'All time Skill Check statistics', channel);
-    sendHighLowMessage(stats.recentHighLow, 'Last session High-Low statistics', channel);
-    sendSkillCheckMessage(
+    await sendHighLowMessage(stats.recentHighLow, 'Last session High-Low statistics', channel);
+    await sendSkillCheckMessage(
         stats.recentSkillChecks,
         'Last session Skill Check statistics',
         channel,

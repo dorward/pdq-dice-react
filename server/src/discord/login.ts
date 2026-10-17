@@ -10,7 +10,7 @@ type LoginArgs = {
 
 const imageOptions: BaseImageURLOptions = { size: 128 };
 
-const login = ({ channel, member }: LoginArgs): string | undefined => {
+const login = async ({ channel, member }: LoginArgs): Promise<string | undefined> => {
     if (!channel) return;
     if (!member) return;
     const userId = member.user.id;
@@ -24,7 +24,7 @@ const login = ({ channel, member }: LoginArgs): string | undefined => {
         guild: channel.guild.name,
         avatar: channel.guild.iconURL(imageOptions),
     };
-    addOrUpdateUserCredentials(
+    await addOrUpdateUserCredentials(
         {
             avatar,
             channel: serializableChannel,

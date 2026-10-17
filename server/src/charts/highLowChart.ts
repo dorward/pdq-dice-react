@@ -1,10 +1,6 @@
 import { HighLowStatisticsReport } from '../types';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { colours } from './colours';
-const AileronUltraLight = readFileSync(join(__dirname, '../../fonts/Aileron-UltraLight.otf'));
-const base64Font = AileronUltraLight.toString('base64');
-const fontMime = 'font/otf';
+import { createSvg } from './svg';
 
 const highLowChart = (data: HighLowStatisticsReport[]) => {
     const parsedData = data.map((d) => ({
@@ -16,6 +12,11 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
 
     const width = 800;
     const height = 500;
+    const svg = createSvg(width, height);
+    const gridLines = svg.ele('g');
+    const yAxis = svg.ele('g');
+    const bars = svg.ele('g');
+    const legend = svg.ele('g');
     const margin = { top: 60, right: 30, bottom: 80, left: 60 };
     const chartHeight = height - margin.top - margin.bottom;
     const chartWidth = width - margin.left - margin.right;
@@ -49,7 +50,6 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
 
     const step = chartWidth / numGroups;
 
-    let bars = '';
     parsedData.forEach((d, i) => {
         const groupX = margin.left + i * step + step / 2 - groupWidth / 2;
         const baseY = margin.top + chartHeight;
@@ -62,31 +62,72 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
         const successX = totalX - subBarWidth / 2;
         const highX = totalX + totalBarWidth - subBarWidth / 2;
 
-        bars += `
-      <rect x="${totalX}" y="${baseY - totalHeight}" width="${totalBarWidth}" height="${totalHeight}" fill="${statColours.total}" rx="4"/>
-      <rect x="${successX}" y="${baseY - successHeight}" width="${subBarWidth}" height="${successHeight}" fill="${statColours.success}" rx="3"/>
-      <rect x="${highX}" y="${baseY - highHeight}" width="${subBarWidth}" height="${highHeight}" fill="${statColours.high}" rx="3"/>
-      <text x="${groupX + groupWidth / 2}" y="${baseY + 15}" fill="white" font-size="12" text-anchor="middle">${d.most_common_charactername}</text>
-    `;
+        bars.ele('rect', {
+            x: totalX,
+            y: baseY - totalHeight,
+            width: totalBarWidth,
+            height: totalHeight,
+            fill: statColours.total,
+            rx: '4',
+        });
+        bars.ele('rect', {
+            x: successX,
+            y: baseY - successHeight,
+            width: subBarWidth,
+            height: successHeight,
+            fill: statColours.success,
+            rx: '3',
+        });
+        bars.ele('rect', {
+            x: highX,
+            y: baseY - highHeight,
+            width: subBarWidth,
+            height: highHeight,
+            fill: statColours.high,
+            rx: '3',
+        });
+        bars.ele('text', {
+            x: groupX + groupWidth / 2,
+            y: baseY + 15,
+            fill: 'white',
+            'font-size': '12',
+            'text-anchor': 'middle',
+        }).txt(`${d.most_common_charactername}`);
     });
 
     const tickInterval = 5;
     const numTicks = maxRolls / tickInterval;
-    let yAxis = '';
-    let gridLines = '';
 
     for (let i = 0; i <= numTicks; i++) {
         const val = i * tickInterval;
         const y = margin.top + chartHeight - val * scaleY;
 
-        yAxis += `
-      <line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="white" stroke-width="1"/>
-      <text x="${margin.left - 10}" y="${y + 4}" fill="white" font-size="12" text-anchor="end">${val}</text>
-    `;
+        yAxis.ele('line', {
+            x1: margin.left - 5,
+            y1: y,
+            x2: margin.left,
+            y2: y,
+            stroke: 'white',
+            'stroke-width': '1',
+        });
+        yAxis
+            .ele('text', {
+                x: margin.left - 10,
+                y: y + 4,
+                fill: 'white',
+                'font-size': '12',
+                'text-anchor': 'end',
+            })
+            .txt(`${val}`);
 
-        gridLines += `
-      <line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#333" stroke-width="1"/>
-    `;
+        gridLines.ele('line', {
+            x1: margin.left,
+            y1: y,
+            x2: width - margin.right,
+            y2: y,
+            stroke: '#333',
+            'stroke-width': '1',
+        });
     }
 
     const legendItems = [
@@ -106,38 +147,29 @@ const highLowChart = (data: HighLowStatisticsReport[]) => {
 
     const legendStartX = (width - totalLegendWidth) / 2;
 
-    let legend = '';
     let currentX = legendStartX;
 
     legendItems.forEach((item, i) => {
-        legend += `
-          <rect x="${currentX}" y="${legendY}" width="15" height="15" fill="${item.colour}" rx="2"/>
-          <text x="${currentX + 20}" y="${legendY + 12}" fill="white" font-size="${labelFontSize}">${item.label}</text>
-        `;
+        legend.ele('rect', {
+            x: currentX,
+            y: legendY,
+            width: '15',
+            height: '15',
+            fill: item.colour,
+            rx: '2',
+        });
+        legend
+            .ele('text', {
+                x: currentX + 20,
+                y: legendY + 12,
+                fill: 'white',
+                'font-size': labelFontSize,
+            })
+            .txt(`${item.label}`);
         currentX += labelWidths[i] + legendSpacing;
     });
 
-    // Final SVG output
-    const svg = `
-  <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-    <style>
-        @font-face {
-        font-family: 'MyFont';
-        src: url('data:${fontMime};base64,${base64Font}') format('opentype');
-        }
-        text {
-        font-family: 'MyFont';
-        }
-    </style>
-    <rect width="100%" height="100%" fill="black" />
-    <g>${gridLines}</g>
-    <g>${yAxis}</g>
-    <g>${bars}</g>
-    <g>${legend}</g>
-  </svg>
-  `;
-
-    return svg;
+    return svg.end({ headless: true });
 };
 
 export default highLowChart;

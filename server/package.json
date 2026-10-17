@@ -10,9 +10,13 @@
 		"typecheck": "tsc --noEmit",
 		"typecheck:watch": "tsc --noEmit --watch",
 		"lint": "oxlint .",
-		"format:check": "oxfmt --check src",
-		"format:fix": "oxfmt --write src",
-		"lint:fix": "oxlint --fix ."
+		"format:check": "oxfmt --check src test",
+		"format:fix": "oxfmt --write src test",
+		"lint:fix": "oxlint --fix .",
+		"test:integration": "vitest run --config vitest.integration.config.mjs",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:typecheck": "tsc --noEmit -p tsconfig.test.json"
 	},
 	"keywords": [],
 	"author": "David Dorward <david@dorward.me.uk>",
@@ -27,7 +31,8 @@
 		"oxfmt": "^0.73.0",
 		"oxlint": "^1.88.0",
 		"tsx": "^4.23.15",
-		"typescript": "^7.0.2"
+		"typescript": "^7.0.2",
+		"vitest": "^5.0.5"
 	},
 	"dependencies": {
 		"@discordjs/rest": "^2.2.0",
@@ -41,7 +46,8 @@
 		"indefinite": "^2.5.1",
 		"pg": "^8.11.3",
 		"sharp": "^0.35.5",
-		"uuid": "^14.0.3"
+		"uuid": "^14.0.3",
+		"xmlbuilder2": "^4.0.3"
 	},
 	"packageManager": "pnpm@12.6.0",
 	"devEngines": {

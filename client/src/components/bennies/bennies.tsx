@@ -6,10 +6,10 @@ import {
     updateCurrentBennies,
     updateMaximumBennies,
 } from '../../data/edit-mode-slice';
-import { Button, FormGroup, H2, HTMLSelect, InputGroup } from '@blueprintjs/core';
+import { Button, Callout, FormGroup, H2, HTMLSelect, InputGroup } from '@blueprintjs/core';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Character } from '../../types';
-import { useCallback } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { isDiceFormat, parseMaxBennyValue } from '../../util/parseMaxBennyValue';
 import { resetBennies } from '../../api/roll';
 
@@ -24,6 +24,23 @@ export const Bennies = () => {
 
 const BenniesView = () => {
     const bennies = useSelector(selectBennies) ?? { current: 0, max: 'unknown' };
+    const pending = useRef(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const reset = async () => {
+        if (pending.current) return;
+        pending.current = true;
+        setLoading(true);
+        setError('');
+        try {
+            await resetBennies();
+        } catch {
+            setError('Bennies could not be reset. Please try again.');
+        } finally {
+            pending.current = false;
+            setLoading(false);
+        }
+    };
 
     const [max, dice] = parseMaxBennyValue(bennies.max);
     const diceCount = +(dice.match(isDiceFormat)?.[1] || '0');
@@ -41,7 +58,12 @@ const BenniesView = () => {
                 </span>
             </div>
             <div className="benny-reset">
-                <Button className="skill-check" icon="reset" onClick={resetBennies}>
+                {error && (
+                    <Callout role="alert" intent="danger">
+                        {error}
+                    </Callout>
+                )}
+                <Button className="skill-check" icon="reset" onClick={reset} loading={loading}>
                     Reset Bennies
                 </Button>
             </div>

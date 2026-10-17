@@ -10,7 +10,7 @@ const sendHighLowMessage = async (
     channel: TextChannel,
 ) => {
     if (typeof stats === 'string') {
-        channel.send({
+        await channel.send({
             content: `There was an error generating the ${label} report`,
         });
         return;
@@ -43,7 +43,7 @@ const sendHighLowMessage = async (
             ]),
         );
 
-    channel.send({
+    await channel.send({
         content: '```' + table + '```',
         files: [attachment],
     });

@@ -1,13 +1,14 @@
 import { attributeValues, countsThatDoNotReduce } from '../consts';
 import { updateLastRoll } from '../data/last-roll-slice';
 import store from '../data/redux-store';
-import { markLoading, setResult, markClear } from '../data/results-slice';
+import { markLoading, setResult, setRollError } from '../data/results-slice';
 import {
     selectCharacter,
     spendInventoryItem,
-    setUserError,
     setBennies,
+    spendBenny,
 } from '../data/user-slice';
+import { selectBennyUse, useBenny } from '../data/roll-slice';
 import { selectCharacterId, selectWhoami } from '../data/whoami-slice';
 import { SkillCheckRequestBody } from '../types';
 import axios from 'axios';
@@ -39,10 +40,15 @@ export const d6 = async ({ high }: D6Params) => {
         rollType,
         description,
     };
-    const response = await axios.post(url, data);
-    const result = response.data.result;
-    store.dispatch(setResult(response.data));
-    return result;
+    try {
+        const response = await axios.post(url, data);
+        const result = response.data.result;
+        store.dispatch(setResult(response.data));
+        return result;
+    } catch (error) {
+        console.error({ error });
+        store.dispatch(setRollError('The roll could not be completed. Please try again.'));
+    }
 };
 
 type SkillCheckProps = {
@@ -91,8 +97,12 @@ export const resetBennies = async () => {
 
 export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
     let body: SkillCheckRequestBody;
+    let inventoryToSpend: { characterId: string; extraId: string }[] = [];
 
     if (isUsingBenny) {
+        const state = store.getState();
+        if (state.results.loading || !selectBennyUse(state)) return;
+        store.dispatch(markLoading());
         body = store.getState().lastRoll.roll;
     } else {
         const { selected, description, circumstance } = store.getState().roll;
@@ -117,13 +127,14 @@ export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
                 name: item.name,
                 value: item.value,
             }));
-        character.inventory
-            .filter((item) => selected[item.id] && !countsThatDoNotReduce.includes(item.count))
-            .forEach((item) => {
-                store.dispatch(
-                    spendInventoryItem({ characterId: character.id, extraId: item.id }),
-                );
-            });
+        inventoryToSpend = character.inventory
+            .filter(
+                (item) =>
+                    selected[item.id] &&
+                    typeof item.count === 'number' &&
+                    !countsThatDoNotReduce.includes(item.count),
+            )
+            .map((item) => ({ characterId: character.id, extraId: item.id }));
         const circumstanceBonus = circumstance.value
             ? [{ name: circumstance.name, value: circumstance.value }]
             : [];
@@ -136,7 +147,6 @@ export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
             description,
             rollType: 'Skill Check',
         };
-        store.dispatch(updateLastRoll(body));
     }
 
     const { auth, url } = getBase();
@@ -147,13 +157,22 @@ export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
         const {
             data: { result },
         } = response;
+        inventoryToSpend.forEach((item) => store.dispatch(spendInventoryItem(item)));
+        if (isUsingBenny) {
+            store.dispatch(spendBenny(auth.characterId));
+            store.dispatch(useBenny());
+        }
+        if (!isUsingBenny) store.dispatch(updateLastRoll(body));
         store.dispatch(setResult(response.data));
         return result;
     } catch (error) {
         console.error({ error });
-        store.dispatch(markClear());
         store.dispatch(
-            setUserError('There was an unexpected error. Try logging in using Discord again.'),
+            setRollError(
+                isUsingBenny
+                    ? 'The reroll could not be completed. Your Benny has not been spent. Please try again.'
+                    : 'The roll could not be completed. Your inventory has not been consumed. Please try again.',
+            ),
         );
     }
 };

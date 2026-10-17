@@ -37,7 +37,7 @@ const bennyRoll = async (
     if (diceCount > 4) {
         throw new Error('Dice count too high');
     }
-    const diceResult = Array(diceCount).fill(d6());
+    const diceResult = Array.from({ length: diceCount }, () => d6());
     const total = diceResult.reduce((acc, cur) => acc + cur, defaultBennies);
     const response: BennyRollResponseBody = {
         rollFor,
@@ -47,7 +47,7 @@ const bennyRoll = async (
         total,
         rollType: 'Benny Reset',
     };
-    sendBennyRollDiscordMessage(user, response);
+    await sendBennyRollDiscordMessage(user, response);
     res.json(response);
 };
 
@@ -81,7 +81,7 @@ router.post('/:id/:code', async (req, res) => {
     }, 0);
 
     if (rollType === 'Luck roll') {
-        recordHighLowRoll({
+        await recordHighLowRoll({
             userId: user.userId,
             characterName: rollFor.name,
             seekingHigh: Boolean(high),
@@ -89,7 +89,7 @@ router.post('/:id/:code', async (req, res) => {
             roll: diceResult.value,
         });
     } else if (rollType === 'Skill Check') {
-        recordSkillRoll({
+        await recordSkillRoll({
             userId: user.userId,
             characterName: rollFor.name,
             description: `${description}`,
@@ -102,7 +102,7 @@ router.post('/:id/:code', async (req, res) => {
             total,
         });
     } else if (rollType === 'd6') {
-        recordD6Roll({
+        await recordD6Roll({
             userId: user.userId,
             characterName: rollFor.name,
             roll: diceResult.value,
@@ -121,7 +121,7 @@ router.post('/:id/:code', async (req, res) => {
         rollType,
         diceResult,
     };
-    sendDiscordMessage(user, response);
+    await sendDiscordMessage(user, response);
     res.json(response);
 });
 

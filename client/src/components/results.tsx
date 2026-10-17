@@ -1,10 +1,16 @@
-import { Button, ButtonGroup, Card, HTMLTable, Intent, Overlay2 } from '@blueprintjs/core';
+import {
+    Button,
+    ButtonGroup,
+    Callout,
+    Card,
+    HTMLTable,
+    Intent,
+    Overlay2,
+} from '@blueprintjs/core';
 
 import { markClear, selectResults } from '../data/results-slice';
-import { reset as markRollClear, selectBennyUse, useBenny } from '../data/roll-slice';
-import { selectCharacterId } from '../data/whoami-slice';
+import { reset as markRollClear, selectBennyUse } from '../data/roll-slice';
 import { skillCheck } from '../api/roll';
-import { spendBenny } from '../data/user-slice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Loading from './loading';
@@ -13,7 +19,6 @@ const Results = () => {
     const dispatch = useDispatch();
     const results = useSelector(selectResults);
     const benniesAvailable = useSelector(selectBennyUse);
-    const characterId = useSelector(selectCharacterId);
     return (
         <Overlay2
             autoFocus
@@ -21,11 +26,23 @@ const Results = () => {
             onClose={() => {
                 /* Clear state */
             }}
-            isOpen={!!(results.loading || results.roll)}
+            isOpen={!!(results.loading || results.roll || results.error)}
         >
             <div className="v-center">
-                <Card interactive={true} elevation={1} className="h-center results">
+                <Card
+                    interactive={true}
+                    elevation={1}
+                    className={`h-center results${results.loading ? ' is-loading' : ''}`}
+                >
                     {results.loading && <Loading />}
+                    {results.error && (
+                        <>
+                            <Callout intent={Intent.DANGER} title="Roll failed">
+                                {results.error}
+                            </Callout>
+                            <Button onClick={() => dispatch(markClear())}>OK</Button>
+                        </>
+                    )}
                     {results?.roll?.results && (
                         <>
                             <div>
@@ -53,11 +70,9 @@ const Results = () => {
                                     OK
                                 </Button>
 
-                                {benniesAvailable ? (
+                                {results.roll.rollType === 'Skill Check' && benniesAvailable ? (
                                     <Button
                                         onClick={() => {
-                                            dispatch(useBenny());
-                                            dispatch(spendBenny(characterId));
                                             skillCheck({ isUsingBenny: true });
                                         }}
                                         className="bennyButton"

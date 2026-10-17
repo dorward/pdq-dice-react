@@ -123,6 +123,9 @@ const EditModeSlice = createSlice({
             if (isExtraUpdateValue(action.payload)) {
                 const { value } = action.payload;
                 if (value === 'DEL') {
+                    if (state.inventory.some((item) => item.location === action.payload.id)) {
+                        return state;
+                    }
                     state.inventory = state.inventory.filter((q) => q.id !== action.payload.id);
                 } else {
                     state.inventory = mutateValue(
@@ -163,12 +166,18 @@ const EditModeSlice = createSlice({
 
             // Find the elements we are dealing with
             const from = state.inventory.find((extra) => extra.id === payload.id);
+            // Containers retain their identity so their children's locations stay valid.
+            if (isExtraContainer(from)) {
+                from.location = payload.location;
+                return state;
+            }
             const change = payload.count;
             const movingAll = [from.count, INF].includes(change);
 
             // Look for an identical item to merge it with
             let to = state.inventory.find(
                 (extra) =>
+                    !isExtraContainer(extra) &&
                     extra.name === from.name &&
                     extra.location === payload.location &&
                     extra?.value === from?.value,

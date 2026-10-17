@@ -4,17 +4,21 @@ import results from './results-slice';
 import roll from './roll-slice';
 import user from './user-slice';
 import whoami from './whoami-slice';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { clearSession } from './session';
+
+const reducer = combineReducers({
+    editMode,
+    lastRoll,
+    results,
+    roll,
+    user,
+    whoami,
+});
 
 const reduxStore = configureStore({
-    reducer: {
-        editMode,
-        lastRoll,
-        results,
-        roll,
-        user,
-        whoami,
-    },
+    reducer: (state: ReturnType<typeof reducer> | undefined, action) =>
+        reducer(clearSession.match(action) ? undefined : state, action),
 });
 
 export type RootState = ReturnType<typeof reduxStore.getState>;

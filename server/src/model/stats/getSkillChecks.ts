@@ -107,7 +107,6 @@ export const getSkillChecks = async (
     session: Session,
 ): Promise<SkillCheckStatisticsReport[] | typeof E_DB_ERROR> => {
     try {
-        const client = await pool.connect();
         const params = [session.session_start, session.session_end];
         let debugSQL = sql;
         params.forEach((p, i) => {
@@ -115,8 +114,7 @@ export const getSkillChecks = async (
             const v = typeof p === 'string' ? `'${p}'` : p;
             debugSQL = debugSQL.replace(`$${i + 1}`, v as string);
         });
-        const result = await client.query<SkillCheckStatisticsReport>(sql, params);
-        client.release();
+        const result = await pool.query<SkillCheckStatisticsReport>(sql, params);
         // console.log('Executing SQL with values:\n', debugSQL);
         // console.log({ r: result.rows, c: result.rowCount, session }, { depth: 6 });
 

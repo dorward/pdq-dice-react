@@ -1,11 +1,6 @@
 import { SkillCheckStatisticsReport } from '../types';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { colours } from './colours';
-
-const AileronUltraLight = readFileSync(join(__dirname, '../../fonts/Aileron-UltraLight.otf'));
-const base64Font = AileronUltraLight.toString('base64');
-const fontMime = 'font/otf';
+import { createSvg } from './svg';
 
 const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
     const parsedData = data.map((d) => ({
@@ -19,6 +14,11 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
 
     const width = 900;
     const height = 500;
+    const svg = createSvg(width, height);
+    const grid = svg.ele('g');
+    const yAxis = svg.ele('g');
+    const bars = svg.ele('g');
+    const legend = svg.ele('g');
     const margin = { top: 70, right: 40, bottom: 100, left: 70 };
     const chartHeight = height - margin.top - margin.bottom;
     const chartWidth = width - margin.left - margin.right;
@@ -33,7 +33,7 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
     const numGroups = parsedData.length;
     const barWidth = Math.min(40, chartWidth / (numGroups * 5));
     const groupWidth = barWidth * 4 + 10;
-    const spacing = (chartWidth - numGroups * groupWidth) / (numGroups - 1);
+    const spacing = numGroups > 1 ? (chartWidth - numGroups * groupWidth) / (numGroups - 1) : 0;
 
     const maxValue = Math.max(
         ...parsedData.flatMap((d) => [
@@ -47,9 +47,10 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
     const scaleY = chartHeight / (Math.ceil(maxValue / 5) * 5);
     const baseY = margin.top + chartHeight;
 
-    let bars = '';
     parsedData.forEach((d, i) => {
-        const groupX = margin.left + i * (groupWidth + spacing);
+        const groupX =
+            margin.left +
+            (numGroups === 1 ? (chartWidth - groupWidth) / 2 : i * (groupWidth + spacing));
         const values = [
             {
                 key: 'Roll',
@@ -80,32 +81,65 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
         values.forEach((v, j) => {
             const x = groupX + j * (barWidth + 5);
             const barHeight = v.val * scaleY;
-            bars += `
-        <rect x="${x}" y="${baseY - barHeight}" width="${barWidth}" height="${barHeight}" fill="${v.colour}" rx="3"/>
-        <title>${d.charactername}: ${v.key} = ${v.val}${v.desc ? ` – ${v.desc}` : ''}</title>
-      `;
+            bars.ele('rect', {
+                x: x,
+                y: baseY - barHeight,
+                width: barWidth,
+                height: barHeight,
+                fill: v.colour,
+                rx: '3',
+            });
+            bars.ele('title').txt(
+                `${d.charactername}: ${v.key} = ${v.val}${v.desc ? ` – ${v.desc}` : ''}`,
+            );
         });
 
         // Character label
-        bars += `
-      <text x="${groupX + (barWidth * 4) / 2}" y="${baseY + 20}" fill="white" font-size="12" text-anchor="middle">${d.charactername}</text>
-      <text x="${groupX + (barWidth * 4) / 2}" y="${baseY + 35}" fill="#aaa" font-size="10" text-anchor="middle">(${d.rolls_with_benny} bennies)</text>
-    `;
+        bars.ele('text', {
+            x: groupX + (barWidth * 4) / 2,
+            y: baseY + 20,
+            fill: 'white',
+            'font-size': '12',
+            'text-anchor': 'middle',
+        }).txt(`${d.charactername}`);
+        bars.ele('text', {
+            x: groupX + (barWidth * 4) / 2,
+            y: baseY + 35,
+            fill: '#aaa',
+            'font-size': '10',
+            'text-anchor': 'middle',
+        }).txt(`(${d.rolls_with_benny} bennies)`);
     });
 
     // Simple Y-axis ticks and grid lines
     const tickInterval = 5;
     const numTicks = Math.ceil(maxValue / tickInterval);
-    let yAxis = '';
-    let grid = '';
     for (let i = 0; i <= numTicks; i++) {
         const val = i * tickInterval;
         const y = margin.top + chartHeight - val * scaleY;
-        grid += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#333"/>`;
-        yAxis += `
-      <line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="white"/>
-      <text x="${margin.left - 10}" y="${y + 4}" fill="white" font-size="12" text-anchor="end">${val}</text>
-    `;
+        grid.ele('line', {
+            x1: margin.left,
+            y1: y,
+            x2: width - margin.right,
+            y2: y,
+            stroke: '#333',
+        });
+        yAxis.ele('line', {
+            x1: margin.left - 5,
+            y1: y,
+            x2: margin.left,
+            y2: y,
+            stroke: 'white',
+        });
+        yAxis
+            .ele('text', {
+                x: margin.left - 10,
+                y: y + 4,
+                fill: 'white',
+                'font-size': '12',
+                'text-anchor': 'end',
+            })
+            .txt(`${val}`);
     }
 
     // Legend
@@ -117,35 +151,28 @@ const skillCheckChart = (data: SkillCheckStatisticsReport[]) => {
     ];
 
     const legendY = height - 30;
-    let legend = '';
     let currentX = (width - legendItems.length * 150) / 2;
     legendItems.forEach((item) => {
-        legend += `
-      <rect x="${currentX}" y="${legendY}" width="15" height="15" fill="${item.colour}" rx="2"/>
-      <text x="${currentX + 20}" y="${legendY + 12}" fill="white" font-size="12">${item.label}</text>
-    `;
+        legend.ele('rect', {
+            x: currentX,
+            y: legendY,
+            width: '15',
+            height: '15',
+            fill: item.colour,
+            rx: '2',
+        });
+        legend
+            .ele('text', {
+                x: currentX + 20,
+                y: legendY + 12,
+                fill: 'white',
+                'font-size': '12',
+            })
+            .txt(`${item.label}`);
         currentX += 150;
     });
 
-    // Final SVG output
-    const svg = `
-    <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-      <style>
-        @font-face {
-          font-family: 'MyFont';
-          src: url('data:${fontMime};base64,${base64Font}') format('opentype');
-        }
-        text { font-family: 'MyFont'; }
-      </style>
-      <rect width="100%" height="100%" fill="black" />
-      <g>${grid}</g>
-      <g>${yAxis}</g>
-      <g>${bars}</g>
-      <g>${legend}</g>
-    </svg>
-  `;
-
-    return svg;
+    return svg.end({ headless: true });
 };
 
 export default skillCheckChart;

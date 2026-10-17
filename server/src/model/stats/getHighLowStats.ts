@@ -49,12 +49,10 @@ const getHighLowStats = async (
     session: Session,
 ): Promise<HighLowStatisticsReport[] | typeof E_DB_ERROR> => {
     try {
-        const client = await pool.connect();
-        const result = await client.query<HighLowStatisticsReport>(sql, [
+        const result = await pool.query<HighLowStatisticsReport>(sql, [
             session.session_start,
             session.session_end,
         ]);
-        client.release();
         return result?.rows ?? E_DB_ERROR;
     } catch (e) {
         console.error('getHighLowStats errors', e);

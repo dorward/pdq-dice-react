@@ -1,5 +1,6 @@
 import { writeFile } from 'fs/promises';
 import { v4 as uuidv4 } from 'uuid';
+import sharp from 'sharp';
 
 type Base = {
     AVATAR_URL: string;
@@ -18,14 +19,23 @@ export const avatarPaths: Base = ['AVATAR_URL', 'AVATAR_PATH'].reduce(
     {} as Partial<Base>,
 ) as Base;
 
-const splitDataUrl = /^data:[a-zA-Z]+\/([a-zA-Z]+);base64,(.*)$/;
+const splitDataUrl = /^data:image\/[a-zA-Z0-9.+-]+;base64,([A-Za-z0-9+/]+={0,2})$/;
 
-const saveDataUrl = async (image: string) => {
+const saveDataUrl = async (image: unknown) => {
+    if (typeof image !== 'string') return;
     const matches = image.match(splitDataUrl);
     if (!matches) return;
-    const [_all, ext, data] = matches;
-    const buffer = Buffer.from(data, 'base64');
-    const filename = `${uuidv4()}.${ext}`;
+    const [, data] = matches;
+    let buffer: Buffer;
+    try {
+        // Decode the contents and write a fresh raster image, never the supplied file.
+        buffer = await sharp(Buffer.from(data, 'base64'), { failOn: 'warning' })
+            .png()
+            .toBuffer();
+    } catch {
+        return;
+    }
+    const filename = `${uuidv4()}.png`;
     const path = `${avatarPaths.AVATAR_PATH}/${filename}`;
     const url = `${avatarPaths.AVATAR_URL}/${filename}`;
     await writeFile(path, buffer, { mode: 0o660 });

@@ -26,6 +26,9 @@ const rollSlice = createSlice({
             state.selected[action.payload] = !state.selected[action.payload];
             return state;
         },
+        deselect: (state, action: PayloadAction<string>) => {
+            delete state.selected[action.payload];
+        },
         updateCircumstance: (
             state,
             action: PayloadAction<ExtraUpdateValue | ExtraUpdateName>,
@@ -47,8 +50,14 @@ const rollSlice = createSlice({
     },
 });
 
-export const { reset, toggleSelected, updateCircumstance, useBenny, updateDescription } =
-    rollSlice.actions;
+export const {
+    reset,
+    toggleSelected,
+    deselect,
+    updateCircumstance,
+    useBenny,
+    updateDescription,
+} = rollSlice.actions;
 export const selectSelected = (state: RootState) => state.roll.selected;
 export const selectCircumstance = (state: RootState) => state.roll.circumstance;
 export const selectDescription = (state: RootState) => state.roll.description;

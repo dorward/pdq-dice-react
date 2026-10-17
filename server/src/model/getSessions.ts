@@ -42,11 +42,9 @@ ORDER BY session_start;
 
 const getSessions = async (): Promise<Session[] | typeof E_NO_SESSIONS> => {
     try {
-        const client = await pool.connect();
-        const result = await client.query<Session>(sql, []);
-        client.release();
+        const result = await pool.query<Session>(sql, []);
         // console.log({ result: result.rows }, { depth: 6 });
-        return result?.rows ?? E_NO_SESSIONS;
+        return result?.rows?.length ? result.rows : E_NO_SESSIONS;
     } catch (e) {
         console.error('getStatistics errors', e);
         return E_NO_SESSIONS;

@@ -22,7 +22,7 @@ class Server {
     }
 
     private dbConnect() {
-        pool.connect(function (err) {
+        pool.query('SELECT 1', function (err) {
             if (err) throw err;
             console.log('Connected');
         });
