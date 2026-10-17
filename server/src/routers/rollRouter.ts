@@ -82,6 +82,9 @@ router.post('/:id/:code', async (req, res) => {
 
     if (rollType === 'Luck roll') {
         await recordHighLowRoll({
+            characterId: user.characters.some((character) => character.id === characterId)
+                ? characterId
+                : undefined,
             userId: user.userId,
             characterName: rollFor.name,
             seekingHigh: Boolean(high),
@@ -90,6 +93,9 @@ router.post('/:id/:code', async (req, res) => {
         });
     } else if (rollType === 'Skill Check') {
         await recordSkillRoll({
+            characterId: user.characters.some((character) => character.id === characterId)
+                ? characterId
+                : undefined,
             userId: user.userId,
             characterName: rollFor.name,
             description: `${description}`,

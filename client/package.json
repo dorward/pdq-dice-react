@@ -1,6 +1,6 @@
 {
 	"name": "pdq-dice-react-frontend",
-	"version": "3.4.0",
+	"version": "4.0.0",
 	"description": "",
 	"author": "David Dorward <david@dorward.me.uk>",
 	"homepage": "",
@@ -25,6 +25,7 @@
 		"@blueprintjs/core": "^6.21.0",
 		"@blueprintjs/icons": "^6.14.1",
 		"@reduxjs/toolkit": "^2.2.1",
+		"@tanstack/react-query": "^5.104.3",
 		"axios": "^1.7.8",
 		"classnames": "^2.5.1",
 		"components": "^0.1.0",

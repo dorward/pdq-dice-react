@@ -595,3 +595,55 @@ span.padding {
         display: none;
     }
 }
+
+.statistics-table {
+    width: 100%;
+    table-layout: fixed;
+
+    caption {
+        // Match Blueprint H3 typography; the heading class supplies weight and color.
+        font-size: 22px;
+        line-height: 25px;
+        text-align: left;
+        padding-bottom: 12px;
+    }
+
+    .statistics-date {
+        width: 8rem;
+    }
+
+    .statistics-total {
+        width: 5rem;
+    }
+
+    .statistics-details {
+        width: 7rem;
+    }
+
+    th,
+    td {
+        overflow-wrap: anywhere;
+    }
+}
+
+.luck-roll-statistics {
+    margin-top: 2rem;
+}
+
+.luck-success-rates {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+
+    > div {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    dd {
+        margin: 0;
+        white-space: nowrap;
+    }
+}

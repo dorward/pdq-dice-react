@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import rollRouter from './rollRouter';
 import expendRouter from './expendRouter';
 import userRouter from './userRouter';
+import statisticsRouter from './statisticsRouter';
 
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000,
@@ -17,6 +18,7 @@ const router = Router();
 router.use(limiter);
 router.use(cors());
 router.use('/user', userRouter);
+router.use('/statistics', statisticsRouter);
 router.use('/roll', rollRouter);
 router.use('/expend', expendRouter);
 export default router;

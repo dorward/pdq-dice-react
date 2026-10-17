@@ -1,3 +1,5 @@
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './api/query-client';
 import Dashboard from './components/dashboard';
 import Home from './components/home';
 import Login from './components/login';
@@ -21,20 +23,22 @@ const App: React.FC = () => {
         return () => window.removeEventListener(SAVE_ERROR_EVENT, onSaveError);
     }, []);
     return (
-        <Provider store={store}>
-            {saveError && (
-                <Callout intent={Intent.DANGER} title="Changes not saved">
-                    {saveError}
-                </Callout>
-            )}
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                </Routes>
-            </Router>
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+                {saveError && (
+                    <Callout intent={Intent.DANGER} title="Changes not saved">
+                        {saveError}
+                    </Callout>
+                )}
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                    </Routes>
+                </Router>
+            </Provider>
+        </QueryClientProvider>
     );
 };
 

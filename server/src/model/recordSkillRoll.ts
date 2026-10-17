@@ -4,6 +4,7 @@ import { StatisticsSkillCheck } from '../types';
 const recordSkillRoll = async ({
     userId,
     characterName,
+    characterId,
     description,
     bonus,
     bonuses,
@@ -14,9 +15,9 @@ const recordSkillRoll = async ({
     const client = await pool.connect();
     try {
         const sql = `
-            INSERT INTO statistics_skill_checks 
-            (userId, characterName, description, bonus, roll, total, bonuses, benny) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            INSERT INTO statistics_skill_checks
+            (userId, characterName, description, bonus, roll, total, bonuses, benny, characterId)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
         `;
         const values = [
             userId,
@@ -27,6 +28,7 @@ const recordSkillRoll = async ({
             total,
             { bonuses },
             benny,
+            characterId,
         ];
         const result = await client.query(sql, values);
         return result.rows[0];

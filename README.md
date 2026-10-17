@@ -2,6 +2,8 @@
 
 This is a dice bot and character management app for the [PDQ system for TTRPGs](http://evilhat.wikidot.com/pdq).
 
+For existing installations, follow the [upgrade instructions](UPGRADE.md).
+
 ## Setup
 
 Use pnpm 12.6.0 (install with `npm install --global pnpm@12.6.0`).
@@ -241,3 +243,22 @@ User documents carry a save revision. Conflicting saves return HTTP 409; the cli
 stops its save queue and shows an error so unsaved characters can be exported.
 Deploy the server update before the client update. Older clients do not send save
 revisions and will need to reload the updated application.
+
+## Character skill-check history
+
+The Statistics tab shows skill checks for the selected character, newest first,
+with 10 checks per page and controls to browse older checks.
+Apply `migration-0002-skill-check-character-id.sql` through the existing migrator
+before starting the updated server. New checks store the character ID so they
+remain associated with the character after a rename. Older checks are matched
+by the character's current displayed name within the user's history; checks
+recorded under a previous name cannot be reliably associated automatically.
+The details overlay shows the recorded dice sum, bonuses, total, Benny use, and
+time. Individual die faces were not stored in historical statistics.
+
+The Luck rolls table shows the five most recent rolls, followed by success rates
+across the character's full recorded history (overall, high attempts, and low
+attempts). Rates are rounded to whole percentages; a dash indicates no attempts.
+Apply `migration-0003-luck-roll-character-id.sql` before starting the updated API.
+New luck rolls use character IDs, with the same current-name fallback for older
+records as skill checks.

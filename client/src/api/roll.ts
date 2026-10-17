@@ -1,3 +1,4 @@
+import { queryClient } from './query-client';
 import { attributeValues, countsThatDoNotReduce } from '../consts';
 import { updateLastRoll } from '../data/last-roll-slice';
 import store from '../data/redux-store';
@@ -42,6 +43,9 @@ export const d6 = async ({ high }: D6Params) => {
     };
     try {
         const response = await axios.post(url, data);
+        if (rollType === 'Luck roll') {
+            void queryClient.invalidateQueries({ queryKey: ['luck-rolls'] });
+        }
         const result = response.data.result;
         store.dispatch(setResult(response.data));
         return result;
@@ -75,6 +79,7 @@ export const simpleSkillCheck = async ({ description, modifier }: SimpleSkillChe
         rollType: 'Skill Check',
     };
     const response = await axios.post(url, { ...auth, ...body });
+    void queryClient.invalidateQueries({ queryKey: ['skill-checks'] });
     return response.data;
 };
 
@@ -157,6 +162,7 @@ export const skillCheck = async ({ isUsingBenny }: SkillCheckProps = {}) => {
         const {
             data: { result },
         } = response;
+        void queryClient.invalidateQueries({ queryKey: ['skill-checks'] });
         inventoryToSpend.forEach((item) => store.dispatch(spendInventoryItem(item)));
         if (isUsingBenny) {
             store.dispatch(spendBenny(auth.characterId));

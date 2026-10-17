@@ -7,6 +7,7 @@ import CharacterInfo from './character-info';
 import CharacterMenu from './character-menu';
 import Extras from './extras';
 import PowerNotes from './power-notes';
+import Statistics from './statistics';
 import SkillCheck from './skill-check';
 import { useSelector } from 'react-redux';
 import { PrepareRoll } from './prepare-roll/prepare-roll';
@@ -102,6 +103,19 @@ const CharacterSheet = ({ character: characterProp }: Props) => {
                             panel={!characterToEdit && <PowerNotes powers={character.powers} />}
                         />
                     )}
+                    <Tab
+                        id="statistics"
+                        icon="chart"
+                        aria-label="Statistics"
+                        panel={
+                            selectedTabId === 'statistics' ? (
+                                <Statistics
+                                    key={characterProp.id}
+                                    characterId={characterProp.id}
+                                />
+                            ) : undefined
+                        }
+                    />
                 </Tabs>
                 <div className="controls footer">
                     {!characterToEdit && <SkillCheck />}
