@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.json",
+    "include": ["**/*.test.ts", "**/*.test.tsx"],
+    "exclude": ["node_modules", "dist"],
+    "compilerOptions": {
+        "types": ["node", "vite/client"],
+        "module": "esnext"
+    }
+}

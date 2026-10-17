@@ -1,4 +1,4 @@
-import yaml from 'js-yaml';
+import { dump } from 'js-yaml';
 import type { Character } from '../types';
 
 type SaveData = {
@@ -27,7 +27,7 @@ export const save = ({ filename, data, contentType = 'text/plain' }: SaveData) =
 };
 
 export const saveYaml = ({ filename, data }: SaveYaml) => {
-    const text = yaml.dump(data);
+    const text = dump(data);
     save({ filename, data: text, contentType: 'text/yaml' });
 };
 

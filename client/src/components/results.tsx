@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Card, HTMLTable, Intent, Overlay } from '@blueprintjs/core';
+import { Button, ButtonGroup, Card, HTMLTable, Intent, Overlay2 } from '@blueprintjs/core';
 
 import { markClear, selectResults } from '../data/results-slice';
 import { reset as markRollClear, selectBennyUse, useBenny } from '../data/roll-slice';
@@ -15,7 +15,7 @@ const Results = () => {
     const benniesAvailable = useSelector(selectBennyUse);
     const characterId = useSelector(selectCharacterId);
     return (
-        <Overlay
+        <Overlay2
             autoFocus
             enforceFocus
             onClose={() => {
@@ -71,7 +71,7 @@ const Results = () => {
                     )}
                 </Card>
             </div>
-        </Overlay>
+        </Overlay2>
     );
 };
 

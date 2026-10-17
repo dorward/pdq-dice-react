@@ -9,37 +9,50 @@ import SimpleHealth from './simple-health';
 import classnames from 'classnames';
 
 const AttributeRow = ({ attribute, character, isWoundable }: RowProps) => {
-	const dispatch = useDispatch();
-	const selectedAttributes = useSelector(selectSelected);
+    const dispatch = useDispatch();
+    const selectedAttributes = useSelector(selectSelected);
 
-	const firstBought = attributeValues.findIndex(value => value[0] === attribute.value);
-	const firstUnwounded = firstBought + attribute.wounds;
-	const checked = !!selectedAttributes[attribute.id];
-	const onChange = () => dispatch(toggleSelected(attribute.id));
+    const firstBought = attributeValues.findIndex((value) => value[0] === attribute.value);
+    const firstUnwounded = firstBought + attribute.wounds;
+    const checked = !!selectedAttributes[attribute.id];
+    const onChange = () => dispatch(toggleSelected(attribute.id));
 
-	return (
-		<tr key={attribute.name} className={classnames({ attributeRow: true, wounded: Boolean(attribute.wounds) })}>
-			<td key="label" className="bonus-name">
-				<Checkbox checked={checked} onChange={onChange}>
-					{attribute.name}
-				</Checkbox>
-			</td>
-			<SimpleHealth
-				key="health"
-				isWoundable={isWoundable}
-				characterId={character.id}
-				attributeId={attribute.id}
-				firstUnwounded={firstUnwounded}
-				firstBought={firstBought}
-			/>
+    return (
+        <tr
+            key={attribute.name}
+            className={classnames({ attributeRow: true, wounded: Boolean(attribute.wounds) })}
+        >
+            <td key="label" className="bonus-name">
+                <Checkbox checked={checked} onChange={onChange}>
+                    {attribute.name}
+                </Checkbox>
+            </td>
+            <SimpleHealth
+                key="health"
+                isWoundable={isWoundable}
+                characterId={character.id}
+                attributeId={attribute.id}
+                firstUnwounded={firstUnwounded}
+                firstBought={firstBought}
+            />
 
-			{attributeValues.map(([name], index) => (
-				<td key={name}>
-					<AttributeState {...{ firstBought, firstUnwounded, index, name, character, attribute, isWoundable }} />
-				</td>
-			))}
-		</tr>
-	);
+            {attributeValues.map(([name], index) => (
+                <td key={name}>
+                    <AttributeState
+                        {...{
+                            firstBought,
+                            firstUnwounded,
+                            index,
+                            name,
+                            character,
+                            attribute,
+                            isWoundable,
+                        }}
+                    />
+                </td>
+            ))}
+        </tr>
+    );
 };
 
 export default AttributeRow;

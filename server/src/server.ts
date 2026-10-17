@@ -38,7 +38,11 @@ class Server {
         return new Promise((resolve, reject) => {
             console.log('Trying to listen on port', port);
             this.app
-                .listen({ hostname: '127.0.0.1', port }, () => {
+                .listen({ hostname: '127.0.0.1', port }, (err?: Error) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
                     resolve(port);
                 })
                 .on('error', (err: Error) => reject(err));

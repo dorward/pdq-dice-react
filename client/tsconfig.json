@@ -1,21 +1,21 @@
 {
-	"compilerOptions": {
-		"baseUrl": "./packages",
-		"paths": {
-			"@pdq-dice/server": ["server/lib"]
-		},
-		"module": "commonjs",
-		"target": "es2015",
-		"sourceMap": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"isolatedModules": true,
-		"noImplicitAny": true,
-		"noUnusedLocals": true,
-		"outDir": "./dist/",
-		"jsx": "react-jsx"
-	},
-	"include": ["**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"],
-	"lib": ["es2015", "es2017", "dom"]
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "es2015",
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "outDir": "./dist/",
+        "jsx": "react-jsx",
+        "moduleResolution": "bundler",
+        "strict": false,
+        "types": ["vite/client"],
+        "lib": ["es2020", "dom"],
+        "rootDir": "./src"
+    },
+    "include": ["**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
 }

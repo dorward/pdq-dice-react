@@ -1,0 +1,12 @@
+strictPeerDependencies: true
+peerDependencyRules:
+  allowedVersions:
+    "react-popper@2>react": "19"
+    "react-popper@2>react-dom": "19"
+allowBuilds:
+  "@parcel/watcher": true
+  esbuild: true
+  fsevents: true
+# Preserve the already-installed version while migrating package managers.
+minimumReleaseAgeExclude:
+  - react-dropzone@20.1.4

@@ -14,7 +14,7 @@ import axios from 'axios';
 import { parseMaxBennyValue } from '../util/parseMaxBennyValue';
 
 const getBase = () => {
-    const API_URL = process.env.API_URL;
+    const API_URL = import.meta.env.VITE_API_URL;
     const whoami = selectWhoami(store.getState());
     const characterId = selectCharacterId(store.getState());
 

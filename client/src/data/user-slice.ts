@@ -5,7 +5,7 @@ import cleanUser, { cleanCharacter } from './clean-user';
 import { RootState } from './redux-store';
 import { selectCharacterId } from './whoami-slice';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import yaml from 'js-yaml';
+import { load } from 'js-yaml';
 
 type UserState = {
     user: User;
@@ -30,7 +30,7 @@ const userSlice = createSlice({
             state.error = action.payload;
         },
         addCharacterFromYAML: (state, action: PayloadAction<string>) => {
-            const parsed = yaml.load(action.payload) as Sheet | Character | null;
+            const parsed = load(action.payload) as Sheet | Character | null;
             if (!parsed)
                 throw new Error(
                     'The YAML file could not be parsed. Something is probably wrong with the format of it.',

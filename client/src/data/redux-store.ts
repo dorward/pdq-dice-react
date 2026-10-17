@@ -7,14 +7,14 @@ import whoami from './whoami-slice';
 import { configureStore } from '@reduxjs/toolkit';
 
 const reduxStore = configureStore({
-	reducer: {
-		editMode,
-		lastRoll,
-		results,
-		roll,
-		user,
-		whoami,
-	},
+    reducer: {
+        editMode,
+        lastRoll,
+        results,
+        roll,
+        user,
+        whoami,
+    },
 });
 
 export type RootState = ReturnType<typeof reduxStore.getState>;

@@ -3,33 +3,33 @@ import { Attribute } from '../types';
 import ReactMarkdown from 'react-markdown';
 
 type Props = {
-	powers: Attribute[];
+    powers: Attribute[];
 };
 
 const PowerNotes = ({ powers }: Props) => {
-	return (
-		<div className="power-description">
-			<H2>Power Notes</H2>
-			{powers
-				.filter(power => Boolean(power.notes))
-				.map(power => (
-					<PowerDescription key={power.id} power={power} />
-				))}
-		</div>
-	);
+    return (
+        <div className="power-description">
+            <H2>Power Notes</H2>
+            {powers
+                .filter((power) => Boolean(power.notes))
+                .map((power) => (
+                    <PowerDescription key={power.id} power={power} />
+                ))}
+        </div>
+    );
 };
 
 type PropsD = {
-	power: Attribute;
+    power: Attribute;
 };
 
 const PowerDescription = ({ power }: PropsD) => {
-	return (
-		<div className="power">
-			<H3>{power.name}</H3>
-			<ReactMarkdown children={power.notes} />
-		</div>
-	);
+    return (
+        <div className="power">
+            <H3>{power.name}</H3>
+            <ReactMarkdown children={power.notes} />
+        </div>
+    );
 };
 
 export default PowerNotes;

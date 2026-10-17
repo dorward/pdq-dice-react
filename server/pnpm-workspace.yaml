@@ -1,0 +1,5 @@
+strictPeerDependencies: true
+allowBuilds:
+  esbuild: true
+  sharp: true
+  fsevents: true

@@ -12,7 +12,7 @@ import {
     ButtonGroup,
     Menu,
     MenuItem,
-    Popover,
+    PopoverNext,
     Classes,
 } from '@blueprintjs/core';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,9 +32,9 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
                 <>
                     <SimpleDice hasSkillButton />
                     <ButtonGroup>
-                        <Popover
+                        <PopoverNext
+                            shouldReturnFocusOnClose={false}
                             interactionKind="click"
-                            minimal={false}
                             placement="bottom"
                             content={
                                 <Menu>
@@ -47,7 +47,7 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
                             }
                         >
                             <Button icon="download" title="Download" aria-label="Download" />
-                        </Popover>
+                        </PopoverNext>
                         <Button
                             onClick={() => {
                                 dispatch(editCharacter(character));
@@ -60,10 +60,10 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
             )}
             {characterToEdit && (
                 <>
-                    <Popover
+                    <PopoverNext
+                        shouldReturnFocusOnClose={false}
                         interactionKind="click"
                         popoverClassName={Classes.POPOVER_CONTENT_SIZING}
-                        placement="auto"
                         content={
                             <div>
                                 <p>Are you sure you want to delete this character?</p>
@@ -87,7 +87,7 @@ const CharacterMenu = ({ character: characterProp }: Props) => {
                                 htmlTitle="Delete Character"
                             />
                         </Button>
-                    </Popover>
+                    </PopoverNext>
 
                     <Button onClick={finishEditing} intent={Intent.PRIMARY}>
                         <Icon icon="floppy-disk" title="Save" htmlTitle="Save" />

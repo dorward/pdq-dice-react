@@ -3,11 +3,20 @@
 	"version": "3.4.0",
 	"description": "This is a dice bot and character management app for the [PDQ system for TTRPGs](http://evilhat.wikidot.com/pdq).",
 	"devDependencies": {
+		"@types/node": "^26.6.5",
 		"commander": "^13.1.0",
 		"semver": "^7.7.1"
 	},
 	"scripts": {},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"packageManager": "pnpm@12.6.0",
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "12.6.0",
+			"onFail": "error"
+		}
+	}
 }

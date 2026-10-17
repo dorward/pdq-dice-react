@@ -1,10 +1,10 @@
 import {
     Button,
-    Card,
-    Elevation,
+    Dialog,
+    DialogBody,
+    DialogFooter,
     HTMLSelect,
     Label,
-    Overlay2,
     Slider,
 } from '@blueprintjs/core';
 import { moveSomeExtra } from '../../../data/edit-mode-slice';
@@ -17,9 +17,6 @@ type ExtraEditLocationProps = {
     extra: Extra;
     containers: ExtraContainer[];
 };
-
-type SimpleTransferAmount = number | '∞';
-const simpleTransferAmount: SimpleTransferAmount[] = [undefined, 0, 1, '∞'];
 
 const ExtraEditLocation = ({ extra, containers }: ExtraEditLocationProps) => {
     const dispatch = useDispatch();
@@ -37,13 +34,19 @@ const ExtraEditLocation = ({ extra, containers }: ExtraEditLocationProps) => {
     const onChange = useCallback<React.ComponentProps<typeof HTMLSelect>['onChange']>(
         (e) => {
             const data = { id: extra.id, location: e.target.value };
-            if (simpleTransferAmount.includes(extra.count)) {
+            if (typeof extra.count !== 'number' || extra.count <= 1) {
                 return dispatch(moveSomeExtra({ ...data, count: extra.count }));
             }
             setMoveData({ count: 1, location: e.target.value });
         },
         [dispatch, extra.count, extra.id],
     );
+
+    const locationName = (id: string) =>
+        id
+            ? (containers.find((container) => container.id === id)?.name ?? 'Unknown location')
+            : 'Top level';
+    const maxCount = typeof extra.count === 'number' ? extra.count : 1;
 
     return (
         <>
@@ -54,7 +57,7 @@ const ExtraEditLocation = ({ extra, containers }: ExtraEditLocationProps) => {
                     value={extra.location}
                     onChange={onChange}
                 >
-                    <option key="top-level" label="🔝" value="" />;
+                    <option key="top-level" label="🔝" value="" />
                     {containers
                         .filter(({ id }) => !descendants.includes(id))
                         .map(({ id, name }) => (
@@ -62,44 +65,55 @@ const ExtraEditLocation = ({ extra, containers }: ExtraEditLocationProps) => {
                         ))}
                 </HTMLSelect>
             </Label>
-            <Overlay2 isOpen={Boolean(moveData.count)}>
-                <div className="v-center">
-                    <Card elevation={Elevation.ONE} className="h-center">
-                        <p>
-                            Moving {extra.name} from {extra.location} to {moveData.location}
-                        </p>
+            <Dialog
+                isOpen={Boolean(moveData.count)}
+                onClose={() => setMoveData(defaultMoveData)}
+                title="Move inventory item"
+                className="extra-move-dialog"
+            >
+                <DialogBody>
+                    <p>
+                        Moving {extra.name} from {locationName(extra.location)} to{' '}
+                        {locationName(moveData.location)}
+                    </p>
 
+                    {maxCount > 1 && (
                         <Slider
                             min={1}
-                            max={typeof extra.count === 'number' ? extra.count : 1}
+                            max={maxCount}
+                            labelStepSize={Math.max(1, Math.ceil((maxCount - 1) / 5))}
+                            stepSize={1}
+                            handleHtmlProps={{ 'aria-label': 'Quantity to move' }}
                             value={moveData.count}
                             onChange={(count) => setMoveData({ ...moveData, count })}
                         />
-                        <Button
-                            onClick={() => {
-                                dispatch(moveSomeExtra({ id: extra.id, ...moveData }));
-                                setMoveData(defaultMoveData);
-                            }}
-                        >
-                            Move {moveData.count}
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                dispatch(
-                                    moveSomeExtra({
-                                        id: extra.id,
-                                        location: moveData.location,
-                                        count: extra.count,
-                                    }),
-                                );
-                                setMoveData(defaultMoveData);
-                            }}
-                        >
-                            Move all
-                        </Button>
-                    </Card>
-                </div>
-            </Overlay2>
+                    )}
+                </DialogBody>
+                <DialogFooter>
+                    <Button
+                        onClick={() => {
+                            dispatch(moveSomeExtra({ id: extra.id, ...moveData }));
+                            setMoveData(defaultMoveData);
+                        }}
+                    >
+                        Move {moveData.count}
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            dispatch(
+                                moveSomeExtra({
+                                    id: extra.id,
+                                    location: moveData.location,
+                                    count: extra.count,
+                                }),
+                            );
+                            setMoveData(defaultMoveData);
+                        }}
+                    >
+                        Move all
+                    </Button>
+                </DialogFooter>
+            </Dialog>
         </>
     );
 };

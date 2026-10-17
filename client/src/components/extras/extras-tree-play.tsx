@@ -132,6 +132,7 @@ const ExtrasTreePlay = () => {
                 </div>
             ) : null}
             <Tree
+                className={editMode ? 'extras-tree edit-mode' : 'extras-tree'}
                 contents={treeData}
                 onNodeExpand={onNodeExpand}
                 onNodeCollapse={onNodeCollapse}

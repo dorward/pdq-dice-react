@@ -1,9 +1,9 @@
 git pull
-npm i
+pnpm install --frozen-lockfile
 cd server
-npm i
-npm run build
+pnpm install --frozen-lockfile
+pnpm run build
 cd ..
 cd client
-npm i
-npm run build:production
+pnpm install --frozen-lockfile
+pnpm run build:production

@@ -1,5 +1,6 @@
 # pull official base image
 FROM node:lts-alpine
+RUN npm install --global pnpm@12.6.0
 
 # set working directory
 WORKDIR /app
@@ -9,12 +10,13 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY ./package.json ./
-COPY ./package-lock.json ./
+COPY ./pnpm-lock.yaml ./
+COPY ./pnpm-workspace.yaml ./
 COPY ./tsconfig.json ./
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
 # add app
 COPY . ./
 
 # start app
-CMD ["npm", "run", "start:dev"]
+CMD ["pnpm", "run", "start:dev"]

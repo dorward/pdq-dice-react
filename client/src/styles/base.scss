@@ -49,7 +49,7 @@ body {
             flex: 0 0 auto;
         }
 
-        > .bp5-tab-panel {
+        > .#{bp.$ns}-tab-panel {
             flex: 1 1 auto;
             display: flex;
             flex-direction: column;
@@ -74,7 +74,7 @@ body {
     }
 }
 
-main > .bp3-tabs > .bp3-tab-list {
+main > .#{bp.$ns}-tabs > .#{bp.$ns}-tab-list {
     flex-wrap: wrap;
 }
 
@@ -88,7 +88,7 @@ main > .bp3-tabs > .bp3-tab-list {
     table {
         margin: auto;
     }
-    .bp3-button-group {
+    .#{bp.$ns}-button-group {
         margin-top: 2em;
         justify-content: center;
     }
@@ -155,14 +155,14 @@ table.extras {
         display: none;
     }
 
-    .bp3-form-group {
+    .#{bp.$ns}-form-group {
         margin: 0;
         input {
             background: inherit;
         }
     }
 
-    .bp4-control {
+    .#{bp.$ns}-control {
         margin-bottom: 0;
     }
 
@@ -249,17 +249,29 @@ span.extra-tree-row {
     box-sizing: border-box;
 }
 
-.bp5-tree-node-content:has(.extra-tree-row.edit-mode) {
+.extras-tree.edit-mode {
+    // Match each nesting step to the folder icon (16px) and its margin (8px).
+    .#{bp.$ns}-tree-node-list:not(.#{bp.$ns}-tree-root) {
+        padding-left: 24px;
+    }
+
+    .#{bp.$ns}-tree-node-content {
+        padding-left: 0;
+    }
+}
+
+.#{bp.$ns}-tree-node-content:has(.extra-tree-row.edit-mode) {
     align-items: flex-start;
 
-    > .bp5-icon-chevron-right {
+    > .#{bp.$ns}-icon-chevron-right {
         margin-top: 0px;
     }
 
-    > .bp5-tree-node-icon {
+    > .#{bp.$ns}-tree-node-icon {
         margin-top: 5px;
     }
 }
+
 .extra-tree-row.edit-mode {
     display: flex;
     flex-direction: row;
@@ -278,12 +290,12 @@ span.extra-tree-row {
         flex-direction: column;
         width: 100%;
 
-        > .bp5-collapse-body {
+        > .#{bp.$ns}-collapse-body {
             display: flex;
             flex-direction: column;
         }
 
-        .bp5-label {
+        .#{bp.$ns}-label {
             display: flex;
             margin: 0;
             > :first-child {
@@ -299,7 +311,9 @@ span.extra-tree-row {
         align-items: flex-end;
 
         .extra-tree-edit-name {
-            flex: 1 1 auto;
+            flex: 1 1 0;
+            width: 0;
+            min-width: 0;
         }
 
         .extra-tree-edit-menu-toggle {
@@ -309,14 +323,31 @@ span.extra-tree-row {
         .extended-menu {
             display: contents;
 
-            > .bp5-collapse-body {
+            > .#{bp.$ns}-collapse-body {
                 display: contents;
             }
 
-            .bp5-label {
+            .#{bp.$ns}-label {
                 display: contents;
                 > :first-child {
                     display: none;
+                }
+                > :not(:first-child) {
+                    flex: 0 0 auto;
+                    min-width: 0;
+                }
+                > .extra-tree-edit-location {
+                    width: 10rem;
+                }
+                > .extra-tree-edit-count,
+                > .extra-tree-edit-capacity {
+                    width: 4.5rem;
+                }
+                > .extra-tree-edit-bonus {
+                    width: 5.5rem;
+                }
+                select {
+                    width: 100%;
                 }
             }
         }
@@ -364,13 +395,13 @@ button.add {
                 width: 60px;
                 height: 60px;
             }
-            .bp3-button-text > svg {
+            .#{bp.$ns}-button-text > svg {
                 position: absolute;
                 left: -500px;
             }
         }
     }
-    .bp3-form-group {
+    .#{bp.$ns}-form-group {
         margin: 0 0 0 12px;
         flex-grow: 1;
     }
@@ -380,7 +411,7 @@ button.add {
     .health {
         display: none;
     }
-    .bp3-control {
+    .#{bp.$ns}-control {
         margin-bottom: 0;
     }
 }
@@ -414,7 +445,8 @@ tr.location-heading th {
     text-align: center;
 }
 
-.bp3-button-group:not(.bp3-minimal) > .bp3-button:not(:last-child).skill-check {
+.#{bp.$ns}-button-group:not(.#{bp.$ns}-minimal)
+    > .#{bp.$ns}-button:not(:last-child).skill-check {
     margin-right: 1em;
 }
 
@@ -499,21 +531,26 @@ svg.goo {
     flex-wrap: wrap;
 }
 
-.extra-tree-edit-name,
-.extra-tree-edit-location {
-    width: 275px;
-}
 span.padding {
     flex: 1 1 auto;
 }
 
-.bp5-tree-node-content {
+.#{bp.$ns}-tree-node-content {
     height: auto;
     min-height: 30px;
 }
 
-.bp5-slider {
+.#{bp.$ns}-slider {
     min-width: 400px;
+}
+
+.extra-move-dialog {
+    width: min(32rem, calc(100vw - 2rem));
+
+    .#{bp.$ns}-slider {
+        min-width: 0;
+        width: 100%;
+    }
 }
 
 .bennies-edit {
@@ -522,10 +559,10 @@ span.padding {
     grid-template-columns: min-content max-content;
     gap: 3px;
 
-    .bp5-form-group {
+    .#{bp.$ns}-form-group {
         display: contents;
 
-        label.bp5-label {
+        label.#{bp.$ns}-label {
             display: inline;
             white-space: nowrap;
         }

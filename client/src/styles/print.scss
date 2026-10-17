@@ -1,3 +1,4 @@
+@use '@blueprintjs/core/lib/scss/variables' as bp;
 @use 'fluff.scss';
 
 @page {
@@ -61,7 +62,7 @@
         > [role='tablist'] {
             display: none;
         }
-        > .bp5-tab-panel[aria-hidden='true'] {
+        > .#{bp.$ns}-tab-panel[aria-hidden='true'] {
             display: block;
             &.character-core {
                 display: contents;

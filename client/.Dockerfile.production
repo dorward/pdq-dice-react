@@ -1,5 +1,6 @@
 # pull official base image
 FROM node:lts-alpine AS build
+RUN npm install --global pnpm@12.6.0
 
 # set working directory
 WORKDIR /app
@@ -9,13 +10,14 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY ./package.json ./
-COPY ./package-lock.json ./
+COPY ./pnpm-lock.yaml ./
+COPY ./pnpm-workspace.yaml ./
 COPY ./tsconfig.json ./
-RUN npm ci
+RUN pnpm install --frozen-lockfile
 
 # add app
 COPY . ./
-RUN npm run build:production
+RUN pnpm run build:production
 
 # production environment
 FROM nginx:stable-alpine
