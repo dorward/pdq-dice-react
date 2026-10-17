@@ -36,7 +36,7 @@
 	},
 	"dependencies": {
 		"@discordjs/rest": "^2.2.0",
-		"@types/uuid": "^10.0.0",
+		"@types/uuid": "^11.0.0",
 		"ascii-table3": "^1.0.4",
 		"cors": "^2.8.5",
 		"discord-api-types": "^0.38.56",
