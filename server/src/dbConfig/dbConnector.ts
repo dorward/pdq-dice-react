@@ -5,10 +5,9 @@ import pg, { Pool } from 'pg';
 pg.types.setTypeParser(1114, (val) => val); // TIMESTAMP WITHOUT TIME ZONE
 pg.types.setTypeParser(1184, (val) => val); // TIMESTAMP WITH TIME ZONE
 
-// TODO Get these from the environment
-
 export default new Pool({
     max: 20,
-    connectionString: 'postgres://postgres:newPassword@postgres16:5432/pdq',
+    connectionString:
+        process.env.DATABASE_URL ?? 'postgres://postgres:newPassword@postgres:5432/pdq',
     idleTimeoutMillis: 30000,
 });

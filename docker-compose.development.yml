@@ -1,0 +1,8 @@
+services:
+  pdq-api:
+    build:
+      target: development
+    read_only: false
+    volumes:
+      - ./server/src:/usr/app/src:ro
+      - ./server/nodemon.json:/usr/app/nodemon.json:ro

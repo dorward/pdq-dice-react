@@ -1,2 +1,2 @@
 cp .env.development client/.env
-env $(cat .env.development) /Users/david/.docker/cli-plugins/docker-compose up --build --remove-orphans pdq-api
+docker compose --env-file .env.development -f docker-compose.yml -f docker-compose.development.yml up --build --remove-orphans pdq-api

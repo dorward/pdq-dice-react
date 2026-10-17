@@ -9,3 +9,4 @@
 /.env.production
 /client/stats.json
 /dump_*.sql
+__pycache__/

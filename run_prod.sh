@@ -1,2 +1,2 @@
 cp .env.production client/.env
-env $(cat .env.production) docker-compose --profile production up --build --remove-orphans -d
+docker compose --env-file .env.production -f docker-compose.yml --profile production up --build --remove-orphans -d

@@ -1,0 +1,1 @@
+env $(cat .env.staging) docker-compose down
