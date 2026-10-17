@@ -10,3 +10,4 @@
 /client/stats.json
 /dump_*.sql
 __pycache__/
+/.env.staging
