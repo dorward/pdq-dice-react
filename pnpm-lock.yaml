@@ -173,8 +173,8 @@ importers:
         specifier: ^15.0.0
         version: 15.0.0
       semver:
-        specifier: ^7.7.1
-        version: 7.7.3
+        specifier: ^7.8.5
+        version: 7.8.5
 
 packages:
 
@@ -185,8 +185,8 @@ packages:
     resolution: {integrity: sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==}
     engines: {node: '>=22.12.0'}
 
-  semver@7.7.3:
-    resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
+  semver@7.8.5:
+    resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -201,6 +201,6 @@ snapshots:
 
   commander@15.0.0: {}
 
-  semver@7.7.3: {}
+  semver@7.8.5: {}
 
   undici-types@8.9.0: {}
