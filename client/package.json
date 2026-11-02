@@ -37,7 +37,7 @@
 		"react-dom": "^19.3.1",
 		"react-dropzone": "^20.1.4",
 		"react-markdown": "^10.1.0",
-		"react-redux": "^9.1.2",
+		"react-redux": "^9.3.1",
 		"react-router-dom": "^7.0.1",
 		"react-spinners": "^0.17.1",
 		"unique-names-generator": "^4.7.1",
